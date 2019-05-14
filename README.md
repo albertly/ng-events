@@ -1,3 +1,11 @@
+Carbon Copy of [Angular Fundamentals Course] (https://app.pluralsight.com/library/courses/angular-fundamentals/table-of-contents) by Joe Eames and Jim Cooper exercise files
+
+## but in React
+
+Github repository [jmcooper/angular-fundamentals-files] https://github.com/jmcooper/angular-fundamentals-files
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

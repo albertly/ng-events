@@ -2,17 +2,21 @@ import React from 'react'
 import 'ngf-bootstrap/dist/bootstrap.min.css';
 import './EventThumbnail.css';
 
-function EventThumbnail(props) {
+const EventThumbnail = props => {
     let place =  '';
     let startTime = '';
+
+    const getStartTimeStyle = () => {
+      if (props.event.time === '8:00 am')
+        return {color: '#003300', 'font-weight': 'bold'}
+      return {}
+    }
 
     switch(props.event.time) {
       case '8:00 am': startTime = ' (Early Start)'; break;
       case '10:00 am': startTime = ' (Late Start)'; break;
       default : startTime = ' (Normal Start)';
     }
-
-  //  <div [ngStyle]="getStartTimeStyle()" [ngSwitch]="event?.time">Time: {{event?.time}}
 
     if (!props.event.location) {
       place =  <div>
@@ -37,12 +41,6 @@ function EventThumbnail(props) {
         {place}
       </div>
     );
-
-    function getStartTimeStyle() {
-      if (props.event.time === '8:00 am')
-        return {color: '#003300', 'font-weight': 'bold'}
-      return {}
-    }
   }
   
   export default EventThumbnail;

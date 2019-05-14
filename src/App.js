@@ -6,7 +6,7 @@ import EventsList from './components/EventsList/EventsList';
 
 import './App.css';
 
-function App() {
+const App = () => {
   return (
    <>
     <NavBar></NavBar>

@@ -1,8 +1,8 @@
-Carbon Copy of [Angular Fundamentals Course] (https://app.pluralsight.com/library/courses/angular-fundamentals/table-of-contents) by Joe Eames and Jim Cooper exercise files
+Carbon Copy of [Angular Fundamentals Course](https://app.pluralsight.com/library/courses/angular-fundamentals/table-of-contents) by Joe Eames and Jim Cooper exercise files
 
 ## but in React
 
-Github repository [jmcooper/angular-fundamentals-files] https://github.com/jmcooper/angular-fundamentals-files
+Github repository [jmcooper/angular-fundamentals-files](https://github.com/jmcooper/angular-fundamentals-files)
 
 
 

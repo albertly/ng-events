@@ -5,7 +5,7 @@ import './EventThumbnail.css';
 function EventThumbnail(props) {
 
     return (
-        <div className="well hoverwell thumbnail">
+      <div className="well hoverwell thumbnail">
         <h2>{props.event.name}</h2>
         <div>Date: {props.event.date}</div>
         <div>Time: {props.event.time}</div>

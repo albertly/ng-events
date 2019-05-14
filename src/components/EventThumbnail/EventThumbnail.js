@@ -9,7 +9,7 @@ function EventThumbnail(props) {
         <h2>{props.event.name}</h2>
         <div>Date: {props.event.date}</div>
         <div>Time: {props.event.time}</div>
-        <div>Price: $ {props.event.price}</div>
+        <div>Price: ${props.event.price}</div>
         <div>
           <span>Location: {props.event.location.address}</span>
           <span className="pad-left">{props.event.location.city}, {props.event.location.country}</span>

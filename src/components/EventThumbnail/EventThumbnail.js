@@ -8,7 +8,7 @@ const EventThumbnail = props => {
 
     const getStartTimeStyle = () => {
       if (props.event.time === '8:00 am')
-        return {color: '#003300', 'font-weight': 'bold'}
+        return {color: '#003300', 'fontWeight': 'bold'}
       return {}
     }
 

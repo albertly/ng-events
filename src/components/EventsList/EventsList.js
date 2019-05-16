@@ -1,7 +1,6 @@
 import React from 'react';
 
 
-import 'ngf-bootstrap/dist/bootstrap.min.css';
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 

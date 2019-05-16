@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'jquery/dist/jquery';
+import 'jquery/dist/jquery.min.js';
 import  'bootstrap/dist/js/bootstrap.min.js';
 
 import './index.css';

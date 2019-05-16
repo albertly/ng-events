@@ -1,5 +1,4 @@
 import React from 'react'
-import 'ngf-bootstrap/dist/bootstrap.min.css';
 import './EventThumbnail.css';
 
 const EventThumbnail = props => {

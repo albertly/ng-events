@@ -1,7 +1,8 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */  // --> OFF
 
 import React from 'react';
-import 'ngf-bootstrap/dist/bootstrap.min.css';
+import { NavLink } from 'react-router-dom';
+
 import './NavBar.css';
 
 function NavBar() {
@@ -13,11 +14,13 @@ function NavBar() {
                 </div>
 
                 <div className="collapse navbar-collapse">
-                <ul className="nav navbar-nav">
+                <ul className="nav navbar-nav">           
                     <li>
-                    <a href="#">All Events</a>
+                        <NavLink exact to="/events/" activeClassName="active">All Events</NavLink>
                     </li>
-                    <li><a href="#">Create Event</a></li>
+                    <li>
+                        <NavLink to="/events/new" activeClassName="active">Create Event</NavLink>
+                    </li>
                     <li className="dropdown">
                     <a href="#" className="dropdown-toggle" data-toggle="dropdown" >
                         Events

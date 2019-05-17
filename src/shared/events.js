@@ -1,8 +1,9 @@
 const Events = () => events;
 
 export const getEvent = id => {
-  if (!id) id = 1;
-  let e = events.find(event => event.id === +id);
+  
+ // if (!id)  id = 1;
+  const e = events.find(event => event.id === +id);
   console.log('E ' + e);
   return e;
 }

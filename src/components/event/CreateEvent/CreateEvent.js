@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import { Prompt } from 'react-router-dom';
 
-function CreateEvent() {
+function CreateEvent({history}) {
 
-    const cancelHandler = () => {};
+    const [isDirty, setDirty] = useState(true);
+
+    const cancelHandler = () => history.push('/events');
 
     return (
     <>
+        <Prompt when={isDirty}
+            message="You have not saved this event, do you really want to cancel?"
+        />
         <h1>New Event</h1>
         <hr/>
         <div className="col-md-6">
@@ -13,7 +19,7 @@ function CreateEvent() {
             <br/>
             <br/>
             <button type="submit" className="btn btn-primary">Save</button>
-            <button type="button" className="btn btn-default" onClick="cancelHandler()">Cancel</button>
+            <button type="button" className="btn btn-default" onClick={cancelHandler}>Cancel</button>
         </div>    
     </>   
     );

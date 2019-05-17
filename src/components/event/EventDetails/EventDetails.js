@@ -2,18 +2,24 @@ import React, {useState, useEffect} from 'react';
 import {getEvent} from '../../../shared/events';
 import './EventDetails.css';
 
-const  EventDetails = ({match}) => {
+function EventDetails({match, history}) {
 
     const [event, setEvent] = useState({});
 
     useEffect(() => {
-        setEvent(getEvent(match.params.id));
-        console.log(event);
-    });
+        console.log('Id ' + match.params.id);
+        const e = getEvent(match.params.id);
+        if (!e) {
+            history.push('/error');
+        }
+        else {
+            setEvent(e);
+        }
+    }, [match.params.id]);
 
     return (
         <div className="container">
-            {/* <img [src]="event?.imageUrl" [alt]="event?.name" class="event-image"> */}
+            <img src={event.imageUrl} alt={event.name} className="event-image"/> 
 
             <div className="row">
                 <div className="col-md-11">
@@ -27,13 +33,15 @@ const  EventDetails = ({match}) => {
                     <div><strong>Time:</strong> {event.time}</div>
                     <div><strong>Price:</strong> $ {event.price}</div>
                 </div>
-                {/* <div class="col-md-6">
+                {event.location && 
+                <div className="col-md-6">
                     <address>
-                        <strong>Address:</strong><br />
-                        {{event?.location?.address}}<br />
-                        {{event?.location?.city}}, {{event?.location?.country}}
+                        <strong>Address:</strong><br/>
+                        {event.location.address}<br/>
+                        {event.location.city}, {event.location.country}
                     </address>
-                </div> */}
+                </div>
+                }
             </div>
         </div>
     );

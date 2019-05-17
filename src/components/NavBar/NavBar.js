@@ -19,7 +19,7 @@ function NavBar() {
                         <NavLink exact to="/events/" activeClassName="active">All Events</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/events/new" activeClassName="active">Create Event</NavLink>
+                        <NavLink exact to="/events/new" activeClassName="active">Create Event</NavLink>
                     </li>
                     <li className="dropdown">
                     <a href="#" className="dropdown-toggle" data-toggle="dropdown" >

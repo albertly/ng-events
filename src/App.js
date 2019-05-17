@@ -16,8 +16,9 @@ const App = () => {
     <Switch>
       <Redirect exact from="/" to="/events"/>
       <Route exact path="/events"  component={EventsList} />
-      <Route exact path="/events/:id"  component={EventDetails} />
       <Route exact path="/events/new" component={CreateEvent} />
+      <Route exact path="/events/:id"  component={EventDetails} />
+      <Route exact path="/error"  component={Error404} />
       <Route component={Error404} />     
     </Switch>
    </Router>

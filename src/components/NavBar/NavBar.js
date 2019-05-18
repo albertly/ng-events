@@ -36,7 +36,7 @@ function NavBar() {
                 <div className="navbar-header navbar-right">
                     <ul className="nav navbar-nav">
                     <li>
-                        <a href="#">Welcome John</a>
+                        <NavLink exact to="/login" activeClassName="active">Login</NavLink>
                     </li>
                     </ul>
                 </div>

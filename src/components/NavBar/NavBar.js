@@ -1,11 +1,13 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */  // --> OFF
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { isAuthenticated, AuthContext } from '../../shared/ContextAuth';
 
 import './NavBar.css';
 
 function NavBar() {
+    let { state,  } = useContext(AuthContext);
     return (
             <div className="navbar navbar-default">
             <div className="container-fluid">
@@ -36,7 +38,12 @@ function NavBar() {
                 <div className="navbar-header navbar-right">
                     <ul className="nav navbar-nav">
                     <li>
-                        <NavLink exact to="/login" activeClassName="active">Login</NavLink>
+                        {!state.userName ? (
+                            <NavLink exact to="/login" activeClassName="active">Login</NavLink>
+                        ) : (
+                            <span>{state.firstName}</span>
+                        )
+                        }
                     </li>
                     </ul>
                 </div>

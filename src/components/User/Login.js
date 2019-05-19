@@ -1,5 +1,6 @@
-import React, {useState, useEffect}  from 'react';
+import React, {useState, useEffect, useContext}  from 'react';
 
+import {AuthContext, AUTH_USER} from '../../shared/ContextAuth';
 import './Login.css';
 
 function Login() {
@@ -12,12 +13,30 @@ function Login() {
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordTouched, setPasswordTouched] = useState(false);
 
+
+    let { state, dispatch } = useContext(AuthContext);
+
+    useEffect(() => {
+        // Update the document title using the browser API
+       // logged = useContext(LoggedContext)
+    });
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const action = {
+            type: AUTH_USER,
+            userName,
+            password,
+        }
+        dispatch(action);
+    };
+
     return (
     <>
         <h1>Login</h1>
         <hr/>
         <div className="col-md-4">
-            <form   autocomplete="off" novalidate>
+            <form   autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <div className="form-group" >
                     <label htmlFor="userName">User Name:</label>
                     {!userNameValid && <em>Required</em> }

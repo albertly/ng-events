@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { Prompt } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { saveEvent as saveEventG } from '../../../shared/events';
+
 import Yup from 'yup';
 
 import './CreateEvent.css';
@@ -9,18 +11,25 @@ const CustomInputComponent = ({
     form: { touched, errors, isValid, values, dirty }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
     ...props
   }) => {
-    console.log('Field ',  field);
-    console.log('touched ', touched);
-    console.log('errors ', errors);
-    console.log('values ', values);
-    console.log('isValid ', isValid);
-    console.log('dirty ', dirty);
+    // console.log('Field ',  field);
+    // console.log('touched ', touched);
+    // console.log('errors ', errors);
+    // console.log('values ', values);
+    // console.log('isValid ', isValid);
+    // console.log('dirty ', dirty);
+    // console.log('props ', props);
+    
+    const propsForInput = Object.assign({}, props);
+    delete propsForInput.className;
+
     return (
-        <div className="form-group">
-        <label htmlFor={field.name}>{props.lable}</label>
+        <div className={props.className}>
+        {props.lable &&
+            <label htmlFor={field.name}>{props.lable}</label>
+        }
         { errors[field.name] && touched[field.name] &&
-            <em>Required</em>}
-        <input type="text" {...field} className="form-control" {...props} />
+            <em>{errors[field.name]}</em>}
+        <input {...field} className="form-control" {...propsForInput} />
         </div>
     )
   };
@@ -31,19 +40,9 @@ function CreateEvent({history}) {
 
     const cancelHandler = () => history.push('/events');
 
-    const  event = {
-        id: 0,
-        name: '',
-        date: '',
-        time: '',
-        price: 0,
-        imageUrl: '',
-        location: {
-          address: '',
-          city: '',
-          country: '',
-        },
-        onlineUrl: '',
+    const saveEvent = (values, actions) => {
+        saveEventG(values);
+        actions.setSubmitting(false);
     }
 
     return (
@@ -56,18 +55,13 @@ function CreateEvent({history}) {
         <div className="col-md-6">
 
             <Formik
-                initialValues={{ eventName: '', eventDate: '', eventTime:'', email: '', }}
+                initialValues={{ name: '', eventDate: '', eventTime:'', eventPrice:0,
+                                 location: {address:'', city:'', country:''}, onlineUrl:'', imageUrl: '' }}
                 validate={values => {
                     let errors = {};
-                    if (!values.email) {
-                        errors.email = 'Required';
-                    } else if (
-                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                    ) {
-                        errors.email = 'Invalid email address';
-                    }
-                    if (!values.eventName) {
-                        errors.eventName = 'Required';
+
+                    if (!values.name) {
+                        errors.name = 'Required';
                     }
                     if (!values.eventDate) {
                         errors.eventDate = 'Required';
@@ -75,43 +69,82 @@ function CreateEvent({history}) {
                     if (!values.eventTime) {
                         errors.eventTime = 'Required';
                     }
+                    if (!values.eventPrice) {
+                        errors.eventPrice = 'Required';
+                    }
+                    if (!values.imageUrl) {
+                        errors.imageUrl = 'Required';
+                    } else if (!/[\/.](jpg|png)$/i.test(values.imageUrl)) {
+                        errors.imageUrl = 'Must be a png or jpg url';
+                    }
                     return errors;
                 }}
-                onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
-                    setSubmitting(false);
-                    }, 400);
-                }}
+                onSubmit={saveEvent}
             >
                 {({ isSubmitting }) => (
                 <Form>
                     <Field  component={CustomInputComponent}
+                            className="form-group"
                             type="text"
-                            name="eventName"
+                            name="name"
                             lable="Event Name:"
                             placeholder="Name of your event..." />
 
                     <Field  component={CustomInputComponent}
+                        className="form-group"
                         type="text"
                         name="eventDate"
                         lable="Event Date:"
                         placeholder="format (mm/dd/yyyy)..." />
 
                     <Field  component={CustomInputComponent}
+                        className="form-group"
                         type="text"
                         name="eventTime"
                         lable="Event Time:"
                         placeholder="start and end time..." />
 
-                    <div className="form-group">
-                    <label htmlFor="email">Event Name:</label>        
-                    <Field type="email" name="email" className="form-control" placeholder="Name of your event..." />
-                    <ErrorMessage name="email" component="div" />
+                    <Field  component={CustomInputComponent}
+                        className="form-group"
+                        type="number"
+                        name="eventPrice"
+                        lable="Event Price:"
+                        placeholder="event price..." />
+
+                    <div>
+                        <Field  component={CustomInputComponent}
+                            className="form-group"
+                            type="text"
+                            name="location.address"
+                            lable="Event Location:"
+                            placeholder="Address of event..." />                        
+                            <div className="row">
+                                <Field  component={CustomInputComponent}
+                                    className="col-md-6"
+                                    type="text"
+                                    name="location.city"
+                                    placeholder="City..." />            
+                                <Field  component={CustomInputComponent}
+                                    className="col-md-6"
+                                    type="text"
+                                    name="location.country"
+                                    placeholder="Country..." />                                                     
+                            </div>                    
                     </div>
-
-
-                    <button type="submit" disabled={isSubmitting}>
+                    <Field  component={CustomInputComponent}
+                        className="form-group"
+                        type="text"
+                        name="onlineUrl"
+                        lable="Online Url:"
+                        placeholder="Online Url..." /> 
+        
+                    <Field  component={CustomInputComponent}
+                        className="form-group"
+                        type="text"
+                        name="imageUrl"
+                        lable="Image:"
+                        placeholder="url of image..." />          
+                    <button type="submit">
                         Submit
                     </button>
                 </Form>

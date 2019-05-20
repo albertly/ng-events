@@ -1,5 +1,5 @@
 import React, {useReducer} from 'react';
-
+// ToDo: Async
 const AUTH_USER = 'AUTH_USER';
 const AuthContext = React.createContext();
 
@@ -11,7 +11,6 @@ const initialState = {
 }
 
 const reducer = (state, action) => {
-
     switch (action.type) {
         case AUTH_USER:
         return  {...state,
@@ -22,18 +21,17 @@ const reducer = (state, action) => {
         default:
             return state;
     }
- 
 };
 
+// ToDo: Doesn't work
 function isAuthenticated() {
     return !!AuthContext.state.userName;
 }
 
 function ContextAuthProvider(props) {
-
     let [state, dispatch] = useReducer(reducer, initialState);
     let value = { state, dispatch };
-  
+
     return (
       <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
     );

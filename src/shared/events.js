@@ -6,7 +6,14 @@ export const getEvent = id => {
   const e = events.find(event => event.id === +id);
   console.log('E ' + e);
   return e;
+};
+
+export const saveEvent = event => {
+  event.id = 999
+  event.session = []
+  events.push(event)
 }
+
 const events = [
     {
       id: 1,

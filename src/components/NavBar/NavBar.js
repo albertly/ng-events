@@ -41,7 +41,7 @@ function NavBar() {
                         {!state.userName ? (
                             <NavLink exact to="/login" activeClassName="active">Login</NavLink>
                         ) : (
-                            <span>{state.firstName}</span>
+                            <NavLink exact to="/profile" activeClassName="active">{state.firstName}</NavLink>
                         )
                         }
                     </li>

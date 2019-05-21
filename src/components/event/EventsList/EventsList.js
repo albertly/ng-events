@@ -1,8 +1,7 @@
 import React from 'react';
 
-
-import toastr from 'toastr'
-import 'toastr/build/toastr.min.css'
+//import toastr from 'toastr'
+//import 'toastr/build/toastr.min.css'
 
 import Events from '../../../shared/events';
 import EventThumbnail from '../EventThumbnail/EventThumbnail';

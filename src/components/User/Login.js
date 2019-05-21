@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useContext}  from 'react';
 
 import {AuthContext, AUTH_USER} from '../../shared/ContextAuth';
+
 import './Login.css';
 
-function Login() {
+function Login({history}) {
 
     const [userName, setUserName] = useState('');
     const [userNameValid, setUserNameValid] = useState(true);
@@ -12,7 +13,6 @@ function Login() {
     const [password, setPassword] = useState('');
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordTouched, setPasswordTouched] = useState(false);
-
 
     let { state, dispatch } = useContext(AuthContext);
 
@@ -29,6 +29,7 @@ function Login() {
             password,
         }
         dispatch(action);
+        history.push('/events')
     };
 
     return (
@@ -75,7 +76,7 @@ function Login() {
                 <span onMouseEnter={()=>{}} onMouseLeave={()=>{}}>
                     <button type="submit"  className="btn btn-primary">Login</button>
                 </span>
-                <button type="button" onClick={()=>{}} className="btn btn-default">Cancel</button>
+                <button type="button" onClick={()=>history.push('/events')} className="btn btn-default">Cancel</button>
             </form>
         </div>
     </>   

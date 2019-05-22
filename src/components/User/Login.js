@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext}  from 'react';
+import React, {useState, useContext}  from 'react';
 
 import {AuthContext, AUTH_USER} from '../../shared/ContextAuth';
 
@@ -14,12 +14,7 @@ function Login({history}) {
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordTouched, setPasswordTouched] = useState(false);
 
-    let { state, dispatch } = useContext(AuthContext);
-
-    useEffect(() => {
-        // Update the document title using the browser API
-       // logged = useContext(LoggedContext)
-    });
+    const dispatch = useContext(AuthContext)[1];
 
     const handleSubmit = (event) => {
         event.preventDefault();

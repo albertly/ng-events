@@ -2,7 +2,7 @@
 
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { isAuthenticated, AuthContext } from '../../shared/ContextAuth';
+import { AuthContext } from '../../shared/ContextAuth';
 
 import './NavBar.css';
 
@@ -38,7 +38,7 @@ function NavBar() {
                 <div className="navbar-header navbar-right">
                     <ul className="nav navbar-nav">
                     <li>
-                        {!state.userName ? (
+                        {!state.isAuthenticated() ? (
                             <NavLink exact to="/login" activeClassName="active">Login</NavLink>
                         ) : (
                             <NavLink exact to="/profile" activeClassName="active">{state.firstName}</NavLink>

@@ -1,41 +1,14 @@
 import React, {useState} from 'react';
 import { Prompt } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
-import { saveEvent as saveEventG } from '../../../shared/events';
 
+import { saveEvent } from '../../../shared/events';
+import CustomInputComponent from '../../../shared/CustomInputComponent';
 //import Yup from 'yup';
 
 import './CreateEvent.css';
 
-const CustomInputComponent = ({
-    field, // { name, value, onChange, onBlur }
-    form: { touched, errors, isValid, values, dirty }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-    ...props
-  }) => {
-    // console.log('Field ',  field);
-    // console.log('touched ', touched);
-    // console.log('errors ', errors);
-    // console.log('values ', values);
-    // console.log('isValid ', isValid);
-    // console.log('dirty ', dirty);
-    // console.log('props ', props);
-    
-    const propsForInput = Object.assign({}, props);
-    delete propsForInput.className;
-    delete propsForInput.children
 
-    return (
-        <div className={props.className}>
-        {props.lable &&
-            <label htmlFor={field.name}>{props.lable}</label>
-        }
-        { errors[field.name] && touched[field.name] &&
-            <em>{errors[field.name]}</em>}
-        <input {...field} className="form-control" {...propsForInput} />
-        {props.children}
-        </div>
-    )
-  };
 
 function CreateEvent({history}) {
 
@@ -43,8 +16,8 @@ function CreateEvent({history}) {
 
     const cancelHandler = () => history.push('/events');
 
-    const saveEvent = (values, actions) => {
-        saveEventG(values);
+    const submitHandler = (values, actions) => {
+        saveEvent(values);
         actions.setSubmitting(false);
         setDirty(false);
         history.push('/events');
@@ -96,7 +69,7 @@ function CreateEvent({history}) {
                 initialValues={{ name: '', date: '', time:'', price:0,
                                  location: {address:'', city:'', country:''}, onlineUrl:'', imageUrl: '' }}
                 validate={ (values) => validateForm(values) }
-                onSubmit={saveEvent}
+                onSubmit={submitHandler}
                 handleChange
             >
                 {({ isSubmitting, dirty, values }) => (

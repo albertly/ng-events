@@ -14,7 +14,7 @@ function Login({history}) {
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordTouched, setPasswordTouched] = useState(false);
 
-    const dispatch = useContext(AuthContext)[1];
+    const dispatch = useContext(AuthContext).dispatch;
 
     const handleSubmit = (event) => {
         event.preventDefault();

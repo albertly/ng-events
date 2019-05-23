@@ -19,7 +19,6 @@ const reducer = (state, action) => {
                 userName:action.userName,
                 }
         case AUTH_UPDATE_USER:
-                console.log(action.firstName);
             return  {...state,
                 firstName: action.firstName,
                 lastName: action.lastName,

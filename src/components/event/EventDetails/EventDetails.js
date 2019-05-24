@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Session from './Session';
+import CreateSession from './CreateSession';
 import {getEvent} from '../../../shared/events';
 import './EventDetails.css';
 
@@ -47,24 +48,27 @@ function EventDetails({match, history}) {
             </div>
 
             <hr/>
-            {event.sessions && !addMode &&
-                <>
-                <div className="row">
-                    <div className="col-md-2">
-                        <h3 style={{margin:0}}>Sessions</h3>
-                    </div>
-
-                    <div className="col-md-2">
-                        <a onClick={()=>{setAddMode(true)}}>Add Session</a>
-                    </div>
+            <div className="row">
+                <div className="col-md-2">
+                    <h3 style={{margin:0}}>Sessions</h3>
                 </div>
+
+                <div className="col-md-2">
+                    <a onClick={()=>{setAddMode(true)}}>Add Session</a>
+                </div>
+            </div>
+            {event.sessions && !addMode &&
                 <div className="row" >
                 {event.sessions.map(session => <Session key={session.id} session={session} />)}
                 </div>
-                </>
             }
-            {/* <create-session *ngIf="addMode" (saveNewSession)="saveNewSession($event)" (cancelAddSession)="cancelAddSession()">
-            </create-session>  */}
+            
+            {addMode &&
+                <div className="row" >
+                    <CreateSession/>
+                </div>
+            }
+
         </div>
     );
 }

@@ -24,8 +24,24 @@ const CustomInputComponent = ({
         }
         { errors[field.name] && touched[field.name] &&
             <em>{errors[field.name]}</em>}
-        <input {...field} className="form-control" {...propsForInput} />
-        {props.children}
+        {props.type !== 'select' && props.type !== 'textarea' ? (
+            <>
+                <input {...field} className="form-control" {...propsForInput} />
+                {props.children}
+            </>
+        ) :
+        (
+            // React.createElement(
+            //     props.type ,
+            //     [...propsForInput, ...field],
+            //     [...props.children]
+            // )
+            <props.type {...field} className="form-control" {...propsForInput}>
+               {props.children}
+            </props.type>
+        )
+        }
+        
         </div>
     )
   };

@@ -82,28 +82,28 @@ function CreateEvent({history}) {
                             className="form-group"
                             type="text"
                             name="name"
-                            lable="Event Name:"
+                            label="Event Name:"
                             placeholder="Name of your event..." />
 
                     <Field  component={CustomInputComponent}
                         className="form-group"
                         type="text"
                         name="date"
-                        lable="Event Date:"
+                        label="Event Date:"
                         placeholder="format (mm/dd/yyyy)..." />
 
                     <Field  component={CustomInputComponent}
                         className="form-group"
                         type="text"
                         name="time"
-                        lable="Event Time:"
+                        label="Event Time:"
                         placeholder="start and end time..." />
 
                     <Field  component={CustomInputComponent}
                         className="form-group"
                         type="number"
                         name="price"
-                        lable="Event Price:"
+                        label="Event Price:"
                         placeholder="event price..." />
 
                     <div>
@@ -111,7 +111,7 @@ function CreateEvent({history}) {
                             className="form-group"
                             type="text"
                             name="location.address"
-                            lable="Event Location:"
+                            label="Event Location:"
                             placeholder="Address of event..." />                        
                             <div className="row">
                                 <Field  component={CustomInputComponent}
@@ -130,14 +130,14 @@ function CreateEvent({history}) {
                         className="form-group"
                         type="text"
                         name="onlineUrl"
-                        lable="Online Url:"
+                        label="Online Url:"
                         placeholder="Online Url..." /> 
         
                     <Field  component={CustomInputComponent}
                         className="form-group"
                         type="text"
                         name="imageUrl"
-                        lable="Image:"
+                        label="Image:"
                         placeholder="url of image...">
                         <img src={values.imageUrl} alt="" />
                     </Field>

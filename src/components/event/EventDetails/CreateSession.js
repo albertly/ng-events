@@ -52,21 +52,21 @@ function CreateSession({match, history}) {
                                 className="form-group"
                                 type="text"
                                 name="name"
-                                lable="Session Name:"
+                                label="Session Name:"
                                 placeholder="session name..." />
                             
                             <Field  component={CustomInputComponent}
                                 className="form-group"
                                 type="text"
                                 name="presenter"
-                                lable="Presenter:"
+                                label="Presenter:"
                                 placeholder="presenter..." /> 
 
                             <Field  component={CustomInputComponent}
                                 className="form-group"
                                 type="select"
                                 name="duration"
-                                lable="Duration:">
+                                label="Duration:">
 
                                 <option value="">select duration...</option>
                                 <option value="1">Half Hour</option>
@@ -79,7 +79,7 @@ function CreateSession({match, history}) {
                                 className="form-group"
                                 type="select"
                                 name="level"
-                                lable="Level:"> 
+                                label="Level:"> 
 
                                     <option value="">select level...</option>
                                     <option value="Beginner">Beginner</option>
@@ -92,7 +92,7 @@ function CreateSession({match, history}) {
                                 type="textarea"
                                 name="abstract"
                                 rows={3}
-                                lable="Abstract:"
+                                label="Abstract:"
                                 placeholder="abstract..." /> 
 
                         </Form>

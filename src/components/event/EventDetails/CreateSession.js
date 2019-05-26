@@ -5,12 +5,13 @@ import CustomInputComponent from '../../../shared/CustomInputComponent';
 
 import './CreateSession.css';
 
-function CreateSession({match, history}) {
+function CreateSession(props) {
+
 
     const validateForm = values => {
         {
             let errors = {};
-    
+            return errors;
             if (!values.name) {
                 errors.name = 'Required';
             }
@@ -34,6 +35,11 @@ function CreateSession({match, history}) {
         }
     };
 
+    const submitHandler = (values, actions) => {
+        props.addSessionHandler(values);
+        actions.setSubmitting(false);    
+    };
+
     return (
         <>
             <div className="col-md-12">
@@ -43,8 +49,7 @@ function CreateSession({match, history}) {
                 <Formik
                     initialValues={{ name: '', presenter: '', duration: '', level:'', abstract:''}}
                     validate={ (values) => validateForm(values) }
-                    // onSubmit={submitHandler}
-                    // handleChange
+                    onSubmit={submitHandler}
                 >
                     {({ isSubmitting, dirty, values }) => (
                         <Form>
@@ -95,10 +100,12 @@ function CreateSession({match, history}) {
                                 label="Abstract:"
                                 placeholder="abstract..." /> 
 
+                            <button type="submit" className="btn btn-primary">Save</button>
+                            <button type="button" onClick={props.cancelHandler} className="btn btn-default">Cancel</button>
                         </Form>
                     )}
-
                 </Formik>
+
             </div>
         </>
     );

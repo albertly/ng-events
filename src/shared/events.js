@@ -14,6 +14,11 @@ export const saveEvent = event => {
   events.push(event)
 }
 
+export const updateEvent = event => {
+  let index = events.findIndex(x => x.id = event.id)
+  events[index] = event
+}
+
 const events = [
     {
       id: 1,

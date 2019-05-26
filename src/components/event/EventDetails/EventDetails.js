@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Session from './Session';
 import CreateSession from './CreateSession';
-import {getEvent} from '../../../shared/events';
+import {getEvent, updateEvent} from '../../../shared/events';
 import './EventDetails.css';
 
 function EventDetails({match, history}) {
@@ -19,6 +19,15 @@ function EventDetails({match, history}) {
             setEvent(e);
         }
     }, [match.params.id]);
+
+    const saveNewSession = session => {
+        console.log('saveNewSession');
+        const nextId = Math.max.apply(null, event.sessions.map(s => s.id));
+        session.id = nextId + 1;
+        event.sessions.push(session);
+        updateEvent(event);
+        setAddMode(false);
+    };
 
     return (
         <div className="container">
@@ -65,7 +74,7 @@ function EventDetails({match, history}) {
             
             {addMode &&
                 <div className="row" >
-                    <CreateSession/>
+                    <CreateSession cancelHandler={()=>setAddMode(false)} addSessionHandler={session => saveNewSession(session)}/>
                 </div>
             }
 

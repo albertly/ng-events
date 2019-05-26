@@ -5,13 +5,13 @@ const CustomInputComponent = ({
     form: { touched, errors, isValid, values, dirty }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
     ...props
   }) => {
-    console.log('Field ',  field);
+    //console.log('Field ',  field);
     // console.log('touched ', touched);
     // console.log('errors ', errors);
     // console.log('values ', values);
     // console.log('isValid ', isValid);
     // console.log('dirty ', dirty);
-     console.log('props ', props);
+    // console.log('props ', props);
     
     const propsForInput = Object.assign({}, props, field);
     delete propsForInput.className;

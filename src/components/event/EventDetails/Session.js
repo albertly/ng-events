@@ -1,16 +1,19 @@
 import React from 'react';
 
+import CollapsibleWell from '../../../shared/collapsible-well'
+
 function Session({session}) {
 
     return (
         <div className="col-md-10">
-        <div className="well">
-            <h4>{session.name}</h4>
-            <h6>{session.presenter}</h6>
-            <span>Duration: {session.duration}</span><br />
-            <span>Level: {session.level}</span>
-            <p>{session.abstract}</p>
-        </div>
+        <CollapsibleWell title={session.name}>
+            <div>
+                <h6>{session.presenter}</h6>
+                <span>Duration: {session.duration}</span><br />
+                <span>Level: {session.level}</span>
+                <p>{session.abstract}</p>
+            </div>
+        </CollapsibleWell>
       </div>
     )
 }

@@ -11,7 +11,7 @@ function CreateSession(props) {
     const validateForm = values => {
         {
             let errors = {};
-            return errors;
+            
             if (!values.name) {
                 errors.name = 'Required';
             }

@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import Session from './Session';
-import CreateSession from './CreateSession';
+import {CreateSession, Session} from  '../';
 import {getEvent, updateEvent} from '../../../shared/events';
 import './EventDetails.css';
 

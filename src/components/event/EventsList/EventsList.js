@@ -4,7 +4,7 @@ import React from 'react';
 //import 'toastr/build/toastr.min.css'
 
 import Events from '../../../shared/events';
-import EventThumbnail from '../EventThumbnail/EventThumbnail';
+import {EventThumbnail} from '../';
 
 function EventsList(props) {
   // to do: take care of async

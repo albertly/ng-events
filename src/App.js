@@ -2,10 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Redirect, Route} from 'react-router-dom';
 
 import NavBar from './components/NavBar/NavBar';
-import EventsList from './components/event/EventsList/EventsList';
-import CreateEvent from './components/event/CreateEvent/CreateEvent';
-import EventDetails from './components/event/EventDetails/EventDetails';
-import CreateSession from './components/event/EventDetails/CreateSession'
+
+import  {EventsList, CreateEvent, EventDetails, CreateSession} from './components/event';
+
 import Error404 from './components/errors/Error404';
 import Login from './components/User/Login';
 import Profile from './components/User/Profile';

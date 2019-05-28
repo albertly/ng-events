@@ -8,6 +8,9 @@ function EventDetails({match, history}) {
     const [event, setEvent] = useState({});
     const [addMode, setAddMode] = useState(false);
 
+    const [filterBy, setFilterBy] = useState('All');
+    const [sortBy, setSortBy] = useState('votes');
+
     useEffect(() => {
         console.log('Id ' + match.params.id);
         const e = getEvent(match.params.id);
@@ -56,9 +59,29 @@ function EventDetails({match, history}) {
             </div>
 
             <hr/>
-            <div className="row">
+            <div className="row" style={{marginBottom :'10px'}}>
                 <div className="col-md-2">
                     <h3 style={{margin:0}}>Sessions</h3>
+                </div>
+
+                <div className="col-md-7">
+                    <div className="btn-group btn-group-sm" style={{marginRight:'20px', marginLeft:'20px'}}>
+                        <button className={'btn btn-default '.concat((sortBy === 'name') ? 'active': '')}
+                                onClick={()=>setSortBy('name')}>By Name</button>
+                        <button className={'btn btn-default '.concat((sortBy === 'votes') ? 'active': '')} 
+                                onClick={()=>setSortBy('votes')}>By Votes</button>
+                    </div>
+
+                    <div className="btn-group btn-group-sm">
+                        <button className={'btn btn-default '.concat((filterBy === 'All') ? 'active': '')}
+                                onClick={()=>setFilterBy('All')}>All</button>
+                        <button className={'btn btn-default '.concat((filterBy === 'Beginner') ? 'active': '')}
+                                onClick={()=>setFilterBy('Beginner')}>Beginner</button>
+                        <button className={'btn btn-default '.concat((filterBy === 'Intermediate') ? 'active': '')}
+                                onClick={()=>setFilterBy('Intermediate')}>Intermediate</button>
+                        <button className={'btn btn-default '.concat((filterBy === 'Advanced') ? 'active': '')}
+                                onClick={()=>setFilterBy('Advanced')}>Advanced</button>
+                    </div>
                 </div>
 
                 <div className="col-md-2">
@@ -67,7 +90,11 @@ function EventDetails({match, history}) {
             </div>
             {event.sessions && !addMode &&
                 <div className="row" >
-                {event.sessions.map(session => <Session key={session.id} session={session} />)}
+
+                {event.sessions.filter(session =>  filterBy === 'All' ? true :  session.level === filterBy)
+                               .sort( (a, b) => sortBy === 'votes' ? (a.voters.length > b.voters.length) ? 1 : -1
+                                                                   : (a.name > b.name) ? 1 : -1)
+                               .map(session => <Session key={session.id} session={session} />)}
                 </div>
             }
             

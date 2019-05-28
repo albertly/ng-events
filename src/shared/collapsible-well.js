@@ -7,7 +7,12 @@ function CollapsibleWell(props) {
     return (
         <div className="well pointable" onClick={()=>setVisible(!visible)}>
             <h4>
-                <div>{props.title}</div>
+                <div>
+                    {props.title}
+                    {props.showFire &&
+                        <i  className="glyphicon glyphicon-fire" style={{color:'red'}}></i>
+                    }
+                </div>
             </h4>
             {visible && props.children}
         </div>

@@ -6,7 +6,7 @@ function Session({session}) {
 
     return (
         <div className="col-md-10">
-        <CollapsibleWell title={session.name}>
+        <CollapsibleWell title={session.name} showFire={session.voters.length > 2}>
             <div>
                 <h6>{session.presenter}</h6>
                 <span>Duration: {session.duration}</span><br />

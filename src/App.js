@@ -11,7 +11,6 @@ import Profile from './components/User/Profile';
 import {ContextAuthProvider} from './shared/ContextAuth';
 
 import 'ngf-bootstrap/dist/bootstrap.min.css';
-import './App.css';
 
 
 const App = () => {

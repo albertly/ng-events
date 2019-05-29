@@ -4,19 +4,20 @@ import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../shared/ContextAuth';
 
-import './NavBar.css';
+import styles from './NavBar.module.css';
 
 function NavBar() {
     let { state,  } = useContext(AuthContext);
     return (
-            <div className="navbar navbar-default">
+        
+            <div className={ ['navbar', 'navbar-default'].join(' ')}>
             <div className="container-fluid">
                 <div className="navbar-header">
                 <a className="navbar-brand" href="#">ngEvents</a>
                 </div>
 
                 <div className="collapse navbar-collapse">
-                <ul className="nav navbar-nav">           
+                <ul className={ ['nav', 'navbar-nav', styles['nav'], styles['navbar-nav']].join(' ')}>           
                     <li>
                         <NavLink exact to="/events/" activeClassName="active">All Events</NavLink>
                     </li>
@@ -36,7 +37,7 @@ function NavBar() {
                     </li>
                 </ul>
                 <div className="navbar-header navbar-right">
-                    <ul className="nav navbar-nav">
+                    <ul className={ ['nav', 'navbar-nav', styles['nav'], styles['navbar-nav']].join(' ')}>
                     <li>
                         {!state.isAuthenticated() ? (
                             <NavLink exact to="/login" activeClassName="active">Login</NavLink>

@@ -1,5 +1,5 @@
 import React from 'react'
-import './EventThumbnail.css';
+import styles from './EventThumbnail.module.css';
 
 const EventThumbnail = props => {
     let place =  '';
@@ -25,12 +25,14 @@ const EventThumbnail = props => {
     else {
       place =  <div>
                   <span>Location: {props.event.location.address}</span>
-                  <span className="pad-left">{props.event.location.city}, {props.event.location.country}</span>
+                  <span className={styles['pad-left']}>{props.event.location.city}, {props.event.location.country}</span>
                 </div>;   
     }
 
+    // className={[styles.well, 'hoverwell', styles.thumbnail].join(' ')}
+    // className="well hoverwell thumbnail"
     return (
-      <div onClick={() => props.onClickHandler(props.event.id)} className="well hoverwell thumbnail cwell">
+      <div onClick={() => props.onClickHandler(props.event.id)} className={['well', styles.well, 'hoverwell', styles.thumbnail].join(' ')}>
         <h2>{props.event.name}</h2>
         <div>Date: {props.event.date}</div>
         <div style={getStartTimeStyle()}>Time: {props.event.time}

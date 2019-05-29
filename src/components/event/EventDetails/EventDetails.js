@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {CreateSession, Session} from  '../';
 import {getEvent, updateEvent} from '../../../shared/events';
-import './EventDetails.css';
+import styles from './EventDetails.module.css';
 
 function EventDetails({match, history}) {
 
@@ -32,8 +32,8 @@ function EventDetails({match, history}) {
     };
 
     return (
-        <div className="container">
-            <img src={event.imageUrl} alt={event.name} className="event-image"/> 
+        <div className={ [styles.container, 'container'].join(' ')}>
+            <img src={event.imageUrl} alt={event.name} className={styles['event-image']}/> 
 
             <div className="row">
                 <div className="col-md-11">

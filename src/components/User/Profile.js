@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
+
 import {AuthContext, AUTH_UPDATE_USER} from '../../shared/ContextAuth';
 import CustomInputComponent from '../../shared/CustomInputComponent';
 
@@ -17,6 +20,7 @@ function Profile({history}) {
 
     dispatch(action);
     actions.setSubmitting(false);
+    toastr.success('Profile Saved');
     history.push('/events');
 
   };

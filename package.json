@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "formik": "^1.5.7",
-    "jquery": ">=3.4.0",
     "ngf-bootstrap": "0.0.5",
     "react": "^16.8.6",
+    "react-bootstrap": "^0.32.4",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",

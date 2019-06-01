@@ -19,6 +19,46 @@ export const updateEvent = event => {
   events[index] = event
 }
 
+// export const searchSessions = searchTerm => {
+//     console.log('searchSessions', searchTerm)
+//     var term = searchTerm.toLocaleLowerCase();
+//     var results = [];
+
+//     events.forEach(event => {
+//       var matchingSessions = event.sessions.filter(session => session.name.toLocaleLowerCase().indexOf(term) > -1);
+//       matchingSessions = matchingSessions.map((session) => {
+//         session.eventId = event.id;
+//         return session;
+//       })
+//       results = results.concat(matchingSessions);
+//     })
+
+//     return results;
+
+// }
+export const searchSessions = searchTerm => (
+
+    new Promise((resolve, reject)=> {
+
+      var term = searchTerm.toLocaleLowerCase();
+      var results = [];
+
+      events.forEach(event => {
+        var matchingSessions = event.sessions.filter(session => session.name.toLocaleLowerCase().indexOf(term) > -1);
+        matchingSessions = matchingSessions.map((session) => {
+          session.eventId = event.id;
+          return session;
+        })
+        results = results.concat(matchingSessions);
+      })
+
+      setTimeout(function() {
+        resolve(results);
+      }, 3000);
+      
+  })
+)
+
 const events = [
     {
       id: 1,

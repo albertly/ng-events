@@ -33,7 +33,7 @@ const EventThumbnail = props => {
     // className="well hoverwell thumbnail"
     return (
       <div onClick={() => props.onClickHandler(props.event.id)} className={['well', styles.well, 'hoverwell', styles.thumbnail].join(' ')}>
-        <h2>{props.event.name}</h2>
+        <h2>{props.event.name.toUpperCase()}</h2>
         <div>Date: {props.event.date}</div>
         <div style={getStartTimeStyle()}>Time: {props.event.time}
           <span>{startTime}</span>

@@ -37,7 +37,7 @@ function EventDetails({match, history}) {
 
             <div className="row">
                 <div className="col-md-11">
-                <h2>{event.name} </h2>
+                <h2>{ !event.name || event.name.toUpperCase() } </h2>
                 </div>
             </div>
 

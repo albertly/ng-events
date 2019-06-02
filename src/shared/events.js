@@ -1,61 +1,37 @@
 const Events = () => events;
 
 export const getEvent = id => {
-  
- // if (!id)  id = 1;
   const e = events.find(event => event.id === +id);
-  console.log('E ' + e);
   return e;
 };
 
 export const saveEvent = event => {
-  event.id = 999
-  event.session = []
-  events.push(event)
+  event.id = 999;
+  event.session = [];
+  events.push(event);
 }
 
 export const updateEvent = event => {
-  let index = events.findIndex(x => x.id = event.id)
-  events[index] = event
+  let index = events.findIndex(x => x.id = event.id);
+  events[index] = event;
 }
 
-// export const searchSessions = searchTerm => {
-//     console.log('searchSessions', searchTerm)
-//     var term = searchTerm.toLocaleLowerCase();
-//     var results = [];
-
-//     events.forEach(event => {
-//       var matchingSessions = event.sessions.filter(session => session.name.toLocaleLowerCase().indexOf(term) > -1);
-//       matchingSessions = matchingSessions.map((session) => {
-//         session.eventId = event.id;
-//         return session;
-//       })
-//       results = results.concat(matchingSessions);
-//     })
-
-//     return results;
-
-// }
 export const searchSessions = searchTerm => (
 
     new Promise((resolve, reject)=> {
-
-      var term = searchTerm.toLocaleLowerCase();
-      var results = [];
+      const term = searchTerm.toLocaleLowerCase();
+      let results = [];
 
       events.forEach(event => {
-        var matchingSessions = event.sessions.filter(session => session.name.toLocaleLowerCase().indexOf(term) > -1);
-        matchingSessions = matchingSessions.map((session) => {
+        let matchingSessions = event.sessions.filter(session => session.name.toLocaleLowerCase().indexOf(term) > -1);
+        matchingSessions = matchingSessions.map(session => {
           session.eventId = event.id;
           return session;
         })
         results = results.concat(matchingSessions);
       })
 
-      setTimeout(function() {
-        resolve(results);
-      }, 3000);
-      
+      setTimeout(() => resolve(results), 3000);    
   })
 )
 

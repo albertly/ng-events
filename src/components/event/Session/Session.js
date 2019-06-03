@@ -27,7 +27,10 @@ function Session({session}) {
             <div className="col-md-1">
                 {state.isAuthenticated() && (
                     <div>
-                        <Upvote count={session.voters.length} voted={userHasVoted(session, state.userName )} toggleVoter={toggleVoter}></Upvote>
+                        <Upvote count={session.voters.length}
+                                voted={userHasVoted(session, state.userName )}
+                                toggleVoter={toggleVoter}>
+                        </Upvote>
                     </div>
                 )}
             </div>

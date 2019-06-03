@@ -99,9 +99,7 @@ function EventDetails({match, history}) {
             }
             
             {addMode &&
-                <div className="row" >
-                    <CreateSession cancelHandler={()=>setAddMode(false)} addSessionHandler={session => saveNewSession(session)}/>
-                </div>
+                <CreateSession cancelHandler={()=>setAddMode(false)} addSessionHandler={session => saveNewSession(session)}/>
             }
 
         </div>

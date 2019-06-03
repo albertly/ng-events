@@ -35,6 +35,18 @@ export const searchSessions = searchTerm => (
   })
 )
 
+export const userHasVoted = (session, voterName) => {
+  return session.voters.some(voter => voter === voterName);
+}
+
+export const deleteVoter = (session, voterName) => {
+  session.voters = session.voters.filter(voter => voter !== voterName);
+}
+
+export const addVoter = (session, voterName) => {
+  session.voters.push(voterName);
+}
+
 const events = [
     {
       id: 1,

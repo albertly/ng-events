@@ -41,10 +41,11 @@ export const userHasVoted = (session, voterName) => {
 
 export const deleteVoter = (session, voterName) => {
   session.voters = session.voters.filter(voter => voter !== voterName);
+  //events = [...events];
 }
 
 export const addVoter = (session, voterName) => {
-  session.voters.push(voterName);
+  session.voters.push(voterName);  
 }
 
 const events = [

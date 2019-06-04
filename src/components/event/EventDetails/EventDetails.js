@@ -3,6 +3,11 @@ import {CreateSession, Session} from  '../';
 import {getEvent, updateEvent} from '../../../shared/events';
 import styles from './EventDetails.module.css';
 
+function useForceUpdate(){
+    const [value, set] = useState(true); //boolean state
+    return () => set(!value); // toggle the state to force render
+}
+
 function EventDetails({match, history}) {
 
     const [event, setEvent] = useState({});
@@ -22,6 +27,8 @@ function EventDetails({match, history}) {
         }
     }, [match.params.id]);
 
+    const forceUpdate = useForceUpdate();
+
     const saveNewSession = session => {
         console.log('saveNewSession');
         const nextId = Math.max.apply(null, event.sessions.map(s => s.id));
@@ -30,6 +37,12 @@ function EventDetails({match, history}) {
         updateEvent(event);
         setAddMode(false);
     };
+
+    const resort = () => {
+        if (sortBy === 'votes') {
+            forceUpdate();
+        }
+    }
 
     return (
         <div className={ [styles.container, 'container'].join(' ')}>
@@ -94,7 +107,7 @@ function EventDetails({match, history}) {
                 {event.sessions.filter(session =>  filterBy === 'All' ? true :  session.level === filterBy)
                                .sort( (a, b) => sortBy === 'votes' ? (a.voters.length > b.voters.length) ? 1 : -1
                                                                    : (a.name > b.name) ? 1 : -1)
-                               .map(session => <Session key={session.id} session={session} />)}
+                               .map(session => <Session key={session.id} session={session} resort={resort}/>)}
                 </div>
             }
             

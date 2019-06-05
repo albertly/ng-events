@@ -1,6 +1,6 @@
-import React, {useState, useContext}  from 'react';
+import React, {useState, useContext, useEffect}  from 'react';
 
-import {AuthContext, AUTH_USER} from '../../shared/ContextAuth';
+import {AuthContext, AuthUserAction, AUTH_USER} from '../../shared/ContextAuth';
 
 import './Login.css';
 
@@ -14,17 +14,22 @@ function Login({history}) {
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordTouched, setPasswordTouched] = useState(false);
 
-    const dispatch = useContext(AuthContext).dispatch;
+    const { state, dispatch } = useContext(AuthContext);
+    
+    useEffect(() => {
+        console.log('Error', state.errorMessage);
+        if (state.isAuthenticated()) {
+            history.push('/events');
+        }
+    }, [state]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const action = {
-            type: AUTH_USER,
-            userName,
-            password,
-        }
-        dispatch(action);
-        history.push('/events')
+
+        AuthUserAction(dispatch, userName).then( () => {
+            console.log("In then", state.userName);
+        });
+        
     };
 
     return (
@@ -67,7 +72,7 @@ function Login({history}) {
                             className="form-control"
                             placeholder="Password..." />
                 </div>
-                
+                {state.errorMessage && <div className="alert alert-danger">{state.errorMessage}</div>}            
                 <span onMouseEnter={()=>{}} onMouseLeave={()=>{}}>
                     <button type="submit"  className="btn btn-primary">Login</button>
                 </span>

@@ -1,5 +1,7 @@
 import React, {useReducer} from 'react';
 
+import axios from 'axios';
+
 const AUTH_SUCCESS = "AUTH_SUCCESS";
 const AUTH_FAILURE = 'AUTH_FAILURE';
 const AUTH_UPDATE_USER = 'AUTH_UPDATE_USER';
@@ -8,8 +10,8 @@ const AuthContext = React.createContext();
 const initialState = {
     id: 0,
     userName: '',
-    firstName: 'John',
-    lastName: 'Papa',
+    firstName: '',
+    lastName: '',
     errorMessage: '',
     isAuthenticated : function(){return !!this.userName}
 }
@@ -17,9 +19,9 @@ const initialState = {
 const reducer = (state, action) => {
     switch (action.type) {
         case AUTH_SUCCESS:
-            console.log('In dispatch ', action.userName);
+            console.log('In dispatch ', action.payload);
             return  {...state,
-                userName: action.userName,
+                ...action.payload,
                 errorMessage: ''
                 }
         case AUTH_FAILURE:
@@ -36,23 +38,27 @@ const reducer = (state, action) => {
     }
 };
 
-const AuthUser = (userName, password) => {
-    return new Promise((resolve, reject) => {
-      if (userName === "user1" && password === "pass") {
-        setTimeout(() => resolve(userName), 1000);
-      } else {
-        setTimeout(() => reject("Auth error"), 1000);
-      }
-    });
+const AuthUser =  (userName, password) => {
+    return  axios.post('/api/login', { username: userName, password: password });
+
+    // return new Promise((resolve, reject) => {
+    //   if (userName === "user1" && password === "pass") {
+    //     setTimeout(() => resolve(userName), 1000);  
+    //   } else {
+    //     setTimeout(() => reject("Auth error"), 1000);
+    //   }
+    // });
 };
 
 const  AuthUserAction = async (dispatch, userName, password) => {
-    let authUserName = '';
+    let response = {};
     try {
-        authUserName = await AuthUser(userName, password);
-        await dispatch({type:AUTH_SUCCESS, userName: authUserName});
+        response = await AuthUser(userName, password);
+        console.log("After post", response.data.user);
+        await dispatch({type:AUTH_SUCCESS, payload: response.data.user});
     }
     catch(ex) {
+        console.log(response);
         dispatch({type: AUTH_FAILURE, error: 'Auth Error'})
     }
 }

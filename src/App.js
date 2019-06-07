@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Redirect, Route} from 'react-router-dom';
+import axios from 'axios';
 
 import NavBar from './components/NavBar/NavBar';
 
@@ -14,7 +15,8 @@ import 'ngf-bootstrap/dist/bootstrap.min.css';
 
 
 const App = () => {
-
+  axios.defaults.baseURL = 'http://localhost:8808';
+  
   return (
   <ContextAuthProvider> 
    <Router>

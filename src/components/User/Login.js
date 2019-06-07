@@ -17,7 +17,6 @@ function Login({ history }) {
     const { state, dispatch } = useContext(AuthContext);
     
     useEffect(() => {
-        console.log('Error', state.errorMessage);
         if (state.isAuthenticated()) {
             history.push('/events');
         }

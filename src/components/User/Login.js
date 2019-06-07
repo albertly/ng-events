@@ -1,10 +1,10 @@
-import React, {useState, useContext, useEffect}  from 'react';
+import React, { useState, useContext, useEffect }  from 'react';
 
-import {AuthContext, AuthUserAction, AUTH_USER} from '../../shared/ContextAuth';
+import { AuthContext, AuthUserAction } from '../../shared/ContextAuth';
 
 import './Login.css';
 
-function Login({history}) {
+function Login({ history }) {
 
     const [userName, setUserName] = useState('');
     const [userNameValid, setUserNameValid] = useState(true);
@@ -26,7 +26,7 @@ function Login({history}) {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        AuthUserAction(dispatch, userName).then( () => {
+        AuthUserAction(dispatch, userName, password).then( () => {
             console.log("In then", state.userName);
         });
         

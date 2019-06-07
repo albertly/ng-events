@@ -1,6 +1,5 @@
 import React, {useReducer} from 'react';
-// ToDo: Async
-const AUTH_USER = 'AUTH_USER';
+
 const AUTH_SUCCESS = "AUTH_SUCCESS";
 const AUTH_FAILURE = 'AUTH_FAILURE';
 const AUTH_UPDATE_USER = 'AUTH_UPDATE_USER';
@@ -47,16 +46,13 @@ const AuthUser = (userName, password) => {
     });
 };
 
-const  AuthUserAction = async (dispatch, userName) => {
+const  AuthUserAction = async (dispatch, userName, password) => {
     let authUserName = '';
     try {
-        console.log('AuthUserAction');
-        authUserName = await AuthUser(userName);
-        console.log('After AuthUser');
+        authUserName = await AuthUser(userName, password);
         await dispatch({type:AUTH_SUCCESS, userName: authUserName});
     }
     catch(ex) {
-        console.log('Auth Error');
         dispatch({type: AUTH_FAILURE, error: 'Auth Error'})
     }
 }

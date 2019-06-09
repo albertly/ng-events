@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { Prompt } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 
-import { saveEvent } from '../../../shared/events';
+import { EventsContext } from '../../../shared/contex-events';
 import CustomInputComponent from '../../../shared/CustomInputComponent';
 //import Yup from 'yup';
 
@@ -12,12 +12,16 @@ import './CreateEvent.css';
 
 function CreateEvent({history}) {
 
+    const { state, dispatch } = useContext(EventsContext);
+
     const [isDirty, setDirty] = useState(true);
 
     const cancelHandler = () => history.push('/events');
 
     const submitHandler = (values, actions) => {
-        saveEvent(values);
+
+        dispatch( {type: "SAVE_EVENT_SUCCESS", event: values} );
+
         actions.setSubmitting(false);
         setDirty(false);
         history.push('/events');

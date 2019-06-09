@@ -4,21 +4,18 @@ import { Formik, Form, Field } from 'formik';
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 
-import {AuthContext, AUTH_UPDATE_USER} from '../../shared/ContextAuth';
+import {AuthContext, updateUserAction} from '../../shared/ContextAuth';
 import CustomInputComponent from '../../shared/CustomInputComponent';
 
 function Profile({history}) {
 
+  const { state, dispatch } = useContext(AuthContext);
+
   const cancelHandler = () => history.push('/events');
 
   const submitHandler = (values, actions) => {
-    const action = {
-      type: AUTH_UPDATE_USER,
-      firstName : values.firstName,
-      lastName :values.lastName,
-    }
-
-    dispatch(action);
+    
+    updateUserAction(dispatch, state.id, values.firstName, values.lastName);
     actions.setSubmitting(false);
     toastr.success('Profile Saved');
     history.push('/events');
@@ -36,8 +33,6 @@ function Profile({history}) {
     }
     return errors;   
   };
-
-  let { state, dispatch } = useContext(AuthContext);
 
   return (
     <div>

@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 
-//import toastr from 'toastr'
-//import 'toastr/build/toastr.min.css'
+import { EventsContext } from '../../../shared/contex-events';
 
-import Events from '../../../shared/events';
 import {EventThumbnail} from '../';
 
 function EventsList(props) {
-  // to do: take care of async
-  const events = Events();
-  
+
+  const { state, dispatch } = useContext(EventsContext);
+
+  useEffect(() => {
+    dispatch( {type:"GET_EVENTS_SUCCESS"} );
+  }, []);
+
   const handleThumbnailClick = eventId => props.history.push(`/events/${eventId}`);
       
   return (
@@ -17,7 +19,7 @@ function EventsList(props) {
     <h1>Upcoming Angular Events</h1>
     <hr/>
       <div className="row">
-        {events.map(e => <div key={e.id} className="col-md-5"><EventThumbnail onClickHandler={handleThumbnailClick}  event={e}></EventThumbnail></div>)}
+        {state.map(e => <div key={e.id} className="col-md-5"><EventThumbnail onClickHandler={handleThumbnailClick}  event={e}></EventThumbnail></div>)}
       </div>
     </div>
   );

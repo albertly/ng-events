@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {CreateSession, Session} from  '../';
 import {getEvent, updateEvent} from '../../../shared/events';
+import { EventsContext, getEventAction } from '../../../shared/contex-events';
 import styles from './EventDetails.module.css';
 
 function useForceUpdate(){
@@ -10,22 +11,31 @@ function useForceUpdate(){
 
 function EventDetails({match, history}) {
 
-    const [event, setEvent] = useState({});
+    console.log('match ', match);
+    console.log('history', history);
+    //const [event, setEvent] = useState({});
+    let event= {};
     const [addMode, setAddMode] = useState(false);
 
     const [filterBy, setFilterBy] = useState('All');
     const [sortBy, setSortBy] = useState('votes');
 
+    const { state, dispatch } = useContext(EventsContext);
+
     useEffect(() => {
-        console.log('Id ' + match.params.id);
-        const e = getEvent(match.params.id);
-        if (!e) {
-            history.push('/error');
-        }
-        else {
-            setEvent(e);
-        }
-    }, [match.params.id]);
+ 
+        getEventAction(dispatch, match.params.id);
+      //  setEvent(state.currentEvent);
+        // .then(setTimeout(() => {
+        //     console.log('currentEvent A' , state);
+        //     if (!state.currentEvent) {
+        //         history.push('/error');
+        //     }
+        //     else {
+        //         setEvent(state.currentEvent);
+        //     }
+        // },10000));
+    }, []);
 
     const forceUpdate = useForceUpdate();
 
@@ -42,6 +52,11 @@ function EventDetails({match, history}) {
         if (sortBy === 'votes') {
             forceUpdate();
         }
+    }
+
+    event = state.currentEvent;
+    if (!state.currentEvent) {
+        history.push('/error');
     }
 
     return (

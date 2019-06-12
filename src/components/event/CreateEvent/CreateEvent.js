@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import { Prompt } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 
-import { EventsContext } from '../../../shared/contex-events';
+import { EventsContext, saveEventAction } from '../../../shared/contex-events';
 import CustomInputComponent from '../../../shared/CustomInputComponent';
 //import Yup from 'yup';
 
@@ -20,8 +20,8 @@ function CreateEvent({history}) {
 
     const submitHandler = (values, actions) => {
 
-        dispatch( {type: "SAVE_EVENT_SUCCESS", event: values} );
-
+        saveEventAction(dispatch, values);
+        
         actions.setSubmitting(false);
         setDirty(false);
         history.push('/events');

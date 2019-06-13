@@ -6,7 +6,7 @@ import './Login.css';
 
 function Login({ history }) {
 
-    const [userName, setUserName] = useState('');
+    const [userName, setUserName] = useState('bradgreen');
     const [userNameValid, setUserNameValid] = useState(true);
     const [userNameTouched, setUserNameTouched] = useState(false);
 

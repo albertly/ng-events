@@ -14,7 +14,7 @@ function EventsList(props) {
   }, []);
 
   const handleThumbnailClick = eventId => props.history.push(`/events/${eventId}`);
-      
+  console.log('state', state); 
   return (
     <div>
     <h1>Upcoming Angular Events</h1>

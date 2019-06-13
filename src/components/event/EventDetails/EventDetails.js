@@ -10,9 +10,8 @@ function useForceUpdate(){
 }
 
 function EventDetails({match, history}) {
+    const [value, set] = useState(true);
 
-    console.log('match ', match);
-    console.log('history', history);
     //const [event, setEvent] = useState({});
     let event= {};
     const [addMode, setAddMode] = useState(false);
@@ -23,7 +22,7 @@ function EventDetails({match, history}) {
     const { state, dispatch } = useContext(EventsContext);
 
     useEffect(() => {
- 
+        console.log('useEffect');
         getEventAction(dispatch, match.params.id);
       //  setEvent(state.currentEvent);
         // .then(setTimeout(() => {
@@ -35,7 +34,7 @@ function EventDetails({match, history}) {
         //         setEvent(state.currentEvent);
         //     }
         // },10000));
-    }, []);
+    }, [match.params.id]);
 
     const forceUpdate = useForceUpdate();
 
@@ -50,6 +49,7 @@ function EventDetails({match, history}) {
 
     const resort = () => {
         if (sortBy === 'votes') {
+         //   set(!value);
             forceUpdate();
         }
     }
@@ -122,7 +122,7 @@ function EventDetails({match, history}) {
                 {event.sessions.filter(session =>  filterBy === 'All' ? true :  session.level === filterBy)
                                .sort( (a, b) => sortBy === 'votes' ? (a.voters.length > b.voters.length) ? 1 : -1
                                                                    : (a.name > b.name) ? 1 : -1)
-                               .map(session => <Session key={session.id} session={session} resort={resort}/>)}
+                               .map(session => <Session key={session.id} eventId={event.id} session={session}  resort={resort}/>)}
                 </div>
             }
             

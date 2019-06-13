@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 
 import { AuthContext } from '../../../shared/ContextAuth';
-import { userHasVoted, deleteVoter, addVoter } from '../../../shared/events';
+import { EventsContext, voteAction } from '../../../shared/contex-events';
+
 import Upvote from './upvote';
 
 import CollapsibleWell from '../../../shared/collapsible-well'
@@ -13,22 +14,31 @@ function useForceUpdate(){
     return () => set(!value); // toggle the state to force render
 }
 
-function Session({session, resort}) {
+function Session({eventId, session, resort}) {
     const { state, } = useContext(AuthContext);
+    const { _, dispatch } = useContext(EventsContext);
 
     const forceUpdate = useForceUpdate();
+
+    const userHasVoted = (session, voterName) => {
+        return session.voters.some(voter => voter === voterName);
+    }
 
     const toggleVoter = () => {
         console.log('toggleVote');
         const userName = state.userName;
-       
+        let action = 'add';
         if(userHasVoted(session, userName )) {
-          deleteVoter(session, userName);          
-        } else {
-          addVoter(session, userName);
+          action = 'delete';         
         }
-        forceUpdate();
-        resort();
+
+        voteAction(dispatch, eventId, session.id, userName, action).then(() => {
+            //forceUpdate();
+            resort();
+        })
+
+
+        console.log('toggleVote end');
         // if(this.sortBy === 'votes') {
         //   this.visibleSessions.sort(sortByVotesDesc);
         // }

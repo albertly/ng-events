@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {CreateSession, Session} from  '../';
 import {getEvent, updateEvent} from '../../../shared/events';
-import { EventsContext, getEventAction } from '../../../shared/contex-events';
+import { EventsContext, getEventAction, addSessionAction } from '../../../shared/contex-events';
 import styles from './EventDetails.module.css';
 
 function useForceUpdate(){
@@ -22,7 +22,6 @@ function EventDetails({match, history}) {
     const { state, dispatch } = useContext(EventsContext);
 
     useEffect(() => {
-        console.log('useEffect');
         getEventAction(dispatch, match.params.id);
       //  setEvent(state.currentEvent);
         // .then(setTimeout(() => {
@@ -39,12 +38,10 @@ function EventDetails({match, history}) {
     const forceUpdate = useForceUpdate();
 
     const saveNewSession = session => {
-        console.log('saveNewSession');
-        const nextId = Math.max.apply(null, event.sessions.map(s => s.id));
-        session.id = nextId + 1;
-        event.sessions.push(session);
-        updateEvent(event);
+        addSessionAction(dispatch, event, session);
         setAddMode(false);
+
+        
     };
 
     const resort = () => {
@@ -55,6 +52,7 @@ function EventDetails({match, history}) {
     }
 
     event = state.currentEvent;
+
     if (!state.currentEvent) {
         history.push('/error');
     }

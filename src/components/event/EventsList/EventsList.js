@@ -9,7 +9,6 @@ function EventsList(props) {
   const { state, dispatch } = useContext(EventsContext);
 
   useEffect(() => {
-    console.log("useEffect");
     getEventsAction(dispatch);
   }, []);
 

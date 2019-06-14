@@ -3,23 +3,24 @@ import React, {useReducer} from 'react';
 import axios from 'axios';
 
 
-const GET_EVENTS_SUCCESS = "GET_EVENTS_SUCCESS";
+const GET_EVENTS_SUCCESS = 'GET_EVENTS_SUCCESS';
 const GET_EVENTS_FAILURE = 'GET_EVENTS_FAILURE';
 
-const GET_EVENT_SUCCESS = "GET_EVENT_SUCCESS";
+const GET_EVENT_SUCCESS = 'GET_EVENT_SUCCESS';
 const GET_EVENT_FAILURE = 'GET_EVENT_FAILURE';
 
-const SAVE_EVENT_SUCCESS = "SAVE_EVENT_SUCCESS";
+const SAVE_EVENT_SUCCESS = 'SAVE_EVENT_SUCCESS"';
 const SAVE_EVENT_FAILURE = 'SAVE_EVENT_FAILURE';
 
-const ADD_VOTER_SUCCESS = "ADD_VOTER_SUCCESS";
+const ADD_VOTER_SUCCESS = 'ADD_VOTER_SUCCESS';
 const ADD_VOTER_FAILURE = 'ADD_VOTER_FAILURE';
 
-const DELETE_VOTER_SUCCESS = "ADD_VOTER_SUCCESS";
+const DELETE_VOTER_SUCCESS = 'ADD_VOTER_SUCCESS';
 const DELETE_VOTER_FAILURE = 'ADD_VOTER_FAILURE';
 
-const UPDATE_EVENT_SUCCESS = 'UPDATE_EVENT_SUCCESS';
-const UPDATE_EVENT_FAILURE = 'UPDATE_EVENT_FAILURE';
+const ADD_SESSION_SUCCESS = 'ADD_SESSION_SUCCESS';
+const ADD_SESSION_FAILURE = 'ADD_SESSION_FAILURE';
+
 
 const EventsContext = React.createContext();
 
@@ -30,14 +31,12 @@ const reducer = (state, action) => {
 
     switch (action.type) {
         case GET_EVENTS_SUCCESS:
-            return {...state, currentEvent:{}, events: action.payload, errorMessage: ''};
+            return {...state, events: action.payload, errorMessage: ''};
 
         case SAVE_EVENT_SUCCESS:
-
-            return {...state, currentEvent:{}, events: state.events.concat(action.payload), errorMessage: ''}
+            return {...state, events: state.events.concat(action.payload), errorMessage: ''}
 
         case GET_EVENT_SUCCESS:
-            console.log(GET_EVENT_SUCCESS, action.payload);
             return  {...state, currentEvent: action.payload, errorMessage: ''};
 
         case DELETE_VOTER_SUCCESS:
@@ -61,6 +60,7 @@ const reducer = (state, action) => {
 
             return {...state, events: newEvents, currentEvent: newEvent, errorMessage: ''};
 
+        case ADD_SESSION_FAILURE:
         case ADD_VOTER_FAILURE:
         case DELETE_VOTER_FAILURE:
         case GET_EVENT_FAILURE:
@@ -94,15 +94,22 @@ const voteAction = async (dispatch, eventId, sessionId, voterId, action) => {
     }
 }
 
+//ToDo: give correct error message
+const addSessionAction = async (dispatch, event, session) => {
+    const nextId = Math.max.apply(null, event.sessions.map(s => s.id));
+    session.id = nextId + 1;
+    session.voters = [];
+    event.sessions.push(session);
+    await saveEventAction(dispatch, event);
+}
+
 const getEventAction = async (dispatch, eventId) => {
     let response = {};
     try {
         response = await axios.get(`/api/events/${eventId}`);
-        console.log('response', response);
         dispatch({type: GET_EVENT_SUCCESS, payload: response.data});
     }
     catch(ex) {
-        console.log('ex', ex);
         return await dispatch({type: GET_EVENT_FAILURE, error: 'Get Event Error'});
     }
 }
@@ -145,5 +152,6 @@ export {
         getEventsAction,
         saveEventAction,
         getEventAction,
-        voteAction
+        voteAction,
+        addSessionAction
        };

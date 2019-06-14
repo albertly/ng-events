@@ -25,7 +25,6 @@ function Session({eventId, session, resort}) {
     }
 
     const toggleVoter = () => {
-        console.log('toggleVote');
         const userName = state.userName;
         let action = 'add';
         if(userHasVoted(session, userName )) {

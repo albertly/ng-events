@@ -25,12 +25,10 @@ function CreateEvent({history}) {
         actions.setSubmitting(false);
         setDirty(false);
         history.push('/events');
-       // console.log(actions);
-        //setTimeout(() => history.push('/events'), 0);
+
     };
 
     const noExit = (dirty) => {
-        console.log(isDirty, dirty);
         if (!isDirty)
             return false;
         return dirty;

@@ -1,11 +1,13 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */  // --> OFF
 
 import React, { useState, useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import { DropdownButton, MenuItem } from  'react-bootstrap';
 
 import { AuthContext } from '../../shared/ContextAuth';
 import  SimpleModal  from '../../shared/simple-modal';
 import { searchSessions } from '../../shared/events';
+import { searchSessionsAction } from '../../shared/contex-events';
 
 import styles from './NavBar.module.css';
 
@@ -20,7 +22,7 @@ function NavBar() {
     const search = e => {
         e.preventDefault();
         setModalShow(true);
-        searchSessions(searchTerm).then( results => {
+        searchSessionsAction(searchTerm).then( results => {
             setSessions(results);
         })
     }
@@ -46,17 +48,9 @@ function NavBar() {
                             <li>
                                 <NavLink exact to="/events/new" activeClassName={styles['active']}>Create Event</NavLink>
                             </li>
-                            <li className="dropdown">
-                                <a href="#" className="dropdown-toggle" data-toggle="dropdown" >
-                                    Events
-                                    <span className="caret"></span>
-                                </a>
-                                <ul className="dropdown-menu">
-                                    <li>
-                                        <a href="#">Angular Connect</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            <DropdownButton className="dropdown" title="Events">
+                                <MenuItem eventKey="1">Angular Connect</MenuItem>
+                            </DropdownButton>
                         </ul>
                         <div className="navbar-header navbar-right">
                             <ul className={ ['nav', 'navbar-nav', styles['nav'], styles['navbar-nav']].join(' ')}>
@@ -85,7 +79,9 @@ function NavBar() {
             <SimpleModal  elementId="searchResults" title="Matching Sessions" show={modalShow} onClose={handleModalClose}>
                 {sessions.map(session => (
                                             <div className="list-group">
-                                               <a className="list-group-item">{session.name}</a>
+                                               <Link className="list-group-item" onClick={handleModalClose} to={`/events/${session.eventId}`}>
+                                                    {session.name}
+                                                </Link>
                                             </div>
                                         )
                                 )

@@ -2,7 +2,6 @@ import React, {useReducer} from 'react';
 
 import axios from 'axios';
 
-
 const GET_EVENTS_SUCCESS = 'GET_EVENTS_SUCCESS';
 const GET_EVENTS_FAILURE = 'GET_EVENTS_FAILURE';
 
@@ -20,7 +19,6 @@ const DELETE_VOTER_FAILURE = 'ADD_VOTER_FAILURE';
 
 const ADD_SESSION_SUCCESS = 'ADD_SESSION_SUCCESS';
 const ADD_SESSION_FAILURE = 'ADD_SESSION_FAILURE';
-
 
 const EventsContext = React.createContext();
 
@@ -93,7 +91,7 @@ const voteAction = async (dispatch, eventId, sessionId, voterId, action) => {
         }
     }
 }
-
+//ToDo: currentEvent use Id only
 //ToDo: give correct error message
 const addSessionAction = async (dispatch, event, session) => {
     const nextId = Math.max.apply(null, event.sessions.map(s => s.id));
@@ -101,6 +99,19 @@ const addSessionAction = async (dispatch, event, session) => {
     session.voters = [];
     event.sessions.push(session);
     await saveEventAction(dispatch, event);
+}
+
+
+
+const searchSessionsAction = async (search) => {
+    let response = {};
+    try {
+        response = await axios.get(`/api/sessions/search?search=${search}`);
+        return response.data;
+    }
+    catch(ex) {
+        return {};
+    }
 }
 
 const getEventAction = async (dispatch, eventId) => {
@@ -153,5 +164,6 @@ export {
         saveEventAction,
         getEventAction,
         voteAction,
-        addSessionAction
+        addSessionAction,
+        searchSessionsAction
        };

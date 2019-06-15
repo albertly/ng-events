@@ -23,16 +23,6 @@ function EventDetails({match, history}) {
 
     useEffect(() => {
         getEventAction(dispatch, match.params.id);
-      //  setEvent(state.currentEvent);
-        // .then(setTimeout(() => {
-        //     console.log('currentEvent A' , state);
-        //     if (!state.currentEvent) {
-        //         history.push('/error');
-        //     }
-        //     else {
-        //         setEvent(state.currentEvent);
-        //     }
-        // },10000));
     }, [match.params.id]);
 
     const forceUpdate = useForceUpdate();

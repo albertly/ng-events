@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router';
 import Error404 from './components/errors/Error404';
 import EventDetails from './components/event/eventDetails/event-details';
 import EventsList from './components/event/eventsList/events-list';
-import App from './App';
+import App from './app';
 
 import Adapter from 'enzyme-adapter-react-16';
 

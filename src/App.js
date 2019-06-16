@@ -14,7 +14,6 @@ import 'ngf-bootstrap/dist/bootstrap.min.css';
 
 
 const App = () => {
- // axios.defaults.baseURL = 'http://localhost:8808';
   
   return (
     <>

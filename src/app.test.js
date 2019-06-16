@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Enzyme, { mount, render } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 
-import Error404 from './components/errors/Error404';
+import Error404 from './components/errors/error404';
 import EventDetails from './components/event/eventDetails/event-details';
 import EventsList from './components/event/eventsList/events-list';
 import App from './app';

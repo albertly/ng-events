@@ -1,5 +1,4 @@
 import React, {useReducer} from 'react';
-
 import axios from 'axios';
 
 const GET_EVENTS_SUCCESS = 'GET_EVENTS_SUCCESS';
@@ -17,7 +16,6 @@ const ADD_VOTER_FAILURE = 'ADD_VOTER_FAILURE';
 const DELETE_VOTER_SUCCESS = 'ADD_VOTER_SUCCESS';
 const DELETE_VOTER_FAILURE = 'ADD_VOTER_FAILURE';
 
-const ADD_SESSION_SUCCESS = 'ADD_SESSION_SUCCESS';
 const ADD_SESSION_FAILURE = 'ADD_SESSION_FAILURE';
 
 const EventsContext = React.createContext();

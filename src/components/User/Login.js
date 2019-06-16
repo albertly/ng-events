@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect }  from 'react';
 
-import { AuthContext, AuthUserAction } from '../../shared/ContextAuth';
+import { AuthContext, AuthUserAction } from '../../shared/context-auth';
 
-import './Login.css';
+import './login.css';
 
 function Login({ history }) {
 
@@ -21,6 +21,7 @@ function Login({ history }) {
             history.push('/events');
         }
     }, [state]);
+
 
     const handleSubmit = (event) => {
         event.preventDefault();

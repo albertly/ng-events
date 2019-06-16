@@ -3,10 +3,9 @@ import { Prompt } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 
 import { EventsContext, saveEventAction } from '../../../shared/contex-events';
-import CustomInputComponent from '../../../shared/CustomInputComponent';
-//import Yup from 'yup';
+import CustomInputComponent from '../../../shared/custom-input-component';
 
-import './CreateEvent.css';
+import './create-event.css';
 
 
 

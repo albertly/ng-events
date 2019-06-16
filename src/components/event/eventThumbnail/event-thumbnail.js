@@ -1,5 +1,6 @@
 import React from 'react'
-import styles from './EventThumbnail.module.css';
+
+import styles from './event-thumbnail.module.css';
 
 const EventThumbnail = props => {
     let place =  '';

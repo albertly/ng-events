@@ -1,9 +1,9 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 
-import CustomInputComponent from '../../../shared/CustomInputComponent';
+import CustomInputComponent from '../../../shared/custom-input-component';
 
-import './CreateSession.css';
+import './create-session.css';
 
 function CreateSession(props) {
 

@@ -4,12 +4,11 @@ import React, { useState, useContext } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { DropdownButton, MenuItem } from  'react-bootstrap';
 
-import { AuthContext } from '../../shared/ContextAuth';
+import { AuthContext } from '../../shared/context-auth';
 import  SimpleModal  from '../../shared/simple-modal';
-import { searchSessions } from '../../shared/events';
 import { searchSessionsAction } from '../../shared/contex-events';
 
-import styles from './NavBar.module.css';
+import styles from './nav-bar.module.css';
 
 function NavBar() {
     const { state, } = useContext(AuthContext);

@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
 
-import toastr from 'toastr'
+import toastr from 'toastr';
 import 'toastr/build/toastr.min.css'
 
-import {AuthContext, updateUserAction} from '../../shared/ContextAuth';
-import CustomInputComponent from '../../shared/CustomInputComponent';
+import {AuthContext, updateUserAction} from '../../shared/context-auth';
+import CustomInputComponent from '../../shared/custom-input-component';
 
 function Profile({history}) {
 

@@ -1,24 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
-import { AuthContext } from '../../../shared/ContextAuth';
+import { AuthContext } from '../../../shared/context-auth';
 import { EventsContext, voteAction } from '../../../shared/contex-events';
-
 import Upvote from './upvote';
-
 import CollapsibleWell from '../../../shared/collapsible-well'
 
-//const useForceUpdate = () => useState()[1];
-
-function useForceUpdate(){
-    const [value, set] = useState(true); //boolean state
-    return () => set(!value); // toggle the state to force render
-}
 
 function Session({eventId, session, resort}) {
     const { state, } = useContext(AuthContext);
     const { _, dispatch } = useContext(EventsContext);
-
-    const forceUpdate = useForceUpdate();
 
     const userHasVoted = (session, voterName) => {
         return session.voters.some(voter => voter === voterName);
@@ -32,7 +22,6 @@ function Session({eventId, session, resort}) {
         }
 
         voteAction(dispatch, eventId, session.id, userName, action).then(() => {
-            //forceUpdate();
             resort();
         })
 

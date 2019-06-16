@@ -1,8 +1,9 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {CreateSession, Session} from  '../';
-import {getEvent, updateEvent} from '../../../shared/events';
+
+import {CreateSession, Session} from  '..';
 import { EventsContext, getEventAction, addSessionAction } from '../../../shared/contex-events';
-import styles from './EventDetails.module.css';
+
+import styles from './event-details.module.css';
 
 function useForceUpdate(){
     const [value, set] = useState(true); //boolean state
@@ -10,9 +11,7 @@ function useForceUpdate(){
 }
 
 function EventDetails({match, history}) {
-    const [value, set] = useState(true);
-
-    //const [event, setEvent] = useState({});
+ 
     let event= {};
     const [addMode, setAddMode] = useState(false);
 

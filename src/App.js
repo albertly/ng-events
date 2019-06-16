@@ -1,22 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Redirect, Route} from 'react-router-dom';
-import axios from 'axios';
 
-import NavBar from './components/NavBar/NavBar';
 
+import NavBar from './components/navbar/nav-bar';
 import  {EventsList, CreateEvent, EventDetails, CreateSession} from './components/event';
-
-import Error404 from './components/errors/Error404';
-import Login from './components/User/Login';
-import Profile from './components/User/Profile';
-import {ContextAuthProvider} from './shared/ContextAuth';
+import Error404 from './components/errors/error404';
+import Login from './components/user/login';
+import Profile from './components/user/profile';
+import {ContextAuthProvider} from './shared/context-auth';
 import { ContextEventsProvider } from './shared/contex-events';
 
 import 'ngf-bootstrap/dist/bootstrap.min.css';
 
 
 const App = () => {
-  axios.defaults.baseURL = 'http://localhost:8808';
+ // axios.defaults.baseURL = 'http://localhost:8808';
   
   return (
     <>

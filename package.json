@@ -12,8 +12,7 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
-    "toastr": "^2.1.4",
-    "yup": "^0.27.0"
+    "toastr": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,5 +39,6 @@
   "devDependencies": {
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.1"
-  }
+  },
+  "proxy": "http://localhost:8808"
 }

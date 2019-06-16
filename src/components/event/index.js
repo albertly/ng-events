@@ -1,10 +1,10 @@
-import EventsList from './EventsList/EventsList';
-import CreateEvent from './CreateEvent/CreateEvent';
-import EventDetails from './EventDetails/EventDetails';
+import EventsList from './eventsList/events-list';
+import CreateEvent from './createEvent/create-event';
+import EventDetails from './eventDetails/event-details';
 
-import CreateSession from './Session/CreateSession'
-import Session from './Session/Session';
+import CreateSession from './session/create-session'
+import Session from './session/session';
 
-import EventThumbnail from './EventThumbnail/EventThumbnail';
+import EventThumbnail from './eventThumbnail/event-thumbnail';
 
 export {EventsList, CreateEvent, EventDetails, CreateSession, Session, EventThumbnail};

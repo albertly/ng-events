@@ -1,5 +1,4 @@
 import React, {useReducer} from 'react';
-
 import axios from 'axios';
 
 const AUTH_SUCCESS = "AUTH_SUCCESS";

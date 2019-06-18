@@ -119,6 +119,7 @@ const getEventAction = async (dispatch, eventId) => {
         dispatch({type: GET_EVENT_SUCCESS, payload: response.data});
     }
     catch(ex) {
+        console.log('error', ex);
         return await dispatch({type: GET_EVENT_FAILURE, error: 'Get Event Error'});
     }
 }

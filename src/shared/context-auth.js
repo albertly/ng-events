@@ -14,7 +14,7 @@ const initialState = {
     firstName: '',
     lastName: '',
     errorMessage: '',
-    isAuthenticated : function(){return !!this.userName}
+    isAuthenticated(){return !!this.userName}
 }
 
 const reducer = (state, action) => {

@@ -29,8 +29,6 @@ function EventDetails({match, history}) {
     const saveNewSession = session => {
         addSessionAction(dispatch, event, session);
         setAddMode(false);
-
-        
     };
 
     const resort = () => {
@@ -103,9 +101,9 @@ function EventDetails({match, history}) {
                     <a onClick={()=>{setAddMode(true)}}>Add Session</a>
                 </div>
             </div>
+           
             {event.sessions && !addMode &&
                 <div className="row" >
-
                 {event.sessions.filter(session =>  filterBy === 'All' ? true :  session.level === filterBy)
                                .sort( (a, b) => sortBy === 'votes' ? (a.voters.length > b.voters.length) ? 1 : -1
                                                                    : (a.name > b.name) ? 1 : -1)

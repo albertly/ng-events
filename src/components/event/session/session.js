@@ -32,7 +32,7 @@ function Session({eventId, session, resort}) {
         // }
     }
 
-    return (
+    let a = (
         <div className="row" >
             <div className="col-md-1">
                 {state.isAuthenticated() && (
@@ -44,7 +44,6 @@ function Session({eventId, session, resort}) {
                     </div>
                 )}
             </div>
-
             <div className="col-md-10">
                 <CollapsibleWell title={session.name} showFire={session.voters.length > 2}>
                     <div>
@@ -56,7 +55,9 @@ function Session({eventId, session, resort}) {
                 </CollapsibleWell>
             </div>
         </div>
-    )
+    );
+  //  console.log(a);
+    return (a);
 }
 
 export default Session;

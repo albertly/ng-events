@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Enzyme, { mount, render } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 

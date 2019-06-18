@@ -21,7 +21,7 @@ const App = () => {
     <>
     <ContextEventsProvider> 
     <ContextAuthProvider> 
-    <Suspense fallback={<div>Loading...</div>}>  
+    {/* <Suspense fallback={<div>Loading...</div>}>   */}
     <Router>
       <NavBar></NavBar>
       <Switch>
@@ -36,7 +36,7 @@ const App = () => {
         <Route component={Error404} />     
       </Switch>
     </Router>
-    </Suspense>
+    {/* </Suspense> */}
     </ContextAuthProvider>
     </ContextEventsProvider>
    </>

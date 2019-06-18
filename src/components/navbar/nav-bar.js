@@ -47,7 +47,7 @@ function NavBar() {
                             <li>
                                 <NavLink exact to="/events/new" activeClassName={styles['active']}>Create Event</NavLink>
                             </li>
-                            <DropdownButton className="dropdown" title="Events">
+                            <DropdownButton id="ddb" className="dropdown" title="Events">
                                 <MenuItem eventKey="1">Angular Connect</MenuItem>
                             </DropdownButton>
                         </ul>

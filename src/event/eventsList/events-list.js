@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
-import { EventsContext, getEventsAction } from '../../../shared/contex-events';
+import { EventsContext, getEventsAction } from '../../shared/contex-events';
 import {EventThumbnail} from '..';
 
 function EventsList(props) {

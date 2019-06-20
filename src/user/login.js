@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect }  from 'react';
 
-import { AuthContext, AuthUserAction } from '../../shared/context-auth';
+import { AuthContext, AuthUserAction } from '../shared/context-auth';
 
 import './login.css';
 

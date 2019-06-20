@@ -1,6 +1,6 @@
 {
     "workbench.colorCustomizations": {
-        "editor.selectionBackground": "#2b3eec", //Currently SELECTED text
+        "editor.selectionBackground": "#1e04af", //Currently SELECTED text
        // "editor.selectionHighlightBackground": "#e395f77c", //Same content as selection
        // "editor.wordHighlightStrongBorder": "#00cc44a8", //Current SEARCH MATCH
         //"editor.wordHighlightStrongBackground": "#ece3daa1", //Other SEARCH MATCHES

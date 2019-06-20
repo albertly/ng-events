@@ -1,19 +1,17 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Redirect, Route} from 'react-router-dom';
 
 
-import NavBar from './components/navbar/nav-bar';
-import  {EventsList, CreateEvent, EventDetails, CreateSession} from './components/event';
-import Error404 from './components/errors/error404';
-//import Login from './components/user/login';
-//import Profile from './components/user/profile';
+import NavBar from './navbar/nav-bar';
+import  {EventsList, CreateEvent, EventDetails, CreateSession} from './event';
+import Error404 from './errors/error404';
 import {ContextAuthProvider} from './shared/context-auth';
 import { ContextEventsProvider } from './shared/contex-events';
 
 import 'ngf-bootstrap/dist/bootstrap.min.css';
 
-const Login = React.lazy(() => import('./components/user/login'));
-const Profile = React.lazy(() => import('./components/user/profile'));
+const Login = React.lazy(() => import('./user/login'));
+const Profile = React.lazy(() => import('./user/profile'));
 
 const App = () => {
   

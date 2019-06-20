@@ -2,8 +2,8 @@ import React, {useContext, useState} from 'react';
 import { Prompt } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 
-import { EventsContext, saveEventAction } from '../../../shared/contex-events';
-import CustomInputComponent from '../../../shared/custom-input-component';
+import { EventsContext, saveEventAction } from '../../shared/contex-events';
+import CustomInputComponent from '../../shared/custom-input-component';
 
 import './create-event.css';
 

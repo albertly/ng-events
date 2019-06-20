@@ -5,12 +5,11 @@ import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import TestRenderer from "react-test-renderer";
 
-import {CreateSession, Session} from  '..';
-import CollapsibleWell from '../../../shared/collapsible-well'
+
 import EventDetails from './event-details';
-import { ContextEventsProvider } from '../../../shared/contex-events';
-import { ContextAuthProvider } from '../../../shared/context-auth';
-import { getEvent } from '../../../shared/events';
+import { ContextEventsProvider } from '../../shared/contex-events';
+import { ContextAuthProvider } from '../../shared/context-auth';
+import { getEvent } from '../../shared/events';
 
 const act = TestRenderer.act;
 Enzyme.configure({ adapter: new Adapter() });
@@ -35,13 +34,6 @@ describe('EventDetails',  () => {
         //                              </ContextEventsProvider> );
         // });
 
-        // const wrapper = await mount( <ContextEventsProvider>
-        //                         <ContextAuthProvider> 
-        //                           <EventDetails match={match} history={history} />
-        //                         </ContextAuthProvider> 
-        //                         </ContextEventsProvider> 
-        //                         );
-
 
         //   act(() => {
         //     console.log(component.root.findByType(EventDetails));
@@ -55,8 +47,7 @@ describe('EventDetails',  () => {
                 </ContextEventsProvider> 
                 );
             setTimeout(() => resolve(wrapper), 0); 
-        }
-        );
+        });
 
         await p.then((wrapper) => console.log(wrapper.update().debug()))
 

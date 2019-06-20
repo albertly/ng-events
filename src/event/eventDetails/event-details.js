@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react';
 
-import {CreateSession, Session} from  '..';
-import { EventsContext, getEventAction, addSessionAction } from '../../../shared/contex-events';
+import {CreateSession, SessionsList} from  '..';
+import { EventsContext, getEventAction, addSessionAction } from '../../shared/contex-events';
 
 import styles from './event-details.module.css';
 
@@ -103,16 +103,18 @@ function EventDetails({match, history}) {
             </div>
            
             {event.sessions && !addMode &&
-                <div className="row" >
-                {event.sessions.filter(session =>  filterBy === 'All' ? true :  session.level === filterBy)
-                               .sort( (a, b) => sortBy === 'votes' ? (a.voters.length > b.voters.length) ? 1 : -1
-                                                                   : (a.name > b.name) ? 1 : -1)
-                               .map(session => <Session key={session.id} eventId={event.id} session={session}  resort={resort}/>)}
-                </div>
+                <SessionsList sessions={event.sessions}
+                              filterBy={filterBy}
+                              sortBy={sortBy}
+                              eventId={event.id}
+                              resort={resort} 
+                />
             }
             
             {addMode &&
-                <CreateSession cancelHandler={()=>setAddMode(false)} addSessionHandler={session => saveNewSession(session)}/>
+                <CreateSession cancelHandler={()=>setAddMode(false)}
+                               addSessionHandler={session => saveNewSession(session)}
+                />
             }
 
         </div>

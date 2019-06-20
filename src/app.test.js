@@ -2,9 +2,9 @@ import React from 'react';
 import Enzyme, { mount, render } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 
-import Error404 from './components/errors/error404';
-import EventDetails from './components/event/eventDetails/event-details';
-import EventsList from './components/event/eventsList/events-list';
+import Error404 from './errors/error404';
+import EventDetails from './event/eventDetails/event-details';
+import EventsList from './event/eventsList/events-list';
 import App from './app';
 
 import Adapter from 'enzyme-adapter-react-16';

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 
-import { AuthContext } from '../../../shared/context-auth';
-import { EventsContext, voteAction } from '../../../shared/contex-events';
+import { AuthContext } from '../../shared/context-auth';
+import { EventsContext, voteAction } from '../../shared/contex-events';
 import Upvote from './upvote';
-import CollapsibleWell from '../../../shared/collapsible-well'
+import CollapsibleWell from '../../shared/collapsible-well'
 
 
 function Session({eventId, session, resort}) {
@@ -25,14 +25,12 @@ function Session({eventId, session, resort}) {
             resort();
         })
 
-
-        console.log('toggleVote end');
         // if(this.sortBy === 'votes') {
         //   this.visibleSessions.sort(sortByVotesDesc);
         // }
     }
 
-    let a = (
+    return (
         <div className="row" >
             <div className="col-md-1">
                 {state.isAuthenticated() && (
@@ -56,8 +54,6 @@ function Session({eventId, session, resort}) {
             </div>
         </div>
     );
-  //  console.log(a);
-    return (a);
 }
 
 export default Session;

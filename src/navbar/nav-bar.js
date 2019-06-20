@@ -33,7 +33,7 @@ function NavBar() {
 
     return (
         <>
-            <div className={ ['navbar', 'navbar-default'].join(' ')}>
+            <div className={ ['navbar', 'navbar-default'].join(' ') }>
                 <div className="container-fluid">
                     <div className="navbar-header">
                         <a className="navbar-brand" href="#">ngEvents</a>
@@ -52,7 +52,7 @@ function NavBar() {
                             </DropdownButton>
                         </ul>
                         <div className="navbar-header navbar-right">
-                            <ul className={ ['nav', 'navbar-nav', styles['nav'], styles['navbar-nav']].join(' ')}>
+                            <ul className={ ['nav', 'navbar-nav', styles['nav'], styles['navbar-nav']].join(' ') }>
                                 <li>
                                     {!state.isAuthenticated() ? (
                                         <NavLink exact to="/login" activeClassName={styles['active']}>Login</NavLink>
@@ -76,7 +76,7 @@ function NavBar() {
             </div>
 
             <SimpleModal  elementId="searchResults" title="Matching Sessions" show={modalShow} onClose={handleModalClose}>
-                {sessions.map(session => (
+                { sessions.map(session => (
                                             <div className="list-group">
                                                <Link className="list-group-item" onClick={handleModalClose} to={`/events/${session.eventId}`}>
                                                     {session.name}

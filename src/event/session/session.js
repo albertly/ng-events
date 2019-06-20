@@ -6,7 +6,7 @@ import Upvote from './upvote';
 import CollapsibleWell from '../../shared/collapsible-well'
 
 
-function Session({eventId, session, resort}) {
+function Session({ eventId, session, resort }) {
     const { state, } = useContext(AuthContext);
     const { _, dispatch } = useContext(EventsContext);
 
@@ -33,7 +33,7 @@ function Session({eventId, session, resort}) {
     return (
         <div className="row" >
             <div className="col-md-1">
-                {state.isAuthenticated() && (
+                { state.isAuthenticated() && (
                     <div>
                         <Upvote count={session.voters.length}
                                 voted={userHasVoted(session, state.userName )}

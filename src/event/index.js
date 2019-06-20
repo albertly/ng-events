@@ -8,4 +8,4 @@ import SessionsList from './session/sessions-list';
 
 import EventThumbnail from './eventThumbnail/event-thumbnail';
 
-export {EventsList, CreateEvent, EventDetails, CreateSession, Session, SessionsList, EventThumbnail};
+export { EventsList, CreateEvent, EventDetails, CreateSession, Session, SessionsList, EventThumbnail };

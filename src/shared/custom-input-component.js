@@ -20,21 +20,21 @@ const CustomInputComponent = ({
     
     return (
         <div className={props.className}>
-        {props.label &&
-            <label htmlFor={field.name}>{props.label}</label>
+        { props.label &&
+            <label htmlFor={field.name}>{ props.label }</label>
         }
         { errors[field.name] && touched[field.name] &&
-            <em>{errors[field.name]}</em>}
+            <em>{ errors[field.name] }</em> }
 
-        {props.type !== 'select' && props.type !== 'textarea' ? (
+        { props.type !== 'select' && props.type !== 'textarea' ? (
             <>
-                <input className="form-control" {...propsForInput} />
-                {props.children}
+                <input className="form-control" { ...propsForInput } />
+                { props.children }
             </>
             ) :
             (
-                <props.type className="form-control" {...propsForInput}>
-                    {props.children}
+                <props.type className="form-control" { ...propsForInput }>
+                    { props.children }
                 </props.type>
             )
         }

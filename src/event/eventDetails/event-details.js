@@ -1,6 +1,6 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
-import {CreateSession, SessionsList} from  '..';
+import { CreateSession, SessionsList } from  '..';
 import { EventsContext, getEventAction, addSessionAction } from '../../shared/contex-events';
 
 import styles from './event-details.module.css';
@@ -102,7 +102,7 @@ function EventDetails({match, history}) {
                 </div>
             </div>
            
-            {event.sessions && !addMode &&
+            { event.sessions && !addMode &&
                 <SessionsList sessions={event.sessions}
                               filterBy={filterBy}
                               sortBy={sortBy}
@@ -111,7 +111,7 @@ function EventDetails({match, history}) {
                 />
             }
             
-            {addMode &&
+            { addMode &&
                 <CreateSession cancelHandler={()=>setAddMode(false)}
                                addSessionHandler={session => saveNewSession(session)}
                 />

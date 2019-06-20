@@ -14,7 +14,7 @@ describe('CustomInputComponent', () => {
         const form = {touched: {'name': false}, errors: {}};
         const props = {label: 'My Name ...', type: 'input', className: 'my-class'};
 
-        const wrapper = shallow(<CustomInputComponent field={field} form={form} {...props}/>);
+        const wrapper = shallow(<CustomInputComponent field={field} form={form} { ...props }/>);
         
         console.log(wrapper.html())
         const control = wrapper.find(props.type);
@@ -31,11 +31,11 @@ describe('CustomInputComponent', () => {
 
       it('renders <CustomInputComponent /> component as textarea', () => {
 
-        const field = {name: 'name', value:'Albert', onChange: ()=>{}};
-        const form = {touched: {'name': false}, errors: {}};
-        const props = {label: 'My Name ...', type: 'textarea', className: 'my-class'};
+        const field = { name: 'name', value:'Albert', onChange: ()=>{} };
+        const form = { touched: {'name': false}, errors: {} };
+        const props = { label: 'My Name ...', type: 'textarea', className: 'my-class'};
 
-        const wrapper = shallow(<CustomInputComponent field={field} form={form} {...props}/>);
+        const wrapper = shallow(<CustomInputComponent field={field} form={form} { ...props }/>);
         
         console.log(wrapper.html())
         console.log('Text ' + wrapper.find('div.my-class').text());

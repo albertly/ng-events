@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Switch, Redirect, Route} from 'react-router-do
 
 
 import NavBar from './navbar/nav-bar';
-import  {EventsList, CreateEvent, EventDetails, CreateSession} from './event';
+import  { EventsList, CreateEvent, EventDetails, CreateSession } from './event';
 import Error404 from './errors/error404';
-import {ContextAuthProvider} from './shared/context-auth';
+import { ContextAuthProvider } from './shared/context-auth';
 import { ContextEventsProvider } from './shared/contex-events';
 
 import 'ngf-bootstrap/dist/bootstrap.min.css';

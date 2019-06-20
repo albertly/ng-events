@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { Prompt } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 
@@ -9,7 +9,7 @@ import './create-event.css';
 
 
 
-function CreateEvent({history}) {
+function CreateEvent({ history }) {
 
     const { state, dispatch } = useContext(EventsContext);
 

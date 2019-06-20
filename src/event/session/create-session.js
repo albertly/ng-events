@@ -47,7 +47,7 @@ function CreateSession(props) {
             </div>
             <div className="col-md-6">
                 <Formik
-                    initialValues={{ name: '', presenter: '', duration: '', level:'', abstract:''}}
+                    initialValues={{ name: '', presenter: '', duration: '', level:'', abstract:'' }}
                     validate={ (values) => validateForm(values) }
                     onSubmit={submitHandler}
                 >

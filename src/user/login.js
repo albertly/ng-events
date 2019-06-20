@@ -40,7 +40,7 @@ function Login({ history }) {
             <form   autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <div className="form-group" >
                     <label htmlFor="userName">User Name:</label>
-                    {!userNameValid && <em>Required</em> }
+                    { !userNameValid && <em>Required</em> }
                     <input  name="userName"
                             value={userName}
                             onChange={(event) => {
@@ -57,7 +57,7 @@ function Login({ history }) {
                 </div>
                 <div className="form-group" >
                     <label htmlFor="password">Password:</label>
-                    {!passwordValid && <em>Required</em> }
+                    { !passwordValid && <em>Required</em> }
                     <input  name="password"
                             value={password}
                             onChange={(event) => {
@@ -72,7 +72,7 @@ function Login({ history }) {
                             className="form-control"
                             placeholder="Password..." />
                 </div>
-                {state.errorMessage && <div className="alert alert-danger">{state.errorMessage}</div>}            
+                { state.errorMessage && <div className="alert alert-danger">{state.errorMessage}</div> }            
                 <span onMouseEnter={()=>{}} onMouseLeave={()=>{}}>
                     <button type="submit"  className="btn btn-primary">Login</button>
                 </span>

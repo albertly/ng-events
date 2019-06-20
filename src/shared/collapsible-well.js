@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 function CollapsibleWell(props) {
 
@@ -8,13 +8,13 @@ function CollapsibleWell(props) {
         <div className="well pointable" onClick={()=>setVisible(!visible)}>
             <h4>
                 <div>
-                    {props.title}
-                    {props.showFire &&
+                    { props.title }
+                    { props.showFire &&
                         <i  className="glyphicon glyphicon-fire" style={{color:'red'}}></i>
                     }
                 </div>
             </h4>
-            {visible && props.children}
+            { visible && props.children }
         </div>
     );
 }

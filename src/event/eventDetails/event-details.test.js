@@ -49,7 +49,7 @@ describe('EventDetails',  () => {
             setTimeout(() => resolve(wrapper), 0); 
         });
 
-        await p.then((wrapper) => console.log(wrapper.update().debug()))
+       // await p.then((wrapper) => console.log(wrapper.update().debug()))
 
         // const wrapper =  mount( <ContextEventsProvider>
         //     <ContextAuthProvider> 

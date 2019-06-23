@@ -72,19 +72,22 @@ const reducer = (state, action) => {
 const voteAction = async (dispatch, eventId, sessionId, voterId, action) => {
     let response = {};
     const url = `/api/events/${eventId}/sessions/${sessionId}/voters/${voterId}`;
+    //console.log('In voteAction');
     try {
         if (action === 'add') {
             response = await axios.post(url);
             dispatch({ type: ADD_VOTER_SUCCESS, eventId, sessionId, session: response.data });
         } else {
             response = await axios.delete(url);
-            dispatch({ type: ADD_VOTER_SUCCESS, eventId, sessionId, session: response.data });
+           // console.log('ADD_VOTER_SUCCESS', response);
+            dispatch({ type: DELETE_VOTER_SUCCESS, eventId, sessionId, session: response.data });
         }
     }
     catch(ex) {
         if (action === 'add') {
             dispatch({ type: ADD_VOTER_FAILURE, error: 'Add Vote Error' });
         } else {
+            console.log('Error in dispatch', ex);
             dispatch({ type: DELETE_VOTER_FAILURE, error: 'Delete Vote Error' });
         }
     }

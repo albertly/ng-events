@@ -22,7 +22,7 @@ function CreateSession(props) {
             if (!values.duration) {
                 errors.duration = 'Required';
             }
-            if (!c.level) {
+            if (!values.level) {
                 errors.level = 'Required';
             }
             if (!values.abstract) {

@@ -59,7 +59,7 @@ describe('SessionsList',  () => {
                                 </ContextAuthProvider>
                                 );
 
-       console.log(wrapper.html());
+     //  console.log(wrapper.html());
        console.log(wrapper.find('h4 div').at(2).text()); //children().at(1).html())
        expect(wrapper.find('h4 div').at(2).text()).toEqual('session 3');
     })

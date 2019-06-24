@@ -12,7 +12,8 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
-    "toastr": "^2.1.4"
+    "toastr": "^2.1.4",
+    "concurrently": "^4.1.0"
   },
   "scripts": {
     "start": "concurrently --kill-others \"npm run server\" \"npm run start-react\"",
@@ -39,7 +40,6 @@
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.16.0",
-    "concurrently": "^4.1.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "react-test-renderer": "^16.8.6"

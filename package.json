@@ -12,16 +12,15 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
-    "toastr": "^2.1.4",
-    "concurrently": "^4.1.0"
+    "toastr": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently --kill-others \"npm run server\" \"npm run start-react\"",
-    "start-react": "react-scripts start",
+    "start1": "concurrently --kill-others \"npm run server\" \"npm run start-react\"",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node node_modules/ngf-server/server.js"
+    "server1": "node node_modules/ngf-server/server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,7 +41,8 @@
     "axios-mock-adapter": "^1.16.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "react-test-renderer": "^16.8.6"
+    "react-test-renderer": "^16.8.6",
+    "concurrently": "^4.1.0"
   },
-  "proxy": "http://localhost:8808"
+  "proxy": "http://localhost:5001"
 }

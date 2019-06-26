@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Redirect, Route} from 'react-router-dom';
-
+import axios from 'axios';
 
 import NavBar from './navbar/nav-bar';
 import  { EventsList, CreateEvent, EventDetails, CreateSession } from './event';
@@ -14,7 +14,9 @@ const Login = React.lazy(() => import('./user/login'));
 const Profile = React.lazy(() => import('./user/profile'));
 
 const App = () => {
-  
+
+  axios.defaults.baseURL = 'https://immense-earth-80859.herokuapp.com/';
+
   return (
     <>
     <ContextEventsProvider> 

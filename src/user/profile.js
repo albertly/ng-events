@@ -1,21 +1,24 @@
 import React, { useContext } from 'react';
+import { connect } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css'
 
+import { updateUser } from '../actions/user-actions';
 import { AuthContext, updateUserAction } from '../shared/context-auth';
 import CustomInputComponent from '../shared/custom-input-component';
 
-function Profile({ history }) {
+function Profile({ state, onUpdateUser, history }) {
 
-  const { state, dispatch } = useContext(AuthContext);
+  //const { state, dispatch } = useContext(AuthContext);
 
   const cancelHandler = () => history.push('/events');
 
   const submitHandler = (values, actions) => {
     
-    updateUserAction(dispatch, state.id, values.firstName, values.lastName);
+   // updateUserAction(dispatch, state.id, values.firstName, values.lastName);
+    onUpdateUser(state.id, values.firstName, values.lastName);
     actions.setSubmitting(false);
     toastr.success('Profile Saved');
     history.push('/events');
@@ -73,4 +76,23 @@ function Profile({ history }) {
     );
 }
 
-export default Profile;
+const mapStateToProps = state => {
+  return {
+    state: state
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onUpdateUser: (userId, firstName, lastName) => {
+      dispatch(updateUser(userId, firstName, lastName));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);
+
+

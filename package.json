@@ -42,10 +42,11 @@
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.16.0",
+    "concurrently": "^4.1.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "react-test-renderer": "^16.8.6",
-    "concurrently": "^4.1.0"
+    "redux-devtools-extension": "^2.13.8"
   },
   "proxy1": "http://localhost:5001"
 }

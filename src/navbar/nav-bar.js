@@ -47,9 +47,11 @@ function NavBar() {
                             <li>
                                 <NavLink exact to="/events/new" activeClassName={styles['active']}>Create Event</NavLink>
                             </li>
-                            <DropdownButton id="ddb" className="dropdown" title="Events">
-                                <MenuItem eventKey="1">Angular Connect</MenuItem>
-                            </DropdownButton>
+                            <li>
+                                <DropdownButton id="ddb" className="dropdown" title="Events">
+                                    <MenuItem eventKey="1">Angular Connect</MenuItem>
+                                </DropdownButton>
+                            </li>
                         </ul>
                         <div className="navbar-header navbar-right">
                             <ul className={ ['nav', 'navbar-nav', styles['nav'], styles['navbar-nav']].join(' ') }>

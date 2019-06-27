@@ -1,7 +1,7 @@
 import * as actions from '../actions/types';
 
 const initialState = {
-    id: 0,
+    id: 6,
     userName: '',
     firstName: '',
     lastName: '',
@@ -18,6 +18,7 @@ const userReducer = (state = initialState, action) => {
                 loading: true,
             }
         case actions.AUTH_SUCCESS:
+            console.log('AUTH_SUCCESS', action.payload);
             return {
                 ...state,
                 ...action.payload,

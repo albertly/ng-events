@@ -76,9 +76,10 @@ function Profile({ state, onUpdateUser, history }) {
     );
 }
 
+
 const mapStateToProps = state => {
   return {
-    state: state
+    state: state.user
   };
 };
 

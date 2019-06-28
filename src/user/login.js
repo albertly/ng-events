@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { authUser } from '../actions/user-actions';
+import { selectUser, isAuth } from '../selectors/user-selector';
 
 import './login.css';
 
-function Login({ state, authUserHandler, history }) {
+function Login({ user, authUserHandler, history }) {
 
     const [userName, setUserName] = useState('bradgreen');
     const [userNameValid, setUserNameValid] = useState(true);
@@ -16,20 +17,20 @@ function Login({ state, authUserHandler, history }) {
     const [passwordTouched, setPasswordTouched] = useState(false);
 
     useEffect(() => {
-        console.log('In useEffect', state.userName);
-        if (state.userName) {
+        console.log('In useEffect', user.userName);
+        if (isAuth(user)) {
             history.push('/events');
         }
-    }, [state]);
+    }, [user]);
 
 
     const handleSubmit = (event) => {
         event.preventDefault();
         authUserHandler(userName, password);
-        console.log('state.userName', state.userName);
+        console.log('state.userName', user.userName);
     };
 
-    console.log('Before render', state.userName);
+    console.log('Before render', user.userName);
 
     return (
         <>
@@ -71,7 +72,7 @@ function Login({ state, authUserHandler, history }) {
                             className="form-control"
                             placeholder="Password..." />
                     </div>
-                    {state.errorMessage && <div className="alert alert-danger">{state.errorMessage}</div>}
+                    {user.errorMessage && <div className="alert alert-danger">{user.errorMessage}</div>}
                     <span onMouseEnter={() => { }} onMouseLeave={() => { }}>
                         <button type="submit" className="btn btn-primary">Login</button>
                     </span>
@@ -84,7 +85,7 @@ function Login({ state, authUserHandler, history }) {
 
 const mapStateToProps = state => {
     return {
-        state: state.user
+        user: selectUser(state)
     };
 };
 

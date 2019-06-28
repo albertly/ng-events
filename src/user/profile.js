@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 
@@ -6,19 +6,16 @@ import toastr from 'toastr';
 import 'toastr/build/toastr.min.css'
 
 import { updateUser } from '../actions/user-actions';
-import { AuthContext, updateUserAction } from '../shared/context-auth';
+import { selectUser } from '../selectors/user-selector';
 import CustomInputComponent from '../shared/custom-input-component';
 
-function Profile({ state, onUpdateUser, history }) {
-
-  //const { state, dispatch } = useContext(AuthContext);
+function Profile({ user, onUpdateUser, history }) {
 
   const cancelHandler = () => history.push('/events');
 
   const submitHandler = (values, actions) => {
-    
-   // updateUserAction(dispatch, state.id, values.firstName, values.lastName);
-    onUpdateUser(state.id, values.firstName, values.lastName);
+
+    onUpdateUser(user.id, values.firstName, values.lastName);
     actions.setSubmitting(false);
     toastr.success('Profile Saved');
     history.push('/events');
@@ -29,57 +26,57 @@ function Profile({ state, onUpdateUser, history }) {
     let errors = {};
 
     if (!values.firstName) {
-        errors.firstName = 'Required';
+      errors.firstName = 'Required';
     }
     if (!values.lastName) {
-        errors.lastName = 'Required';
+      errors.lastName = 'Required';
     }
-    return errors;   
+    return errors;
   };
 
   return (
     <div>
-       <h1>Edit Your Profile</h1>
-       <hr/>
-       <div className="col-md-4">
+      <h1>Edit Your Profile</h1>
+      <hr />
+      <div className="col-md-4">
 
-       <Formik  initialValues={{ firstName: state.firstName, lastName: state.lastName }}        
-                validate={ (values) => validateForm(values) }
-                onSubmit={ submitHandler }
-                handleChange
+        <Formik initialValues={{ firstName: user.firstName, lastName: user.lastName }}
+          validate={(values) => validateForm(values)}
+          onSubmit={submitHandler}
+          handleChange
         >
           {() => (
-            <>    
+            <>
               <Form>
-                  <Field  component={CustomInputComponent}
-                          className="form-group"
-                          type="text"
-                          name="firstName"
-                          lable="First Name:"
-                          placeholder="First Name..." />
+                <Field component={CustomInputComponent}
+                  className="form-group"
+                  type="text"
+                  name="firstName"
+                  lable="First Name:"
+                  placeholder="First Name..." />
 
-                  <Field  component={CustomInputComponent}
-                          className="form-group"
-                          type="text"
-                          name="lastName"
-                          lable="Last Name:"
-                          placeholder="Last Name..." />
-      
-                  <button type="submit" className="btn btn-primary">Save</button>
-                  <button type="button" className="btn btn-default" onClick={cancelHandler}>Cancel</button>                 
+                <Field component={CustomInputComponent}
+                  className="form-group"
+                  type="text"
+                  name="lastName"
+                  lable="Last Name:"
+                  placeholder="Last Name..." />
+
+                <button type="submit" className="btn btn-primary">Save</button>
+                <button type="button" className="btn btn-default" onClick={cancelHandler}>Cancel</button>
               </Form>
             </>
           )}
         </Formik>
-      </div>     
-    </div>   
-    );
+      </div>
+    </div>
+  );
 }
 
 
 const mapStateToProps = state => {
   return {
-    state: state.user
+    user: selectUser(state)
   };
 };
 

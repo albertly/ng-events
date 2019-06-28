@@ -38,7 +38,7 @@ export const updateUser = (userId, firstName, lastName) => {
     axios.put(`/api/users/${userId}`, { id: userId, firstName: firstName, lastName: lastName })
       .then(res => {
         console.log('Updated user', res);
-        dispatch(updateUserSuccess(res.data.user));
+        dispatch(updateUserSuccess(res.data));
       })
       .catch(err => {
         console.log('Error', err);

@@ -41,8 +41,8 @@ const userReducer = (state = initialState, action) => {
         case actions.UPDATE_USER_SUCCESS:
             return {
                 ...state,
-                firstName: action.firstName,
-                lastName: action.lastName,
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
                 loading: false,
             }
         default:

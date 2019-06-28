@@ -1,6 +1,6 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */  // --> OFF
 
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import { NavLink, Link } from 'react-router-dom';
@@ -80,7 +80,7 @@ function NavBar({ user }) {
 
             <SimpleModal elementId="searchResults" title="Matching Sessions" show={modalShow} onClose={handleModalClose}>
                 {sessions.map(session => (
-                    <div className="list-group">
+                    <div className="list-group" key={`${session.id}-${session.eventId}`}>
                         <Link className="list-group-item" onClick={handleModalClose} to={`/events/${session.eventId}`}>
                             {session.name}
                         </Link>

@@ -12,7 +12,6 @@ import { searchSessionsAction } from '../shared/contex-events';
 import styles from './nav-bar.module.css';
 
 function NavBar({ user }) {
-    console.log('user', user);
     const [searchTerm, setSearchTerm] = useState('');
     const [modalShow, setModalShow] = useState(false);
     const [sessions, setSessions] = useState([]);

@@ -32,7 +32,6 @@ const userReducer = (state = initialState, action) => {
             }
         case actions.UPDATE_USER_FAILURE:
         case actions.AUTH_FAILURE:
-            console.log('In dispatch failure ', action.error);
             return {
                 ...state,
                 errorMessage: action.error,

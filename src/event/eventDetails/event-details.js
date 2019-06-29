@@ -33,7 +33,6 @@ function EventDetails({match, history}) {
 
     const resort = () => {
         if (sortBy === 'votes') {
-         //   set(!value);
             forceUpdate();
         }
     }

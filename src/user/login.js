@@ -17,7 +17,6 @@ function Login({ user, authUserHandler, history }) {
     const [passwordTouched, setPasswordTouched] = useState(false);
 
     useEffect(() => {
-        console.log('In useEffect', user.userName);
         if (isAuth(user)) {
             history.push('/events');
         }
@@ -27,10 +26,7 @@ function Login({ user, authUserHandler, history }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         authUserHandler(userName, password);
-        console.log('state.userName', user.userName);
     };
-
-    console.log('Before render', user.userName);
 
     return (
         <>

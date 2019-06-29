@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 
-import { EventsContext, getEventsAction } from '../../shared/contex-events';
+import { getEvents } from '../../actions/events-actions';
+import { selectEvents } from '../../selectors/events-selector';
 import { EventThumbnail } from '..';
 
 function EventsList(props) {
-
-  const { state, dispatch } = useContext(EventsContext);
-
+  
   useEffect(() => {
-    getEventsAction(dispatch);
-  }, []);
+    props.fetchEvents();
+  },[]);
 
   const handleThumbnailClick = eventId => props.history.push(`/events/${eventId}`);
   return (
@@ -17,11 +17,27 @@ function EventsList(props) {
     <h1>Upcoming Angular Events</h1>
     <hr/>
       <div className="row">
-        {state.events.map(e => <div key={e.id} className="col-md-5"><EventThumbnail onClickHandler={handleThumbnailClick}  event={e}></EventThumbnail></div>)}
+        {props.events.map(e => <div key={e.id} className="col-md-5"><EventThumbnail onClickHandler={handleThumbnailClick}  event={e}></EventThumbnail></div>)}
       </div>
     </div>
   );
 }
   
+const mapStateToProps = state => {
+  return {
+      events: selectEvents(state)
+  };
+};
 
-export default EventsList;
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchEvents: () => {
+      dispatch(getEvents());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EventsList);

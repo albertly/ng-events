@@ -51,7 +51,7 @@ function CreateEvent({ history }) {
             }
             if (!values.imageUrl) {
                 errors.imageUrl = 'Required';
-            } else if (!/[\/.](jpg|png)$/i.test(values.imageUrl)) {
+            } else if (!/[.](jpg|png)$/i.test(values.imageUrl)) {
                 errors.imageUrl = 'Must be a png or jpg url';
             }
 

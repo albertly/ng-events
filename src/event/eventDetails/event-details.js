@@ -1,5 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
+import { getEvent } from '../../actions/events-actions';
+import { selectEvent } from '../../selectors/events-selector';
 import { CreateSession, SessionsList } from  '..';
 import { EventsContext, getEventAction, addSessionAction } from '../../shared/contex-events';
 
@@ -10,9 +13,8 @@ function useForceUpdate(){
     return () => set(!value); // toggle the state to force render
 }
 
-function EventDetails({match, history}) {
+function EventDetails({event, fetchEvent, match, history}) {
  
-    let event= {};
     const [addMode, setAddMode] = useState(false);
 
     const [filterBy, setFilterBy] = useState('All');
@@ -21,7 +23,7 @@ function EventDetails({match, history}) {
     const { state, dispatch } = useContext(EventsContext);
 
     useEffect(() => {
-        getEventAction(dispatch, match.params.id);
+        fetchEvent(match.params.id);
     }, [match.params.id]);
 
     const forceUpdate = useForceUpdate();
@@ -37,9 +39,7 @@ function EventDetails({match, history}) {
         }
     }
 
-    event = state.currentEvent;
-
-    if (!state.currentEvent) {
+    if (!event) {
         history.push('/error');
     }
 
@@ -120,4 +120,23 @@ function EventDetails({match, history}) {
     );
 }
 
-export default EventDetails;
+const mapStateToProps = state => {
+    return {
+        event: selectEvent(state)
+    };
+  };
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      fetchEvent: (eventId) => {
+        dispatch(getEvent(eventId));
+      }
+    };
+  };
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(EventDetails);
+
+

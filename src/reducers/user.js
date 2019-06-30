@@ -18,7 +18,6 @@ const userReducer = (state = initialState, action) => {
                 loading: true,
             }
         case actions.AUTH_SUCCESS:
-            console.log('AUTH_SUCCESS', action.payload);
             return {
                 ...state,
                 ...action.payload,

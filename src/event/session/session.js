@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
+import { connect } from 'react-redux';
 
-import { AuthContext } from '../../shared/context-auth';
+import { selectUser, isAuth } from '../../selectors/user-selector';
+
 import { EventsContext, voteAction } from '../../shared/contex-events';
 import Upvote from './upvote';
 import CollapsibleWell from '../../shared/collapsible-well'
 
 
-function Session({ eventId, session, resort }) {
-    const { state, } = useContext(AuthContext);
+function Session({isAuth, user, eventId, session, resort }) {
     const { _, dispatch } = useContext(EventsContext);
 
     const userHasVoted = (session, voterName) => {
@@ -15,7 +16,7 @@ function Session({ eventId, session, resort }) {
     }
 
     const toggleVoter = () => {
-        const userName = state.userName;
+        const userName = user.userName;
         let action = 'add';
         if(userHasVoted(session, userName )) {
           action = 'delete';         
@@ -33,10 +34,10 @@ function Session({ eventId, session, resort }) {
     return (
         <div className="row" >
             <div className="col-md-1">
-                { state.isAuthenticated() && (
+                { isAuth && (
                     <div>
                         <Upvote count={session.voters.length}
-                                voted={userHasVoted(session, state.userName )}
+                                voted={userHasVoted(session, user.userName )}
                                 toggleVoter={toggleVoter}>
                         </Upvote>
                     </div>
@@ -56,4 +57,16 @@ function Session({ eventId, session, resort }) {
     );
 }
 
-export default Session;
+
+const mapStateToProps = state => {
+    return {
+        isAuth: isAuth(state),
+        user: selectUser(state)
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(Session);
+

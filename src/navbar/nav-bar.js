@@ -11,7 +11,7 @@ import { searchSessionsAction } from '../shared/contex-events';
 
 import styles from './nav-bar.module.css';
 
-function NavBar({ user }) {
+function NavBar({ isAuth, user }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [modalShow, setModalShow] = useState(false);
     const [sessions, setSessions] = useState([]);
@@ -56,7 +56,7 @@ function NavBar({ user }) {
                         <div className="navbar-header navbar-right">
                             <ul className={['nav', 'navbar-nav', styles['nav'], styles['navbar-nav']].join(' ')}>
                                 <li>
-                                    {!isAuth(user) ? (
+                                    {!isAuth ? (
                                         <NavLink exact to="/login" activeClassName={styles['active']}>Login</NavLink>
                                     ) : (
                                             <NavLink exact to="/profile" activeClassName={styles['active']}>{user.firstName}</NavLink>
@@ -94,6 +94,7 @@ function NavBar({ user }) {
 
 const mapStateToProps = state => {
     return {
+        isAuth: isAuth(state),
         user: selectUser(state)
     };
 };

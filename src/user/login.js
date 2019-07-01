@@ -6,7 +6,7 @@ import { selectUser, isAuth } from '../selectors/user-selector';
 
 import './login.css';
 
-function Login({ user, authUserHandler, history }) {
+function Login({ isAuth, user, authUserHandler, history }) {
 
     const [userName, setUserName] = useState('bradgreen');
     const [userNameValid, setUserNameValid] = useState(true);
@@ -17,7 +17,7 @@ function Login({ user, authUserHandler, history }) {
     const [passwordTouched, setPasswordTouched] = useState(false);
 
     useEffect(() => {
-        if (isAuth(user)) {
+        if (isAuth) {
             history.push('/events');
         }
     }, [user]);
@@ -81,7 +81,8 @@ function Login({ user, authUserHandler, history }) {
 
 const mapStateToProps = state => {
     return {
-        user: selectUser(state)
+        user: selectUser(state),
+        isAuth: isAuth(state)
     };
 };
 

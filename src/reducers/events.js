@@ -21,11 +21,11 @@ const eventsReducer = (state = initialState, action) => {
         case actions.GET_EVENT_START:
             return { ...state, currentEvent: {}, errorMessage: '', loading: true };
         case actions.GET_EVENT_SUCCESS:
-            console.log('action.payload',action.payload)
             return { ...state, currentEvent: action.payload, errorMessage: '', loading: false };
 
-        case actions.DELETE_VOTER_SUCCESS:
-        case actions.ADD_VOTER_SUCCESS:
+        case actions.VOTER_ACTION_START:
+                return { ...state, currentEvent: {}, errorMessage: '', loading: true };
+        case actions.VOTER_ACTION_SUCCESS:
             let newEvent;
             const newEvents = state.events.map(event => {
                 if (event.id === action.eventId) {
@@ -44,11 +44,10 @@ const eventsReducer = (state = initialState, action) => {
                 }
             })
 
-            return { ...state, events: newEvents, currentEvent: newEvent, errorMessage: '' };
+            return { ...state, events: newEvents, currentEvent: newEvent, errorMessage: '', loading: false };
 
         case actions.ADD_SESSION_FAILURE:
-        case actions.ADD_VOTER_FAILURE:
-        case actions.DELETE_VOTER_FAILURE:
+        case actions.VOTER_ACTION_FAILURE:
         case actions.GET_EVENT_FAILURE:
         case actions.SAVE_EVENT_FAILURE:
         case actions.GET_EVENTS_FAILURE:

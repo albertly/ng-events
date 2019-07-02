@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getEvent } from '../../actions/events-actions';
 import { selectEvent } from '../../selectors/events-selector';
 import { CreateSession, SessionsList } from  '..';
-import { EventsContext, getEventAction, addSessionAction } from '../../shared/contex-events';
+import { EventsContext, addSessionAction } from '../../shared/contex-events';
 
 import styles from './event-details.module.css';
 

@@ -67,7 +67,7 @@ function NavBar({ isAuth, user }) {
                         </div>
                         <form id={styles['searchForm']} className="navbar-form navbar-right"  >
                             <div className="form-group">
-                                <input type="text" className="form-control" placeholder="Search Sessions" onChange={handleOnChange} value={searchTerm} />
+                                <input type="text" className="form-control" placeholder="Search Sessions1" onChange={handleOnChange} value={searchTerm} />
                             </div>
                             <button className="btn btn-default" onClick={search}>
                                 Search

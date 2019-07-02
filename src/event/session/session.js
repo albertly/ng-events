@@ -1,15 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { selectUser, isAuth } from '../../selectors/user-selector';
-
-import { EventsContext, voteAction } from '../../shared/contex-events';
+import { voteAction } from '../../actions/events-actions';
 import Upvote from './upvote';
 import CollapsibleWell from '../../shared/collapsible-well'
 
 
-function Session({isAuth, user, eventId, session, resort }) {
-    const { _, dispatch } = useContext(EventsContext);
+function Session({voteActionHandler, isAuth, user, eventId, session, resort }) {
 
     const userHasVoted = (session, voterName) => {
         return session.voters.some(voter => voter === voterName);
@@ -22,9 +20,10 @@ function Session({isAuth, user, eventId, session, resort }) {
           action = 'delete';         
         }
 
-        voteAction(dispatch, eventId, session.id, userName, action).then(() => {
-            resort();
-        })
+        voteActionHandler(eventId, session.id, userName, action);
+        // .then(() => {
+        //     resort();
+        // })
 
         // if(this.sortBy === 'votes') {
         //   this.visibleSessions.sort(sortByVotesDesc);
@@ -65,8 +64,16 @@ const mapStateToProps = state => {
     };
 };
 
+const mapDispatchToProps = dispatch => {
+    return {
+        voteActionHandler: (eventId, sessionId, userName, action) => {
+            dispatch(voteAction(eventId, sessionId, userName, action));
+        }
+    };
+};
+
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(Session);
 

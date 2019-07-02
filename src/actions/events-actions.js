@@ -56,3 +56,33 @@ const getEventFailure = error => ({
     type: actions.GET_EVENT_FAILURE,
     error
 });
+
+//////////////////////////////////////////////////
+export const voteAction =  (eventId, sessionId, voterId, action) => {
+    return dispatch => {
+        dispatch(voteActionStarted()); 
+        
+        let axiosVerb = axios.delete;
+        if (action === 'add') {
+            axiosVerb = axios.post;
+        }
+
+        const url = `/api/events/${eventId}/sessions/${sessionId}/voters/${voterId}`;
+        axiosVerb(url)
+            .then(res => {
+                dispatch({ type: actions.VOTER_ACTION_SUCCESS, eventId, sessionId, session: res.data });
+            })
+            .catch(err => {
+                dispatch(voteActionFailure(err.message));
+            });
+    }
+}
+
+const voteActionStarted = () =>  ({
+    type: actions.VOTER_ACTION_START
+});
+
+const voteActionFailure = error => ({
+    type: actions.VOTER_ACTION_FAILURE,
+    error
+});

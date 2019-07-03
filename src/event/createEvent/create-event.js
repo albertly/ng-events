@@ -1,17 +1,14 @@
 import React, { useContext, useState } from 'react';
+import { connect } from 'react-redux';
 import { Prompt } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 
-import { EventsContext, saveEventAction } from '../../shared/contex-events';
+import { saveEvent } from '../../actions/events-actions';
 import CustomInputComponent from '../../shared/custom-input-component';
 
 import './create-event.css';
 
-
-
-function CreateEvent({ history }) {
-
-    const { state, dispatch } = useContext(EventsContext);
+function CreateEvent({saveEventAction, history }) {
 
     const [isDirty, setDirty] = useState(true);
 
@@ -19,7 +16,7 @@ function CreateEvent({ history }) {
 
     const submitHandler = (values, actions) => {
 
-        saveEventAction(dispatch, values);
+        saveEventAction(values);
         
         actions.setSubmitting(false);
         setDirty(false);
@@ -61,11 +58,9 @@ function CreateEvent({ history }) {
 
     return (
     <>
-
         <h1>New Event</h1>
         <hr/>
         <div className="col-md-6">
-
             <Formik
                 initialValues={{ name: '', date: '', time:'', price:0,
                                  location: {address:'', city:'', country:''}, onlineUrl:'', imageUrl: '' }}
@@ -154,4 +149,15 @@ function CreateEvent({ history }) {
     );
 }
 
-export default CreateEvent;
+const mapDispatchToProps = dispatch => {
+    return {
+        saveEventAction : event => {
+        dispatch(saveEvent(event));
+      }
+    };
+  };
+  
+  export default connect(
+    null,
+    mapDispatchToProps
+  )(CreateEvent);

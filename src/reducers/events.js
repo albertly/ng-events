@@ -20,7 +20,6 @@ const eventsReducer = (state = initialState, action) => {
                 return { ...state, errorMessage: '', loading: true }
 
         case actions.SAVE_EVENT_SUCCESS:
-            console.log('SAVE_EVENT_SUCCESS')
             return { ...state, events: state.events.concat(action.payload), errorMessage: '' }
 
         case actions.GET_EVENT_START:
@@ -31,6 +30,7 @@ const eventsReducer = (state = initialState, action) => {
 
         case actions.VOTER_ACTION_START:
             return { ...state, errorMessage: '', loading: true };
+            
         case actions.VOTER_ACTION_SUCCESS:
             let newEvent;
             const newEvents = state.events.map(event => {

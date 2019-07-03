@@ -109,7 +109,6 @@ export const saveEvent =  (event, msg = 'Save Event Error: ') => {
 
         axios.post('/api/events', event)
             .then(res => {
-                console.log('saveEventSuccess(res.data)');
                 dispatch(saveEventSuccess(res.data));
             })
             .catch(err => {

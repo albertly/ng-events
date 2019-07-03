@@ -42,7 +42,7 @@ function EventDetails({event, fetchEvent, match, history}) {
     if (!event) {
         history.push('/error');
     }
-
+    
     return (
         <div className={ [styles.container, 'container'].join(' ')}>
             <img src={event.imageUrl} alt={event.name} className={styles['event-image']}/> 

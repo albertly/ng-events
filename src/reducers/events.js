@@ -20,11 +20,12 @@ const eventsReducer = (state = initialState, action) => {
 
         case actions.GET_EVENT_START:
             return { ...state, currentEvent: {}, errorMessage: '', loading: true };
+
         case actions.GET_EVENT_SUCCESS:
             return { ...state, currentEvent: action.payload, errorMessage: '', loading: false };
 
         case actions.VOTER_ACTION_START:
-                return { ...state, currentEvent: {}, errorMessage: '', loading: true };
+            return { ...state, errorMessage: '', loading: true };
         case actions.VOTER_ACTION_SUCCESS:
             let newEvent;
             const newEvents = state.events.map(event => {

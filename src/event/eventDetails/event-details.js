@@ -1,43 +1,27 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, {useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { getEvent } from '../../actions/events-actions';
+import { getEvent, addSession } from '../../actions/events-actions';
 import { selectEvent } from '../../selectors/events-selector';
 import { CreateSession, SessionsList } from  '..';
-import { EventsContext, addSessionAction } from '../../shared/contex-events';
 
 import styles from './event-details.module.css';
 
-function useForceUpdate(){
-    const [value, set] = useState(true); //boolean state
-    return () => set(!value); // toggle the state to force render
-}
-
-function EventDetails({event, fetchEvent, match, history}) {
+function EventDetails({addSessionAction, event, fetchEvent, match, history}) {
  
     const [addMode, setAddMode] = useState(false);
 
     const [filterBy, setFilterBy] = useState('All');
     const [sortBy, setSortBy] = useState('votes');
 
-    const { state, dispatch } = useContext(EventsContext);
-
     useEffect(() => {
         fetchEvent(match.params.id);
     }, [match.params.id]);
 
-    const forceUpdate = useForceUpdate();
-
     const saveNewSession = session => {
-        addSessionAction(dispatch, event, session);
+        addSessionAction(event, session);
         setAddMode(false);
     };
-
-    const resort = () => {
-        if (sortBy === 'votes') {
-            forceUpdate();
-        }
-    }
 
     if (!event) {
         history.push('/error');
@@ -106,7 +90,6 @@ function EventDetails({event, fetchEvent, match, history}) {
                               filterBy={filterBy}
                               sortBy={sortBy}
                               eventId={event.id}
-                              resort={resort} 
                 />
             }
             
@@ -128,8 +111,11 @@ const mapStateToProps = state => {
   
   const mapDispatchToProps = dispatch => {
     return {
-      fetchEvent: (eventId) => {
+      fetchEvent: eventId => {
         dispatch(getEvent(eventId));
+      },
+      addSessionAction : (event, session) => {
+        dispatch(addSession(event, session));
       }
     };
   };

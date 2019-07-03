@@ -19,7 +19,6 @@
     "toastr": "^2.1.4"
   },
   "scripts": {
-    "start1": "concurrently --kill-others \"npm run server\" \"npm run start-react\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

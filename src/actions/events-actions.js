@@ -70,7 +70,7 @@ export const voteAction =  (eventId, sessionId, voterId, action) => {
         const url = `/api/events/${eventId}/sessions/${sessionId}/voters/${voterId}`;
         axiosVerb(url)
             .then(res => {
-                dispatch({ type: actions.VOTER_ACTION_SUCCESS, eventId, sessionId, session: res.data });
+                voteActionSuccess(eventId, sessionId, res.data);
             })
             .catch(err => {
                 dispatch(voteActionFailure(err.message));
@@ -82,7 +82,52 @@ const voteActionStarted = () =>  ({
     type: actions.VOTER_ACTION_START
 });
 
+const voteActionSuccess = (eventId, sessionId, session) => ({
+    type: actions.GET_EVENT_SUCCESS,
+    eventId,
+    sessionId,
+    session
+});
+
 const voteActionFailure = error => ({
+    type: actions.VOTER_ACTION_FAILURE,
+    error
+});
+
+/////////////////////////////////
+export const addSession =  (event, session) => {
+    const nextId = Math.max.apply(null, event.sessions.map(s => s.id));
+    session.id = nextId + 1;
+    session.voters = [];
+    event.sessions.push(session);
+    return saveEvent(event, 'Save Session Error: ');
+}
+
+export const saveEvent =  (event, msg = 'Save Event Error: ') => {
+    return dispatch => {
+        dispatch(saveEventStarted());
+
+        axios.post('/api/events', event)
+            .then(res => {
+                console.log('saveEventSuccess(res.data)');
+                dispatch(saveEventSuccess(res.data));
+            })
+            .catch(err => {
+                dispatch(saveEventFailure(msg + err));
+            });
+    }
+}
+
+const saveEventStarted = () =>  ({
+    type: actions.SAVE_EVENT_START
+});
+
+const saveEventSuccess = payload => ({
+    type: actions.SAVE_EVENT_SUCCESS,
+    payload,
+});
+
+const saveEventFailure = error => ({
     type: actions.VOTER_ACTION_FAILURE,
     error
 });

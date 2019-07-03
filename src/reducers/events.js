@@ -12,10 +12,15 @@ const eventsReducer = (state = initialState, action) => {
     switch (action.type) {
         case actions.GET_EVENTS_SUCCESS:
             return { ...state, events: action.payload, errorMessage: '', loading: false };
+
         case actions.GET_EVENTS_START:
             return { ...state, errorMessage: '', loading: true };
 
+        case actions.SAVE_EVENT_START:
+                return { ...state, errorMessage: '', loading: true }
+
         case actions.SAVE_EVENT_SUCCESS:
+            console.log('SAVE_EVENT_SUCCESS')
             return { ...state, events: state.events.concat(action.payload), errorMessage: '' }
 
         case actions.GET_EVENT_START:

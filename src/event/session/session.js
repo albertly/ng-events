@@ -7,7 +7,7 @@ import Upvote from './upvote';
 import CollapsibleWell from '../../shared/collapsible-well'
 
 
-function Session({voteActionHandler, isAuth, user, eventId, session, resort }) {
+function Session({voteActionHandler, isAuth, user, eventId, session }) {
 
     const userHasVoted = (session, voterName) => {
         return session.voters.some(voter => voter === voterName);

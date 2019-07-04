@@ -70,7 +70,7 @@ export const voteAction =  (eventId, sessionId, voterId, action) => {
         const url = `/api/events/${eventId}/sessions/${sessionId}/voters/${voterId}`;
         axiosVerb(url)
             .then(res => {
-                voteActionSuccess(eventId, sessionId, res.data);
+                dispatch(voteActionSuccess(eventId, sessionId, res.data));
             })
             .catch(err => {
                 dispatch(voteActionFailure(err.message));
@@ -83,7 +83,7 @@ const voteActionStarted = () =>  ({
 });
 
 const voteActionSuccess = (eventId, sessionId, session) => ({
-    type: actions.GET_EVENT_SUCCESS,
+    type: actions.VOTER_ACTION_SUCCESS,
     eventId,
     sessionId,
     session

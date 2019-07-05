@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 import { NavLink, Link } from 'react-router-dom';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
@@ -31,51 +32,63 @@ function NavBar({ isAuth, user }) {
         setModalShow(false);
     }
 
+    const { to, text } = (() => {
+        return !isAuth ?
+            {
+                to: '/login',
+                text: 'Login'
+            }
+            :
+            {
+                to: '/profile',
+                text: user.firstName
+            }
+    })();
+
+
     return (
         <>
-            <div className={['navbar', 'navbar-default'].join(' ')}>
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                        <a className="navbar-brand" href="#">ngEvents</a>
-                    </div>
+            <Navbar collapseOnSelect={true} fixedTop className={['navbar', 'navbar-default'].join(' ')}>
 
-                    <div className="collapse navbar-collapse">
-                        <ul className={['nav', 'navbar-nav', styles['nav'], styles['navbar-nav']].join(' ')}>
-                            <li>
-                                <NavLink exact to="/events/" activeClassName={styles['active']}>All Events</NavLink>
-                            </li>
-                            <li>
-                                <NavLink exact to="/events/new" activeClassName={styles['active']}>Create Event</NavLink>
-                            </li>
-                            <li>
-                                <DropdownButton id="ddb" className="dropdown" title="Events">
-                                    <MenuItem eventKey="1">Angular Connect</MenuItem>
-                                </DropdownButton>
-                            </li>
-                        </ul>
-                        <div className="navbar-header navbar-right">
-                            <ul className={['nav', 'navbar-nav', styles['nav'], styles['navbar-nav']].join(' ')}>
-                                <li>
-                                    {!isAuth ? (
-                                        <NavLink exact to="/login" activeClassName={styles['active']}>Login</NavLink>
-                                    ) : (
-                                            <NavLink exact to="/profile" activeClassName={styles['active']}>{user.firstName}</NavLink>
-                                        )
-                                    }
-                                </li>
-                            </ul>
-                        </div>
-                        <form id={styles['searchForm']} className="navbar-form navbar-right"  >
-                            <div className="form-group">
-                                <input type="text" className="form-control" placeholder="Search Sessions1" onChange={handleOnChange} value={searchTerm} />
-                            </div>
-                            <button className="btn btn-default" onClick={search}>
-                                Search
-                            </button>
-                        </form>
+                <Navbar.Header>
+                    <Navbar.Toggle />
+                    <Navbar.Brand>
+                        <a href="#">ngEvents</a>
+                    </Navbar.Brand>
+                </Navbar.Header>
+
+                <Navbar.Collapse className="collapse navbar-collapse">
+                    <Nav className={['nav', 'navbar-nav', styles['nav'], styles['navbar-nav']].join(' ')}>
+                        <NavItem componentClass={NavLink} exact to="/events/" href="/events/" activeClassName={styles['active']}>
+                            All Events
+                        </NavItem>
+                        <NavItem componentClass={NavLink} exact to="/events/new" href="/events/new" activeClassName={styles['active']}>
+                            Create Event
+                        </NavItem>
+                        <NavItem componentClass={DropdownButton} id="ddb" className="dropdown" title="Events">
+                            {/* <DropdownButton id="ddb" className="dropdown" title="Events"> */}
+                            <MenuItem eventKey="1">Angular Connect</MenuItem>
+                            {/* </DropdownButton> */}
+                        </NavItem>
+                    </Nav>
+                    <div className="navbar-header navbar-right">
+                        <Nav className={['nav', 'navbar-nav', styles['nav'], styles['navbar-nav']].join(' ')}>
+                            <NavItem componentClass={NavLink} exact to={to} href={to} activeClassName={styles['active']}>
+                                {text}
+                            </NavItem>
+                        </Nav>
                     </div>
-                </div>
-            </div>
+                    <form id={styles['searchForm']} className="navbar-form navbar-right"  >
+                        <div className="form-group">
+                            <input type="text" className="form-control" placeholder="Search Sessions1" onChange={handleOnChange} value={searchTerm} />
+                        </div>
+                        <button className="btn btn-default" onClick={search}>
+                            Search
+                            </button>
+                    </form>
+                </Navbar.Collapse>
+
+            </Navbar>
 
             <SimpleModal elementId="searchResults" title="Matching Sessions" show={modalShow} onClose={handleModalClose}>
                 {sessions.map(session => (

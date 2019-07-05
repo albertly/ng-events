@@ -1,4 +1,11 @@
 .nav.navbar-nav {font-size: 15px;}
 #searchForm {margin-right: 100px;}
 @media (max-width: 1200px) {#searchForm {display:none}}
-li > a.active { color: #F97924 !important;} 
+a { color: rgb(255, 255, 255) !important;} 
+li >  a.active { color: #F97924 !important;} 
+li > a > a.active { color: #F97924 !important;} 
+li > li {
+    display: block;
+    padding-top: 9.5px;
+    padding-bottom: 9.5px;
+}

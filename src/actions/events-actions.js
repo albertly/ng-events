@@ -130,3 +130,15 @@ const saveEventFailure = error => ({
     type: actions.VOTER_ACTION_FAILURE,
     error
 });
+
+///////////////////////////
+export const searchSessionsAction = async (search) => {
+    let response = {};
+    try {
+        response = await axios.get(`/api/sessions/search?search=${search}`);
+        return response.data;
+    }
+    catch(ex) {
+        return {};
+    }
+}

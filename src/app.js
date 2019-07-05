@@ -5,8 +5,6 @@ import axios from 'axios';
 import NavBar from './navbar/nav-bar';
 import { EventsList, CreateEvent, EventDetails, CreateSession } from './event';
 import Error404 from './errors/error404';
-import { ContextAuthProvider } from './shared/context-auth';
-import { ContextEventsProvider } from './shared/contex-events';
 
 import 'ngf-bootstrap/dist/bootstrap.min.css';
 
@@ -19,28 +17,22 @@ const App = () => {
 
   return (
     <>
-      <ContextEventsProvider>
-        <ContextAuthProvider>
-          {/* <Suspense fallback={<div>Loading...</div>}>   */}
-          <Router>
-            <NavBar></NavBar>
-            <div style={{ "marginTop": "70px" }}>
-              <Switch>
-                <Redirect exact from="/" to="/events" />
-                <Route exact path="/events" component={EventsList} />
-                <Route exact path="/events/new" component={CreateEvent} />
-                <Route exact path="/events/:id" component={EventDetails} />
-                <Route exact path="/session/new" component={CreateSession} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/profile" component={Profile} />
-                <Route exact path="/error" component={Error404} />
-                <Route component={Error404} />
-              </Switch>
-            </div>
-          </Router>
-          {/* </Suspense> */}
-        </ContextAuthProvider>
-      </ContextEventsProvider>
+      <Router>
+        <NavBar></NavBar>
+        <div style={{ "marginTop": "70px" }}>
+          <Switch>
+            <Redirect exact from="/" to="/events" />
+            <Route exact path="/events" component={EventsList} />
+            <Route exact path="/events/new" component={CreateEvent} />
+            <Route exact path="/events/:id" component={EventDetails} />
+            <Route exact path="/session/new" component={CreateSession} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/error" component={Error404} />
+            <Route component={Error404} />
+          </Switch>
+        </div>
+      </Router>
     </>
   );
 }

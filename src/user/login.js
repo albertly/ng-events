@@ -1,3 +1,5 @@
+/* react-hooks/exhaustive-deps: 0 */
+
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
@@ -20,7 +22,9 @@ function Login({ isAuth, user, authUserHandler, history }) {
         if (isAuth) {
             history.push('/events');
         }
-    }, [user]);
+    },
+        // eslint-disable-next-line
+        [user]);
 
 
     const handleSubmit = (event) => {

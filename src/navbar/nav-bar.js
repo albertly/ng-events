@@ -8,7 +8,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { selectUser, isAuth } from '../selectors/user-selector';
 import SimpleModal from '../shared/simple-modal';
-import { searchSessionsAction } from '../shared/contex-events';
+import { searchSessionsAction } from '../actions/events-actions';
 
 import styles from './nav-bar.module.css';
 
@@ -80,7 +80,7 @@ function NavBar({ isAuth, user }) {
                     </div>
                     <form id={styles['searchForm']} className="navbar-form navbar-right"  >
                         <div className="form-group">
-                            <input type="text" className="form-control" placeholder="Search Sessions1" onChange={handleOnChange} value={searchTerm} />
+                            <input type="text" className="form-control" placeholder="Search Sessions" onChange={handleOnChange} value={searchTerm} />
                         </div>
                         <button className="btn btn-default" onClick={search}>
                             Search

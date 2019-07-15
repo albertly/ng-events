@@ -13,8 +13,8 @@ const Profile = React.lazy(() => import('./user/profile'));
 
 const App = () => {
 
-  axios.defaults.baseURL = 'https://immense-earth-80859.herokuapp.com/';
-
+ // axios.defaults.baseURL = 'https://immense-earth-80859.herokuapp.com/';
+ axios.defaults.baseURL = 'http://localhost:5000/';
   return (
     <>
       <Router>

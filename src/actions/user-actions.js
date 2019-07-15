@@ -6,9 +6,10 @@ export const authUser = (userName, password) => {
   return dispatch => {
     dispatch(authUserStarted());
 
-    axios.post('/api/login', { username: userName, password: password })
+    axios.post('/api/login', { email: userName, password: password })
       .then(res => {
-        dispatch(authUserSuccess(res.data.user));
+        console.log('res', res);
+        dispatch(authUserSuccess(res.data));
       })
       .catch(err => {
         dispatch(authUserFailure(err.message));
@@ -31,10 +32,12 @@ const authUserFailure = error => ({
 });
 
 export const updateUser = (userId, firstName, lastName) => {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(updateUserStarted());
 
-    axios.put(`/api/users/${userId}`, { id: userId, firstName: firstName, lastName: lastName })
+    const config = { headers: { authorization: getState().user.token,}};
+    console.log('config', config);
+    axios.put(`/api/users/${userId}`, { id: userId, firstName: firstName, lastName: lastName }, config)
       .then(res => {
         dispatch(updateUserSuccess(res.data));
       })

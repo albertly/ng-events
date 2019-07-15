@@ -5,6 +5,7 @@ const initialState = {
     userName: '',
     firstName: '',
     lastName: '',
+    token:'',
     errorMessage: '',
     loading: false,
 }
@@ -18,6 +19,7 @@ const userReducer = (state = initialState, action) => {
                 loading: true,
             }
         case actions.AUTH_SUCCESS:
+            console.log("payload", action.payload);
             return {
                 ...state,
                 ...action.payload,

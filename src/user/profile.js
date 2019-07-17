@@ -15,11 +15,13 @@ function Profile({ user, onUpdateUser, history }) {
 
   const submitHandler = (values, actions) => {
 
-    onUpdateUser(user.id, values.firstName, values.lastName);
-    actions.setSubmitting(false);
-    toastr.success('Profile Saved');
-    history.push('/events');
-
+    onUpdateUser(user.id, values.firstName, values.lastName)
+      .then(() => {
+        actions.setSubmitting(false);
+        toastr.success('Profile Saved');
+        history.push('/events');
+      }
+      )
   };
 
   const validateForm = values => {
@@ -82,8 +84,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onUpdateUser: (userId, firstName, lastName) => {
-      dispatch(updateUser(userId, firstName, lastName));
+    onUpdateUser: async (userId, firstName, lastName) => {
+      return await dispatch(updateUser(userId, firstName, lastName));
     }
   };
 };

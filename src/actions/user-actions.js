@@ -36,13 +36,14 @@ export const updateUser = (userId, firstName, lastName) => {
     dispatch(updateUserStarted());
 
     const config = { headers: { authorization: getState().user.token,}};
-    console.log('config', config);
+
     axios.put(`/api/users/${userId}`, { id: userId, firstName: firstName, lastName: lastName }, config)
       .then(res => {
-        dispatch(updateUserSuccess(res.data));
+        console.log('res.data', res);
+        return dispatch(updateUserSuccess(res.data));
       })
       .catch(err => {
-        dispatch(updateUserFailure(err.message));
+        return dispatch(updateUserFailure(err.message));
       });
   };
 };

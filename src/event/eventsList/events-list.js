@@ -19,7 +19,7 @@ function EventsList(props) {
       <h1>Upcoming Angular Events</h1>
       <hr />
       <div className="row">
-        {props.events.map(e => <div key={e.id} className="col-md-5"><EventThumbnail onClickHandler={handleThumbnailClick} event={e}></EventThumbnail></div>)}
+        {props.events.map(e => <div key={e._id} className="col-md-5"><EventThumbnail onClickHandler={handleThumbnailClick} event={e}></EventThumbnail></div>)}
       </div>
     </div>
   );

@@ -104,10 +104,11 @@ export const addSession =  (event, session) => {
 }
 
 export const saveEvent =  (event, msg = 'Save Event Error: ') => {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(saveEventStarted());
 
-        axios.post('/api/events', event)
+        const config = { headers: { authorization: getState().user.token,}};
+        axios.post('/api/events', event, config)
             .then(res => {
                 dispatch(saveEventSuccess(res.data));
             })
@@ -127,7 +128,7 @@ const saveEventSuccess = payload => ({
 });
 
 const saveEventFailure = error => ({
-    type: actions.VOTER_ACTION_FAILURE,
+    type: actions.SAVE_EVENT_FAILURE,
     error
 });
 

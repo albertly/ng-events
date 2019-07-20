@@ -15,7 +15,6 @@ function CreateEvent({saveEventAction, history }) {
     const cancelHandler = () => history.push('/events');
 
     const submitHandler = (values, actions) => {
-
         saveEventAction(values);
         
         actions.setSubmitting(false);

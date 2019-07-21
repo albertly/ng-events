@@ -9,10 +9,11 @@ import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { selectUser, isAuth } from '../selectors/user-selector';
 import SimpleModal from '../shared/simple-modal';
 import { searchSessionsAction } from '../actions/events-actions';
+import { logoffUser } from '../actions/user-actions';
 
 import styles from './nav-bar.module.css';
 
-function NavBar({ isAuth, user }) {
+function NavBar({ isAuth, user, logOff }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [modalShow, setModalShow] = useState(false);
     const [sessions, setSessions] = useState([]);
@@ -76,6 +77,11 @@ function NavBar({ isAuth, user }) {
                             <NavItem componentClass={NavLink} exact to={to} href={to} activeClassName={styles['active']}>
                                 {text}
                             </NavItem>
+                            {isAuth && (
+                                <button  className="btn btn-default" onClick={logOff}>
+                                    Log Off
+                                </button>
+                            )}
                         </Nav>
                     </div>
                     <form id={styles['searchForm']} className="navbar-form navbar-right"  >
@@ -84,7 +90,7 @@ function NavBar({ isAuth, user }) {
                         </div>
                         <button className="btn btn-default" onClick={search}>
                             Search
-                            </button>
+                        </button>
                     </form>
                 </Navbar.Collapse>
 
@@ -112,8 +118,13 @@ const mapStateToProps = state => {
     };
 };
 
+const mapDispatchToProps = dispatch => {
+    return {
+        logOff: () => { dispatch(logoffUser()); }
+    };
+};
 
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(NavBar);

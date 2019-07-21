@@ -2,10 +2,10 @@ import * as actions from '../actions/types';
 
 const initialState = {
     id: 6,
-    userName: '',
-    firstName: '',
-    lastName: '',
-    token:'',
+    userName: sessionStorage.getItem('userName'),
+    firstName: sessionStorage.getItem('firstName'),
+    lastName: sessionStorage.getItem('lastName'),
+    token: sessionStorage.getItem('token'),
     errorMessage: '',
     loading: false,
 }
@@ -43,6 +43,14 @@ const userReducer = (state = initialState, action) => {
                 firstName: action.payload.firstName,
                 lastName: action.payload.lastName,
                 loading: false,
+            }
+        case actions.LOGOFF_USER:
+            return {
+                ...state,
+                firstName: '',
+                lastName: '',
+                userName: '',
+                token: ''
             }
         default:
             return state;

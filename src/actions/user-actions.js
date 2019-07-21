@@ -2,13 +2,23 @@ import axios from 'axios';
 
 import * as actions from './types';
 
+export const logoffUser = () => {
+  return dispatch => {
+    sessionStorage.clear();
+    dispatch({type:actions.LOGOFF_USER});
+  };
+};
+
 export const authUser = (userName, password) => {
   return dispatch => {
     dispatch(authUserStarted());
 
     axios.post('/api/login', { email: userName, password: password })
       .then(res => {
-        console.log('res', res);
+        sessionStorage.setItem('token', res.data.token);
+        sessionStorage.setItem('userName', res.data.userName);
+        sessionStorage.setItem('firstName', res.data.firstName);
+        sessionStorage.setItem('lastName', res.data.lastName);
         dispatch(authUserSuccess(res.data));
       })
       .catch(err => {
@@ -39,7 +49,6 @@ export const updateUser = (userId, firstName, lastName) => {
 
     axios.put(`/api/users/${userId}`, { id: userId, firstName: firstName, lastName: lastName }, config)
       .then(res => {
-        console.log('res.data', res);
         return dispatch(updateUserSuccess(res.data));
       })
       .catch(err => {

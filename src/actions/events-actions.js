@@ -59,16 +59,18 @@ const getEventFailure = error => ({
 
 //////////////////////////////////////////////////
 export const voteAction =  (eventId, sessionId, voterId, action) => {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(voteActionStarted()); 
-        
+
+        const config = { headers: { authorization: getState().user.token,}};
+
         let axiosVerb = axios.delete;
         if (action === 'add') {
             axiosVerb = axios.post;
         }
 
         const url = `/api/events/${eventId}/sessions/${sessionId}/voters/${voterId}`;
-        axiosVerb(url)
+        axiosVerb(url, {}, config)
             .then(res => {
                 dispatch(voteActionSuccess(eventId, sessionId, res.data));
             })

@@ -19,7 +19,6 @@ function Session({voteActionHandler, isAuth, user, eventId, session }) {
         if(userHasVoted(session, userName )) {
           action = 'delete';         
         }
-
         voteActionHandler(eventId, session.id, userName, action);
         // .then(() => {
         //     resort();

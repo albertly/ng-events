@@ -94,7 +94,7 @@ function EventDetails({ addSessionAction, event, fetchEvent, match, history }) {
                 <SessionsList sessions={event.sessions}
                     filterBy={filterBy}
                     sortBy={sortBy}
-                    eventId={event.id}
+                    eventId={event._id}
                 />
             }
 

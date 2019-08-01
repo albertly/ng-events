@@ -63,14 +63,16 @@ export const voteAction =  (eventId, sessionId, voterId, action) => {
         dispatch(voteActionStarted()); 
 
         const config = { headers: { authorization: getState().user.token,}};
+        const url = `/api/events/${eventId}/sessions/${sessionId}/voters/${voterId}`;
 
         let axiosVerb = axios.delete;
+        let data = [url,config];
         if (action === 'add') {
             axiosVerb = axios.post;
+            data = [url, {}, config];
         }
-
-        const url = `/api/events/${eventId}/sessions/${sessionId}/voters/${voterId}`;
-        axiosVerb(url, {}, config)
+        
+        axiosVerb.apply(null, data)
             .then(res => {
                 dispatch(voteActionSuccess(eventId, sessionId, res.data));
             })

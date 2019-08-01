@@ -34,7 +34,7 @@ const eventsReducer = (state = initialState, action) => {
         case actions.VOTER_ACTION_SUCCESS:
             let newEvent;
             const newEvents = state.events.map(event => {
-                if (event.id === action.eventId) {
+                if (event._id === action.eventId) {
                     newEvent = {
                         ...event, sessions: event.sessions.map(session => {
                             if (session.id === action.sessionId) {
@@ -49,7 +49,6 @@ const eventsReducer = (state = initialState, action) => {
                     return event;
                 }
             })
-
             return { ...state, events: newEvents, currentEvent: newEvent, errorMessage: '', loading: false };
 
         case actions.ADD_SESSION_FAILURE:

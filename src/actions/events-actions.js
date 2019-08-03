@@ -66,7 +66,7 @@ export const voteAction =  (eventId, sessionId, voterId, action) => {
         const url = `/api/events/${eventId}/sessions/${sessionId}/voters/${voterId}`;
 
         let axiosVerb = axios.delete;
-        let data = [url,config];
+        let data = [url, config];
         if (action === 'add') {
             axiosVerb = axios.post;
             data = [url, {}, config];
@@ -141,6 +141,7 @@ export const searchSessionsAction = async (search) => {
     let response = {};
     try {
         response = await axios.get(`/api/sessions/search?search=${search}`);
+        console.log(response);
         return response.data;
     }
     catch(ex) {

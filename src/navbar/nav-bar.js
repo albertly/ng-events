@@ -22,6 +22,7 @@ function NavBar({ isAuth, user, logOff }) {
 
     const search = e => {
         e.preventDefault();
+        setSessions([]);
         setModalShow(true);
         searchSessionsAction(searchTerm).then(results => {
             setSessions(results);

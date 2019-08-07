@@ -1,4 +1,5 @@
 import React from 'react'
+import { Panel, Button, Glyphicon, ButtonToolbar, ButtonGroup  } from 'react-bootstrap';
 
 import styles from './event-thumbnail.module.css';
 
@@ -31,7 +32,26 @@ const EventThumbnail = props => {
     }
 
     return (
-      <div onClick={() => props.onClickHandler(props.event._id)} className={['well', styles.well, 'hoverwell', styles.thumbnail].join(' ')}>
+      <Panel  onClick={() => props.onClickHandler(props.event._id)} className={[ styles.well, styles.thumbnail].join(' ')}>
+         <Panel.Title className={styles.fr}>
+         <ButtonToolbar >
+          <ButtonGroup >
+            <Button bsSize="xsmall">
+              <Glyphicon glyph="trash" />
+            </Button>
+            <Button bsSize="xsmall">
+              <Glyphicon glyph="pencil" />
+            </Button>
+            <Button bsSize="xsmall">
+              <Glyphicon glyph="shopping-cart" />
+            </Button>
+            <Button bsSize="xsmall">
+              <Glyphicon glyph="list" />
+            </Button>
+          </ButtonGroup>
+          </ButtonToolbar>
+         </Panel.Title>
+         <Panel.Body>
         <h2>{props.event.name.toUpperCase()}</h2>
         <div>Date: {props.event.date}</div>
         <div style={getStartTimeStyle()}>Time: {props.event.time}
@@ -39,7 +59,8 @@ const EventThumbnail = props => {
         </div>
         <div>Price: ${props.event.price}</div>
         {place}
-      </div>
+        </Panel.Body>
+      </Panel>
     );
   }
   

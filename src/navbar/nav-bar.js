@@ -79,8 +79,14 @@ function NavBar({ isAuth, user, logOff }) {
                                 {text}
                             </NavItem>
                             {isAuth && (
-                                <button  className="btn btn-default" onClick={logOff}>
+                                <button className="btn btn-default" onClick={logOff}>
                                     Log Off
+                                </button>
+                            )}
+                            {!isAuth && (
+
+                                <button className="btn btn-default" onClick={logOff}>
+                                    Sign Up
                                 </button>
                             )}
                         </Nav>

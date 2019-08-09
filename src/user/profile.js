@@ -5,11 +5,11 @@ import { Formik, Form, Field } from 'formik';
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css'
 
-import { updateUser } from '../actions/user-actions';
+import { updateUser, signupUser } from '../actions/user-actions';
 import { selectUser } from '../selectors/user-selector';
 import CustomInputComponent from '../shared/custom-input-component';
 
-function Profile({ user, onUpdateUser, history, location }) {
+function Profile({ user, onUpdateUser, onSignupUser, history, location }) {
 
   const mode = location.pathname === '/profile' ? 'upd' : 'add';
 
@@ -21,20 +21,31 @@ function Profile({ user, onUpdateUser, history, location }) {
   const cancelHandler = () => history.push('/events');
 
   const submitHandler = (values, actions) => {
-
-    onUpdateUser(user.id, values.firstName, values.lastName)
-      .then(() => {
+    if (mode === 'add') {
+      onSignupUser(values.email, values.password, values.userName, values.firstName, values.lastName).then(() => {
         actions.setSubmitting(false);
-        toastr.success('Profile Saved');
+        toastr.success('User created');
         history.push('/events');
       }
       )
+    } else {
+      onUpdateUser(user.id, values.firstName, values.lastName)
+        .then(() => {
+          actions.setSubmitting(false);
+          toastr.success('Profile Saved');
+          history.push('/events');
+        }
+        )
+    }
   };
 
   const validateForm = values => {
     let errors = {};
     if (!values.email) {
       errors.email = 'Required';
+    }
+    if (!values.userName) {
+      errors.userName = 'Required';
     }
     if (!values.firstName) {
       errors.firstName = 'Required';
@@ -51,7 +62,7 @@ function Profile({ user, onUpdateUser, history, location }) {
       <hr />
       <div className="col-md-4">
 
-        <Formik initialValues={{ email: user.email, firstName: user.firstName, lastName: user.lastName }}
+        <Formik initialValues={{ email: user.email, userName: user.userName, firstName: user.firstName, lastName: user.lastName }}
           validate={(values) => validateForm(values)}
           onSubmit={submitHandler}
           handleChange
@@ -59,12 +70,19 @@ function Profile({ user, onUpdateUser, history, location }) {
           {() => (
             <>
               <Form>
-              <Field component={CustomInputComponent}
+                <Field component={CustomInputComponent}
                   className="form-group"
                   type="email"
                   name="email"
                   lable="E-Mail:"
                   placeholder="E-Mail..." />
+
+                <Field component={CustomInputComponent}
+                  className="form-group"
+                  type="text"
+                  name="userName"
+                  lable="User Name:"
+                  placeholder="User Name..." />
 
                 <Field component={CustomInputComponent}
                   className="form-group"
@@ -80,6 +98,15 @@ function Profile({ user, onUpdateUser, history, location }) {
                   lable="Last Name:"
                   placeholder="Last Name..." />
 
+                {mode === 'add' && (
+                  <Field component={CustomInputComponent}
+                    className="form-group"
+                    type="password"
+                    name="password"
+                    lable="Password:"
+                    placeholder="Password..." />
+                )
+                }
                 <button type="submit" className="btn btn-primary">Save</button>
                 <button type="button" className="btn btn-default" onClick={cancelHandler}>Cancel</button>
               </Form>
@@ -102,6 +129,9 @@ const mapDispatchToProps = dispatch => {
   return {
     onUpdateUser: async (userId, firstName, lastName) => {
       return await dispatch(updateUser(userId, firstName, lastName));
+    },
+    onSignupUser: async (email, password, userName, firstName, lastName) => {
+      return await dispatch(signupUser(email, password, userName, firstName, lastName));
     }
   };
 };

@@ -26,11 +26,13 @@ const userReducer = (state = initialState, action) => {
                 errorMessage: '',
                 loading: false,
             }
+        case action.SIGNUP_USER_START:
         case actions.UPDATE_USER_START:
             return {
                 ...state,
                 loading: true,
             }
+        case actions.SIGNUP_USER_FAILURE:
         case actions.UPDATE_USER_FAILURE:
         case actions.AUTH_FAILURE:
             return {
@@ -45,6 +47,13 @@ const userReducer = (state = initialState, action) => {
                 lastName: action.payload.lastName,
                 loading: false,
             }
+            case actions.SIGNUP_USER_SUCCESS:
+                    return {
+                        ...state,
+                        ...action.payload,
+                        errorMessage: '',
+                        loading: false,
+                    }
         case actions.LOGOFF_USER:
             return {
                 ...state,

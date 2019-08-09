@@ -71,4 +71,31 @@ const updateUserFailure = error => ({
   error
 });
 
+export const signupUser = (email, password, userName, firstName, lastName) => {
+  return (dispatch, getState) => {
+    dispatch(signupUserStarted());
 
+    axios.post(`/api/signup`, { email: email, password: password, userName: userName, firstName: firstName, lastName: lastName })
+      .then(res => {
+        console.log('signup', res);
+        return dispatch(signupUserSuccess(res.data));
+      })
+      .catch(err => {
+        return dispatch(signupUserFailure(err.message));
+      });
+  };
+};
+
+const signupUserSuccess = payload => ({
+  type: actions.SIGNUP_USER_SUCCESS,
+  payload,
+});
+
+const signupUserStarted = () => ({
+  type: actions.SIGNUP_USER_START
+});
+
+const signupUserFailure = error => ({
+  type: actions.SIGNUP_USER_FAILURE,
+  error
+});

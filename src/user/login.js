@@ -2,10 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { GoogleLogin } from 'react-google-login';
 
 import { authUser } from '../actions/user-actions';
 import { selectUser, isAuth } from '../selectors/user-selector';
 
+import config from '../config.json';
 import './login.css';
 
 function Login({ isAuth, user, authUserHandler, history }) {
@@ -26,6 +28,32 @@ function Login({ isAuth, user, authUserHandler, history }) {
         // eslint-disable-next-line
         [user]);
 
+   const onFailure = (error, desc) => {
+        console.log(error, desc);
+    };
+
+
+
+    const googleResponse = (response) => {
+        console.log(response);
+        const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
+        const options = {
+            method: 'POST',
+            body: tokenBlob,
+            mode: 'cors',
+            cache: 'default'
+        };
+        fetch('http://localhost:8080/api/v1/auth/google', options).then(r => {
+            const token = r.headers.get('x-auth-token');
+            console.log(token);
+            r.json().then(user => {
+                if (token) {
+                    this.setState({ isAuthenticated: true, user, token })
+                }
+            });
+        })
+            .catch(err => console.log(err));
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -35,6 +63,13 @@ function Login({ isAuth, user, authUserHandler, history }) {
     return (
         <>
             <h1>Login</h1>
+            <GoogleLogin
+                clientId={config.GOOGLE_CLIENT_ID}
+                buttonText="Login with Google"
+                onSuccess={googleResponse}
+                onFailure={onFailure}
+                theme="dark"
+            />
             <hr />
             <div className="col-md-4">
                 <form autoComplete="off" noValidate onSubmit={handleSubmit}>

@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.19.0",
     "formik": "^1.5.7",
+    "history": "^4.9.0",
     "ngf-bootstrap": "0.0.5",
     "ngf-server": "^1.0.2",
     "react": "^16.8.6",

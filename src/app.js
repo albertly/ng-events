@@ -1,6 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Redirect, Route } from 'react-router-dom';
+import { Router, Switch, Redirect, Route } from 'react-router-dom';
+import history from './history';
 import axios from 'axios';
+
 
 import NavBar from './navbar/nav-bar';
 import { EventsList, CreateEvent, EventDetails, CreateSession } from './event';
@@ -17,7 +19,7 @@ const App = () => {
  axios.defaults.baseURL = 'http://localhost:5000/';
   return (
     <>
-      <Router>
+      <Router history={history}>
         <NavBar></NavBar>
         <div style={{ "marginTop": "70px" }}>
           <Switch>
@@ -28,6 +30,7 @@ const App = () => {
             <Route exact path="/session/new" component={CreateSession} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/signup" component={Profile} />
             <Route exact path="/error" component={Error404} />
             <Route component={Error404} />
           </Switch>

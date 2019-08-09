@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import history from '../history';
 
 import { NavLink, Link } from 'react-router-dom';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
@@ -19,6 +20,10 @@ function NavBar({ isAuth, user, logOff }) {
     const [sessions, setSessions] = useState([]);
 
     const handleOnChange = event => setSearchTerm(event.target.value);
+
+    const signup = e => {
+        history.push('/signup');
+    }
 
     const search = e => {
         e.preventDefault();
@@ -85,7 +90,7 @@ function NavBar({ isAuth, user, logOff }) {
                             )}
                             {!isAuth && (
 
-                                <button className="btn btn-default" onClick={logOff}>
+                                <button className="btn btn-default" onClick={signup}>
                                     Sign Up
                                 </button>
                             )}

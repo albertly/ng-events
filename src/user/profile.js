@@ -9,7 +9,14 @@ import { updateUser } from '../actions/user-actions';
 import { selectUser } from '../selectors/user-selector';
 import CustomInputComponent from '../shared/custom-input-component';
 
-function Profile({ user, onUpdateUser, history }) {
+function Profile({ user, onUpdateUser, history, location }) {
+
+  const mode = location.pathname === '/profile' ? 'upd' : 'add';
+
+  let title = 'Edit Your Profile';
+  if (mode === 'add') {
+    title = 'Registration';
+  }
 
   const cancelHandler = () => history.push('/events');
 
@@ -26,7 +33,9 @@ function Profile({ user, onUpdateUser, history }) {
 
   const validateForm = values => {
     let errors = {};
-
+    if (!values.email) {
+      errors.email = 'Required';
+    }
     if (!values.firstName) {
       errors.firstName = 'Required';
     }
@@ -38,11 +47,11 @@ function Profile({ user, onUpdateUser, history }) {
 
   return (
     <div>
-      <h1>Edit Your Profile</h1>
+      <h1>{title}</h1>
       <hr />
       <div className="col-md-4">
 
-        <Formik initialValues={{ firstName: user.firstName, lastName: user.lastName }}
+        <Formik initialValues={{ email: user.email, firstName: user.firstName, lastName: user.lastName }}
           validate={(values) => validateForm(values)}
           onSubmit={submitHandler}
           handleChange
@@ -50,6 +59,13 @@ function Profile({ user, onUpdateUser, history }) {
           {() => (
             <>
               <Form>
+              <Field component={CustomInputComponent}
+                  className="form-group"
+                  type="email"
+                  name="email"
+                  lable="E-Mail:"
+                  placeholder="E-Mail..." />
+
                 <Field component={CustomInputComponent}
                   className="form-group"
                   type="text"

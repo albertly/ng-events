@@ -1,7 +1,8 @@
 import * as actions from '../actions/types';
 
 const initialState = {
-    id: 6,
+    id: 0,
+    email: sessionStorage.getItem('email'),
     userName: sessionStorage.getItem('userName'),
     firstName: sessionStorage.getItem('firstName'),
     lastName: sessionStorage.getItem('lastName'),
@@ -47,6 +48,7 @@ const userReducer = (state = initialState, action) => {
         case actions.LOGOFF_USER:
             return {
                 ...state,
+                email: '',
                 firstName: '',
                 lastName: '',
                 userName: '',

@@ -14,11 +14,13 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
+        case actions.AUTH_GOOGLE_START:
         case actions.AUTH_START:
             return {
                 ...state,
                 loading: true,
             }
+        case actions.AUTH_GOOGLE_SUCCESS:    
         case actions.AUTH_SUCCESS:
             return {
                 ...state,
@@ -34,6 +36,7 @@ const userReducer = (state = initialState, action) => {
             }
         case actions.SIGNUP_USER_FAILURE:
         case actions.UPDATE_USER_FAILURE:
+        case actions.AUTH_GOOGLE_FAILURE:    
         case actions.AUTH_FAILURE:
             return {
                 ...state,

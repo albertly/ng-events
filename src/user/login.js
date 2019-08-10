@@ -4,13 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { GoogleLogin } from 'react-google-login';
 
-import { authUser } from '../actions/user-actions';
+import { authUser, authGoogleUser } from '../actions/user-actions';
 import { selectUser, isAuth } from '../selectors/user-selector';
 
 import config from '../config.json';
 import './login.css';
 
-function Login({ isAuth, user, authUserHandler, history }) {
+function Login({ isAuth, user, authUserHandler, authGoogleUserHandler, history }) {
 
     const [userName, setUserName] = useState('bradgreen');
     const [userNameValid, setUserNameValid] = useState(true);
@@ -66,7 +66,7 @@ function Login({ isAuth, user, authUserHandler, history }) {
             <GoogleLogin
                 clientId={config.GOOGLE_CLIENT_ID}
                 buttonText="Login with Google"
-                onSuccess={googleResponse}
+                onSuccess={(response) => authGoogleUserHandler(response)}
                 onFailure={onFailure}
                 theme="dark"
             />
@@ -129,6 +129,9 @@ const mapDispatchToProps = dispatch => {
     return {
         authUserHandler: (userName, password) => {
             dispatch(authUser(userName, password));
+        },
+        authGoogleUserHandler: (response) => {
+            dispatch(authGoogleUser(response));
         }
     };
 };

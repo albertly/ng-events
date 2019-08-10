@@ -5,7 +5,7 @@ import * as actions from './types';
 export const logoffUser = () => {
   return dispatch => {
     sessionStorage.clear();
-    dispatch({type:actions.LOGOFF_USER});
+    dispatch({ type: actions.LOGOFF_USER });
   };
 };
 
@@ -45,7 +45,7 @@ export const updateUser = (userId, firstName, lastName) => {
   return (dispatch, getState) => {
     dispatch(updateUserStarted());
 
-    const config = { headers: { authorization: getState().user.token,}};
+    const config = { headers: { authorization: getState().user.token, } };
 
     axios.put(`/api/users/${userId}`, { id: userId, firstName: firstName, lastName: lastName }, config)
       .then(res => {
@@ -97,5 +97,47 @@ const signupUserStarted = () => ({
 
 const signupUserFailure = error => ({
   type: actions.SIGNUP_USER_FAILURE,
+  error
+});
+
+export const authGoogleUser = (response) => {
+  return dispatch => {
+    dispatch(authGoogleUserStarted());
+
+    const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
+    const options = {
+      method: 'POST',
+      body: tokenBlob,
+      mode: 'cors',
+      cache: 'default'
+    };
+
+    fetch('http://localhost:8080/api/v1/auth/google', options)
+      .then(r => {
+        const token = r.headers.get('x-auth-token');
+        r.json().then(user => {
+          if (token) {
+            dispatch(authGoogleUserSuccess({ ...user, token }));
+          }
+          else {
+            dispatch(authGoogleUserFailure('Google Auth: Cannot get token'));
+          }
+        });
+      })
+      .catch(err => dispatch(authGoogleUserFailure('Google Auth Error: ' + err.message)));
+  };
+};
+
+const authGoogleUserStarted = () => ({
+  type: actions.AUTH_GOOGLE_START
+});
+
+const authGoogleUserSuccess = payload => ({
+  type: actions.AUTH_GOOGLE_SUCCESS,
+  payload,
+});
+
+const authGoogleUserFailure = error => ({
+  type: actions.AUTH_FAILURE,
   error
 });

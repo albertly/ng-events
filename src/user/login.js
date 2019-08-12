@@ -32,29 +32,6 @@ function Login({ isAuth, user, authUserHandler, authGoogleUserHandler, history }
         console.log(error, desc);
     };
 
-
-
-    const googleResponse = (response) => {
-        console.log(response);
-        const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
-        const options = {
-            method: 'POST',
-            body: tokenBlob,
-            mode: 'cors',
-            cache: 'default'
-        };
-        fetch('http://localhost:8080/api/v1/auth/google', options).then(r => {
-            const token = r.headers.get('x-auth-token');
-            console.log(token);
-            r.json().then(user => {
-                if (token) {
-                    this.setState({ isAuthenticated: true, user, token })
-                }
-            });
-        })
-            .catch(err => console.log(err));
-    };
-
     const handleSubmit = (event) => {
         event.preventDefault();
         authUserHandler(userName, password);

@@ -5,6 +5,7 @@ const initialState = {
     currentEvent: {},
     errorMessage: '',
     loading: false,
+    actionState: 0
 };
 
 const eventsReducer = (state = initialState, action) => {
@@ -16,11 +17,14 @@ const eventsReducer = (state = initialState, action) => {
         case actions.GET_EVENTS_START:
             return { ...state, errorMessage: '', loading: true };
 
+        case actions.SET_ACTION_STATE:
+            return { ...state, actionState: action.payload }
+
         case actions.SAVE_EVENT_START:
-                return { ...state, errorMessage: '', loading: true }
+            return { ...state, errorMessage: '', loading: true, actionState: 1 }
 
         case actions.SAVE_EVENT_SUCCESS:
-            return { ...state, events: state.events.concat(action.payload), errorMessage: '' }
+            return { ...state, events: state.events.concat(action.payload), errorMessage: '', loading: false, actionState: 2 }
 
         case actions.GET_EVENT_START:
             return { ...state, currentEvent: {}, errorMessage: '', loading: true };
@@ -30,7 +34,7 @@ const eventsReducer = (state = initialState, action) => {
 
         case actions.VOTER_ACTION_START:
             return { ...state, errorMessage: '', loading: true };
-            
+
         case actions.VOTER_ACTION_SUCCESS:
             let newEvent;
             const newEvents = state.events.map(event => {

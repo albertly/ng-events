@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { Prompt } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 
-import { saveEvent } from '../../actions/events-actions';
+import { saveEvent, setActionState } from '../../actions/events-actions';
 import CustomInputComponent from '../../shared/custom-input-component';
 
 import './create-event.css';
 
-function CreateEvent({saveEventAction, history }) {
+function CreateEvent({actionState, resetActionState, saveEventAction, history }) {
 
     const [isDirty, setDirty] = useState(true);
 
@@ -16,11 +16,8 @@ function CreateEvent({saveEventAction, history }) {
 
     const submitHandler = (values, actions) => {
         saveEventAction(values);
-        
         actions.setSubmitting(false);
         setDirty(false);
-        history.push('/events');
-
     };
 
     const noExit = (dirty) => {
@@ -55,6 +52,11 @@ function CreateEvent({saveEventAction, history }) {
         }
     };
 
+    if (actionState === 2) {
+        resetActionState();
+        history.push('/events');
+    } 
+
     return (
     <>
         <h1>New Event</h1>
@@ -64,7 +66,7 @@ function CreateEvent({saveEventAction, history }) {
                 initialValues={{ name: '', date: '', time:'', price:0,
                                  location: {address:'', city:'', country:''}, onlineUrl:'', imageUrl: '' }}
                 validate={ (values) => validateForm(values) }
-                onSubmit={submitHandler}
+                onSubmit={(values, actions) => submitHandler(values, actions)}
                 handleChange
             >
                 {({ isSubmitting, dirty, values }) => (
@@ -148,15 +150,24 @@ function CreateEvent({saveEventAction, history }) {
     );
 }
 
+const mapStateToProps = state => {
+    return {
+        actionState: state.events.actionState,
+    };
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         saveEventAction : event => {
-        dispatch(saveEvent(event));
+            dispatch(saveEvent(event));
+      },
+      resetActionState: () => {
+          dispatch(setActionState(0));
       }
     };
   };
   
   export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )(CreateEvent);

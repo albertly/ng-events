@@ -2,6 +2,11 @@ import axios from 'axios';
 
 import * as actions from './types';
 
+export const setActionState = (actionState) => ({
+    type: actions.SET_ACTION_STATE,
+    payload : actionState
+});
+
 export const getEvents = () => {
     return dispatch => {
         dispatch(getEventsStarted());
@@ -114,10 +119,10 @@ export const saveEvent =  (event, msg = 'Save Event Error: ') => {
         const config = { headers: { authorization: getState().user.token,}};
         axios.post('/api/events', event, config)
             .then(res => {
-                dispatch(saveEventSuccess(res.data));
+              dispatch(saveEventSuccess(res.data));
             })
             .catch(err => {
-                dispatch(saveEventFailure(msg + err));
+               dispatch(saveEventFailure(msg + err));
             });
     }
 }

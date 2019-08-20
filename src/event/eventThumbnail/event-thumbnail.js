@@ -36,7 +36,7 @@ const EventThumbnail = props => {
          <Panel.Title className={styles.fr}>
          <ButtonToolbar >
           <ButtonGroup >
-            <Button bsSize="xsmall">
+            <Button bsSize="xsmall" onClick={(e) => props.onDeleteEventHandler(e, props.event._id)}>
               <Glyphicon glyph="trash" />
             </Button>
             <Button bsSize="xsmall">

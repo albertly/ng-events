@@ -63,6 +63,35 @@ const getEventFailure = error => ({
 });
 
 //////////////////////////////////////////////////
+export const deleteEvent = (eventId) => {
+    return (dispatch, getState) => {
+        dispatch(deleteEventStarted());
+
+        const config = { headers: { authorization: getState().user.token,}};
+        axios.delete(`/api/events/${eventId}`, config)
+            .then(res => {
+                dispatch(deleteEventSuccess(res.data));
+            })
+            .catch(err => {
+                dispatch(deleteEventFailure(err.message));
+            });
+    }
+}
+
+const deleteEventStarted = () => ({
+    type: actions.DELETE_EVENT_START
+});
+
+const deleteEventSuccess = payload => ({
+    type: actions.DELETE_EVENT_SUCCESS,
+    payload,
+});
+
+const deleteEventFailure = error => ({
+    type: actions.DELETE_EVENT_FAILURE,
+    error
+});
+//////////////////////////////////////////////////
 export const voteAction =  (eventId, sessionId, voterId, action) => {
     return (dispatch, getState) => {
         dispatch(voteActionStarted()); 

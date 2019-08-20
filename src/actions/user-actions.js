@@ -49,10 +49,10 @@ export const updateUser = (userId, firstName, lastName) => {
 
     axios.put(`/api/users/${userId}`, { id: userId, firstName: firstName, lastName: lastName }, config)
       .then(res => {
-        return dispatch(updateUserSuccess(res.data));
+         dispatch(updateUserSuccess(res.data));
       })
       .catch(err => {
-        return dispatch(updateUserFailure(err.message));
+         dispatch(updateUserFailure(err.message));
       });
   };
 };
@@ -78,10 +78,10 @@ export const signupUser = (email, password, userName, firstName, lastName) => {
     axios.post(`/api/signup`, { email: email, password: password, userName: userName, firstName: firstName, lastName: lastName })
       .then(res => {
         console.log('signup', res);
-        return dispatch(signupUserSuccess(res.data));
+        dispatch(signupUserSuccess(res.data));
       })
       .catch(err => {
-        return dispatch(signupUserFailure(err.message));
+        dispatch(signupUserFailure(err.message));
       });
   };
 };

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { getEvents } from '../../actions/events-actions';
+import { getEvents, deleteEvent } from '../../actions/events-actions';
 import { selectEvents } from '../../selectors/events-selector';
 import { EventThumbnail } from '..';
 
@@ -14,12 +14,19 @@ function EventsList(props) {
     []);
 
   const handleThumbnailClick = eventId => props.history.push(`/events/${eventId}`);
+
+  const handleDeleteSingleEvent = (e, eventId) => {
+    e.preventDefault();
+    e.stopPropagation();
+    props.deleteSingleEvent(eventId);
+  }
+
   return (
     <div>
       <h1>Upcoming Angular Events</h1>
       <hr />
       <div className="row">
-        {props.events.map(e => <div key={e._id} className="col-md-5"><EventThumbnail onClickHandler={handleThumbnailClick} event={e}></EventThumbnail></div>)}
+        {props.events.map(e => <div key={e._id} className="col-md-5"><EventThumbnail onDeleteEventHandler={handleDeleteSingleEvent} onClickHandler={handleThumbnailClick} event={e}></EventThumbnail></div>)}
       </div>
     </div>
   );
@@ -35,6 +42,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchEvents: () => {
       dispatch(getEvents());
+    },
+    deleteSingleEvent: (eventId) => {
+      dispatch(deleteEvent(eventId));
     }
   };
 };

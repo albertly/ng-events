@@ -22,20 +22,19 @@ function Profile({ user, onUpdateUser, onSignupUser, history, location }) {
 
   const submitHandler = (values, actions) => {
     if (mode === 'add') {
-      onSignupUser(values.email, values.password, values.userName, values.firstName, values.lastName).then(() => {
-        actions.setSubmitting(false);
-        toastr.success('User created');
-        history.push('/events');
-      }
-      )
+      onSignupUser(values.email, values.password, values.userName, values.firstName, values.lastName);
+
+      actions.setSubmitting(false);
+      toastr.success('User created');
+      history.push('/events');
+
     } else {
-      onUpdateUser(user.id, values.firstName, values.lastName)
-        .then(() => {
-          actions.setSubmitting(false);
-          toastr.success('Profile Saved');
-          history.push('/events');
-        }
-        )
+      onUpdateUser(user.id, values.firstName, values.lastName);
+
+      actions.setSubmitting(false);
+      toastr.success('Profile Saved');
+      history.push('/events');
+
     }
   };
 
@@ -127,11 +126,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onUpdateUser: async (userId, firstName, lastName) => {
-      return await dispatch(updateUser(userId, firstName, lastName));
+    onUpdateUser: (userId, firstName, lastName) => {
+      dispatch(updateUser(userId, firstName, lastName));
     },
-    onSignupUser: async (email, password, userName, firstName, lastName) => {
-      return await dispatch(signupUser(email, password, userName, firstName, lastName));
+    onSignupUser: (email, password, userName, firstName, lastName) => {
+      dispatch(signupUser(email, password, userName, firstName, lastName));
     }
   };
 };

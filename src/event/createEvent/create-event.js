@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Prompt } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
@@ -11,6 +11,15 @@ import './create-event.css';
 function CreateEvent({actionState, resetActionState, saveEventAction, history }) {
 
     const [isDirty, setDirty] = useState(true);
+
+    useEffect(() => {
+        if (actionState === 2) {
+            resetActionState(); 
+            history.push('/events');
+        }
+    },
+        // eslint-disable-next-line
+        [actionState]);
 
     const cancelHandler = () => history.push('/events');
 
@@ -51,11 +60,6 @@ function CreateEvent({actionState, resetActionState, saveEventAction, history })
             return errors;
         }
     };
-
-    if (actionState === 2) {
-        resetActionState();
-        history.push('/events');
-    } 
 
     return (
     <>

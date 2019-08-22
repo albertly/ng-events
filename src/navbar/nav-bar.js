@@ -11,6 +11,7 @@ import { selectUser, isAuth } from '../selectors/user-selector';
 import SimpleModal from '../shared/simple-modal';
 import { searchSessionsAction } from '../actions/events-actions';
 import { logoffUser } from '../actions/user-actions';
+import Avatar from '../shared/avatar';
 
 import styles from './nav-bar.module.css';
 
@@ -84,9 +85,12 @@ function NavBar({ isAuth, user, logOff }) {
                                 {text}
                             </NavItem>
                             {isAuth && (
-                                <button className="btn btn-default" onClick={logOff}>
-                                    Log Off
-                                </button>
+                                <>
+                                    <Avatar user={user}></Avatar>
+                                    <button className="btn btn-default" onClick={logOff}>
+                                        Log Off
+                                    </button>
+                                </>
                             )}
                             {!isAuth && (
 

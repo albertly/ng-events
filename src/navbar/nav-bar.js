@@ -70,9 +70,13 @@ function NavBar({ isAuth, user, logOff }) {
                         <NavItem componentClass={NavLink} exact to="/events/" href="/events/" activeClassName={styles['active']}>
                             All Events
                         </NavItem>
-                        <NavItem componentClass={NavLink} exact to="/events/new" href="/events/new" activeClassName={styles['active']}>
-                            Create Event
-                        </NavItem>
+
+                        {isAuth && user.roles && user.roles === 'admin' && (
+                            <NavItem componentClass={NavLink} exact to="/events/new" href="/events/new" activeClassName={styles['active']}>
+                                Create Event
+                            </NavItem>
+                        )}
+
                         <NavItem componentClass={DropdownButton} id="ddb" className="dropdown" title="Events">
                             {/* <DropdownButton id="ddb" className="dropdown" title="Events"> */}
                             <MenuItem eventKey="1">Angular Connect</MenuItem>

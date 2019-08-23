@@ -19,6 +19,7 @@ export const authUser = (userName, password) => {
         sessionStorage.setItem('userName', res.data.userName);
         sessionStorage.setItem('firstName', res.data.firstName);
         sessionStorage.setItem('lastName', res.data.lastName);
+        sessionStorage.setItem('roles', res.data.roles);
         dispatch(authUserSuccess(res.data));
       })
       .catch(err => {

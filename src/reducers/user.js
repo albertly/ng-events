@@ -7,6 +7,7 @@ const initialState = {
     firstName: sessionStorage.getItem('firstName'),
     lastName: sessionStorage.getItem('lastName'),
     token: sessionStorage.getItem('token'),
+    roles: sessionStorage.getItem('roles'),
     errorMessage: '',
     loading: false,
 }
@@ -64,6 +65,7 @@ const userReducer = (state = initialState, action) => {
                 firstName: '',
                 lastName: '',
                 userName: '',
+                roles: '',
                 token: ''
             }
         default:

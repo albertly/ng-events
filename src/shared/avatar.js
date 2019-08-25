@@ -30,7 +30,8 @@ function Avatar({user}) {
         padding: '5px',
         borderRadius: '50%',
         background: colors().background,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginLeft: '5px'
     };
 
     const initials = (user.firstName.charAt(0) + user.lastName.charAt(0)).toUpperCase();

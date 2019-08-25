@@ -12,7 +12,7 @@ import SimpleModal from '../shared/simple-modal';
 import { searchSessionsAction } from '../actions/events-actions';
 import { logoffUser } from '../actions/user-actions';
 import Avatar from '../shared/avatar';
-
+1
 import styles from './nav-bar.module.css';
 
 function NavBar({ isAuth, user, logOff }) {
@@ -87,20 +87,20 @@ function NavBar({ isAuth, user, logOff }) {
                         <Nav className={['nav', 'navbar-nav', styles['nav'], styles['navbar-nav']].join(' ')}>
                             <NavItem componentClass={NavLink} exact to={to} href={to} activeClassName={styles['active']}>
                                 {text}
-                            </NavItem>
-                            {isAuth && (
-                                <>
+                                {isAuth && (
                                     <Avatar user={user}></Avatar>
-                                    <button className="btn btn-default" onClick={logOff}>
-                                        Log Off
-                                    </button>
-                                </>
+                                )}
+                            </NavItem>
+                            
+                            {isAuth && (
+                                <NavItem componentClass={NavLink} to="#" onClick={logOff} activeClassName={styles['active']}>
+                                    Log Off
+                                </NavItem>
                             )}
                             {!isAuth && (
-
-                                <button className="btn btn-default" onClick={signup}>
+                                <NavItem componentClass={NavLink} to="#" onClick={signup} activeClassName={styles['active']}>
                                     Sign Up
-                                </button>
+                                </NavItem>
                             )}
                         </Nav>
                     </div>

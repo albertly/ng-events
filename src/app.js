@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import NavBar from './navbar/nav-bar';
 import { EventsList, CreateEvent, EventDetails, CreateSession } from './event';
+import UserList from './user/user-list';
 import Error404 from './errors/error404';
 import { selectUser, isAuth } from './selectors/user-selector';
 
@@ -23,7 +24,7 @@ const renderIfAdmin = (routeProps) => (isAuth, user, Component) => {
   }
 }
 
-const App = ({ isAuth, user }) => {
+export const App = ({ isAuth, user }) => {
 
   // axios.defaults.baseURL = 'https://immense-earth-80859.herokuapp.com/';
   axios.defaults.baseURL = 'http://localhost:8080/';
@@ -41,6 +42,7 @@ const App = ({ isAuth, user }) => {
             <Route exact path="/login" component={Login} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/signup" component={Profile} />
+            <Route exact path="/users" component = {UserList} />
             <Route exact path="/error" component={Error404} />
             <Route component={Error404} />
           </Switch>

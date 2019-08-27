@@ -12,7 +12,7 @@ import SimpleModal from '../shared/simple-modal';
 import { searchSessionsAction } from '../actions/events-actions';
 import { logoffUser } from '../actions/user-actions';
 import Avatar from '../shared/avatar';
-1
+
 import styles from './nav-bar.module.css';
 
 function NavBar({ isAuth, user, logOff }) {

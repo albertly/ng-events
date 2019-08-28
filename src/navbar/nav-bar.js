@@ -71,6 +71,10 @@ function NavBar({ isAuth, user, logOff }) {
                             All Events
                         </NavItem>
 
+                        <NavItem componentClass={NavLink} exact to="/users/" href="/users/" activeClassName={styles['active']}>
+                            All Events
+                        </NavItem>
+
                         {isAuth && user.roles && user.roles === 'admin' && (
                             <NavItem componentClass={NavLink} exact to="/events/new" href="/events/new" activeClassName={styles['active']}>
                                 Create Event

@@ -1,28 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
+
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
 export function UserList({ history }) {
-
+    const [userData, setUserData] = useState([]);
     const state = {
         columnDefs: [{
-            headerName: "Make", field: "make", sortable: true
+            headerName: "Id", field: "_id", sortable: false
         }, {
-            headerName: "Model", field: "model", sortable: true
+            headerName: "User Name", field: "userName", sortable: true
         }, {
-            headerName: "Price", field: "price", sortable: true
-        }],
-        rowData: [{
-            make: "Toyota", model: "Celica", price: 35000
+            headerName: "Email", field: "email", sortable: true
         }, {
-            make: "Ford", model: "Mondeo", price: 32000
+            headerName: "First Name", field: "firstName", sortable: true
         }, {
-            make: "Porsche", model: "Boxter", price: 72000
-        }]
+            headerName: "Last Name", field: "lastName", sortable: true
+        }, {
+            headerName: "Roles", field: "roles", sortable: true
+        } ]        
     }
 
+    useEffect(() => {
+        axios.get('/api/users')
+       // .then(result => result.json())
+        .then(rowData => {
+            console.log(rowData);
+            setUserData(rowData.data.data);
+            console.log(state);
+        })
+        .catch(err => {
+            console.log(err);
+        });                        
+    },[]);
 
     return (
         <>
@@ -40,7 +53,7 @@ export function UserList({ history }) {
                     rowSelection='single'
                     pagination='true'
                     columnDefs={state.columnDefs}
-                    rowData={state.rowData}>
+                    rowData={userData}>
                 </AgGridReact>
             </div>
         </>

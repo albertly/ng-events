@@ -72,7 +72,7 @@ function NavBar({ isAuth, user, logOff }) {
                         </NavItem>
 
                         <NavItem componentClass={NavLink} exact to="/users/" href="/users/" activeClassName={styles['active']}>
-                            All Events
+                            Users
                         </NavItem>
 
                         {isAuth && user.roles && user.roles === 'admin' && (

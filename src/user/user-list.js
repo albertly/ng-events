@@ -6,11 +6,7 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
-         //{
-        //     
 
-        // }
-//valueGetter: 'data.firstName + " " + data.lastName',     //  : <span/> 
 export function UserList({ history }) {
     const [userData, setUserData] = useState([]);
     const state = {
@@ -39,9 +35,7 @@ export function UserList({ history }) {
         axios.get('/api/users?limit=50')
        // .then(result => result.json())
         .then(rowData => {
-            console.log(rowData);
             setUserData(rowData.data.data);
-            console.log(state);
         })
         .catch(err => {
             console.log(err);

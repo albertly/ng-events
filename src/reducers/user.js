@@ -10,6 +10,7 @@ const initialState = {
     roles: sessionStorage.getItem('roles'),
     errorMessage: '',
     loading: false,
+    actionState: 0
 }
 
 
@@ -21,6 +22,9 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 loading: true,
             }
+        case actions.SET_USER_ACTION_STATE:
+                return { ...state, actionState: action.payload };    
+
         case actions.AUTH_GOOGLE_SUCCESS:    
         case actions.AUTH_SUCCESS:
             return {
@@ -34,9 +38,17 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: true,
+                errorMessage: '',
+                actionState: 1
             }
-        case actions.SIGNUP_USER_FAILURE:
         case actions.UPDATE_USER_FAILURE:
+                return {
+                    ...state,
+                    errorMessage: action.error,
+                    loading: false,
+                    actionState: 2
+                }
+        case actions.SIGNUP_USER_FAILURE:
         case actions.AUTH_GOOGLE_FAILURE:    
         case actions.AUTH_FAILURE:
             return {
@@ -49,7 +61,9 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 firstName: action.payload.firstName,
                 lastName: action.payload.lastName,
+                errorMessage: '',
                 loading: false,
+                actionState: 2
             }
             case actions.SIGNUP_USER_SUCCESS:
                     return {

@@ -24,9 +24,11 @@ const eventsReducer = (state = initialState, action) => {
             return { ...state, errorMessage: '', loading: true };
 
         case actions.DELETE_EVENT_SUCCESS:
-                console.log('action.payload', action.payload);
-                return { ...state, events: state.events.filter(event => event._id !== action.payload._id ),
-                          errorMessage: '', loading: false }
+            console.log('action.payload', action.payload);
+            return {
+                ...state, events: state.events.filter(event => event._id !== action.payload._id),
+                errorMessage: '', loading: false
+            }
         case actions.SAVE_EVENT_START:
             return { ...state, errorMessage: '', loading: true, actionState: 1 }
 
@@ -65,10 +67,11 @@ const eventsReducer = (state = initialState, action) => {
         case actions.ADD_SESSION_FAILURE:
         case actions.VOTER_ACTION_FAILURE:
         case actions.GET_EVENT_FAILURE:
-        case actions.DELETE_EVENT_FAILURE:    
-        case actions.SAVE_EVENT_FAILURE:
+        case actions.DELETE_EVENT_FAILURE:
         case actions.GET_EVENTS_FAILURE:
-            return { ...state, currentEvent: {}, errorMessage: action.error, loading: false }
+            return { ...state, currentEvent: {}, errorMessage: action.error, loading: false };
+        case actions.SAVE_EVENT_FAILURE:
+            return { ...state, currentEvent: {}, errorMessage: action.error, loading: false, actionState: 2 }
 
         default:
             return state;

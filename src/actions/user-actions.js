@@ -2,6 +2,11 @@ import axios from 'axios';
 
 import * as actions from './types';
 
+export const setActionState = (actionState) => ({
+  type: actions.SET_USER_ACTION_STATE,
+  payload : actionState
+});
+
 export const logoffUser = () => {
   return dispatch => {
     sessionStorage.clear();

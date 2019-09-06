@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css'
 
-import { updateUser, signupUser } from '../actions/user-actions';
+import { updateUser, signupUser, setActionState } from '../actions/user-actions';
 import { selectUser } from '../selectors/user-selector';
 import CustomInputComponent from '../shared/custom-input-component';
 
-function Profile({ user, onUpdateUser, onSignupUser, history, location }) {
+function Profile({ user, errorMessage, actionState, onUpdateUser, onSignupUser, resetActionState, history, location }) {
+
+  useEffect(() => {
+
+    if (actionState === 2) {
+      resetActionState();
+      if (errorMessage) {
+        toastr.error(errorMessage)
+      } else {
+        toastr.success('Profile Saved');
+        history.push('/events');
+      }
+     
+    }
+  },
+    // eslint-disable-next-line
+    [actionState]);
 
   const mode = location.pathname === '/profile' ? 'upd' : 'add';
 
@@ -30,11 +46,8 @@ function Profile({ user, onUpdateUser, onSignupUser, history, location }) {
 
     } else {
       onUpdateUser(user.id, values.firstName, values.lastName);
-
       actions.setSubmitting(false);
-      toastr.success('Profile Saved');
-      history.push('/events');
-
+      
     }
   };
 
@@ -120,7 +133,9 @@ function Profile({ user, onUpdateUser, onSignupUser, history, location }) {
 
 const mapStateToProps = state => {
   return {
-    user: selectUser(state)
+    user: selectUser(state),
+    actionState: state.user.actionState,
+    errorMessage: state.user.errorMessage
   };
 };
 
@@ -131,6 +146,9 @@ const mapDispatchToProps = dispatch => {
     },
     onSignupUser: (email, password, userName, firstName, lastName) => {
       dispatch(signupUser(email, password, userName, firstName, lastName));
+    },
+    resetActionState: () => {
+      dispatch(setActionState(0));
     }
   };
 };

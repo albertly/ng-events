@@ -6,6 +6,7 @@ import styles from './event-thumbnail.module.css';
 
 const EventThumbnail = props => {
   let place = '';
+  let placeText = '';
   let startTime = '';
 
   const getStartTimeStyle = () => {
@@ -21,11 +22,13 @@ const EventThumbnail = props => {
   }
 
   if (!props.event.location) {
+    placeText = props.event.onlineUrl;
     place = <div>
       Online URL: {props.event.onlineUrl}
     </div>;
   }
   else {
+    placeText = props.event.location.address + ' \n' + props.event.location.city + '\n' + props.event.location.country;
     place = <div>
       <span>Location: {props.event.location.address}</span>
       <span className={styles['pad-left']}>{props.event.location.city}, {props.event.location.country}</span>
@@ -48,10 +51,10 @@ const EventThumbnail = props => {
                 e.stopPropagation();
               }}>
             <StripeCheckout
-              name="Emaily"
-              description="$5 for 5 email credits"
-              amount={500}
-              token={token => console.log('token',token)}
+              name={props.event.name}
+              description={ new Date(props.event.date).toDateString() + ' ' + placeText}
+              amount={props.event.price * 100}
+              token={token => props.onPay(token, props.event._id)}
               stripeKey={'pk_test_j3acsib29tsMFPqakQN0pc8T00gvFoiYIH'}
             >
               <Button bsSize="xsmall" >
@@ -68,7 +71,7 @@ const EventThumbnail = props => {
       </Panel.Title>
       <Panel.Body>
         <h2>{props.event.name.toUpperCase()}</h2>
-        <div>Date: {props.event.date}</div>
+        <div>Date: {(new Date(props.event.date)).toDateString()}</div>
         <div style={getStartTimeStyle()}>Time: {props.event.time}
           <span>{startTime}</span>
         </div>

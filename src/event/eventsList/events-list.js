@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { getEvents, deleteEvent } from '../../actions/events-actions';
+import { pay } from '../../actions/payment-action';
 import { selectEvents } from '../../selectors/events-selector';
 import { EventThumbnail } from '..';
 
@@ -21,12 +22,16 @@ function EventsList(props) {
     props.deleteSingleEvent(eventId);
   }
 
+  const payHandler = (token, eventId) => {
+    props.payHandler( token, eventId);
+  }
+
   return (
     <div>
       <h1>Upcoming Angular Events</h1>
       <hr />
       <div className="row">
-        {props.events.map(e => <div key={e._id} className="col-md-5"><EventThumbnail onDeleteEventHandler={handleDeleteSingleEvent} onClickHandler={handleThumbnailClick} event={e}></EventThumbnail></div>)}
+        {props.events.map(e => <div key={e._id} className="col-md-5"><EventThumbnail onPay={payHandler} onDeleteEventHandler={handleDeleteSingleEvent} onClickHandler={handleThumbnailClick} event={e}></EventThumbnail></div>)}
       </div>
     </div>
   );
@@ -45,6 +50,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteSingleEvent: (eventId) => {
       dispatch(deleteEvent(eventId));
+    },
+    payHandler: (token, eventId) => {
+      dispatch(pay(token, eventId))
     }
   };
 };

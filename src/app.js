@@ -27,7 +27,10 @@ const renderIfAdmin = (routeProps) => (isAuth, user, Component) => {
 export const App = ({ isAuth, user }) => {
 
   // axios.defaults.baseURL = 'https://immense-earth-80859.herokuapp.com/';
-  axios.defaults.baseURL = 'http://localhost:8080/';
+  axios.defaults.baseURL = process.env.REACT_APP_AXIOS_BASE;
+  console.log('process.env.AXIOS_BASE',process.env.REACT_APP_AXIOS_BASE)
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+  console.log('REACT_APP_STRIPE_KEY', process.env.REACT_APP_STRIPE_KEY)
   return (
     <>
       <Router history={history}>

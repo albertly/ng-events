@@ -55,7 +55,7 @@ const EventThumbnail = props => {
               description={ new Date(props.event.date).toDateString() + ' ' + placeText}
               amount={props.event.price * 100}
               token={token => props.onPay(token, props.event._id)}
-              stripeKey={'pk_test_j3acsib29tsMFPqakQN0pc8T00gvFoiYIH'}
+              stripeKey={process.env.REACT_APP_STRIPE_KEY}
             >
               <Button bsSize="xsmall" >
                 <Glyphicon glyph="shopping-cart" />

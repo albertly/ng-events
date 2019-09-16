@@ -7,7 +7,6 @@ import { GoogleLogin } from 'react-google-login';
 import { authUser, authGoogleUser } from '../actions/user-actions';
 import { selectUser, isAuth } from '../selectors/user-selector';
 
-import config from '../config.json';
 import './login.css';
 
 function Login({ isAuth, user, authUserHandler, authGoogleUserHandler, history }) {
@@ -37,11 +36,12 @@ function Login({ isAuth, user, authUserHandler, authGoogleUserHandler, history }
         authUserHandler(userName, password);
     };
 
+    console.log('process.env.GOOGLE_CLIENT_ID', process.env.REACT_APP_GOOGLE_CLIENT_ID)
     return (
         <>
             <h1>Login</h1>
             <GoogleLogin
-                clientId={config.GOOGLE_CLIENT_ID}
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                 buttonText="Login with Google"
                 onSuccess={(response) => authGoogleUserHandler(response)}
                 onFailure={onFailure}

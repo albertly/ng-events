@@ -118,7 +118,8 @@ export const authGoogleUser = (response) => {
       cache: 'default'
     };
 
-    fetch('http://localhost:8080/api/google', options)
+    
+    fetch(`${process.env.REACT_APP_AXIOS_BASE}api/google`, options)
       .then(r => {
         const token = r.headers.get('x-auth-token');
         r.json().then(user => {

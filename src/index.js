@@ -1,3 +1,4 @@
+import 'react-app-polyfill/ie11';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware  } from 'redux'

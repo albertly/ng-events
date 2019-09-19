@@ -119,7 +119,7 @@ export const authGoogleUser = (response) => {
     };
 
     
-    fetch(`${process.env.REACT_APP_AXIOS_BASE}/api/google`, options)
+    fetch(`${process.env.REACT_APP_AXIOS_BASE}api/google`, options)
       .then(r => {
         const token = r.headers.get('x-auth-token');
         r.json().then(user => {

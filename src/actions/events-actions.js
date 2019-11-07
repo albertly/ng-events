@@ -2,10 +2,6 @@ import axios from 'axios';
 
 import * as actions from './types';
 
-export const setActionState = (actionState) => ({
-    type: actions.SET_ACTION_STATE,
-    payload : actionState
-});
 
 export const getEvents = () => {
     return dispatch => {
@@ -138,10 +134,10 @@ export const addSession =  (event, session) => {
     session.id = nextId + 1;
     session.voters = [];
     event.sessions.push(session);
-    return saveEvent(event, 'Save Session Error: ');
+    return saveEvent(event, null, 'Save Session Error: ');
 }
 
-export const saveEvent =  (event, msg = 'Save Event Error: ') => {
+export const saveEvent =  (event, history = null, msg = 'Save Event Error: ') => {
     return (dispatch, getState) => {
         dispatch(saveEventStarted());
 
@@ -149,6 +145,9 @@ export const saveEvent =  (event, msg = 'Save Event Error: ') => {
         axios.post('/api/events', event, config)
             .then(res => {
               dispatch(saveEventSuccess(res.data));
+              if (history) {
+                history.push('/events');
+              }
             })
             .catch(err => {
                dispatch(saveEventFailure(msg + err));

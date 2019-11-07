@@ -3,28 +3,20 @@ import { connect } from 'react-redux';
 import { Prompt } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 
-import { saveEvent, setActionState } from '../../actions/events-actions';
+import { saveEvent } from '../../actions/events-actions';
 import CustomInputComponent from '../../shared/custom-input-component';
 
 import './create-event.css';
 
-function CreateEvent({actionState, resetActionState, saveEventAction, history }) {
+function CreateEvent({ saveEventAction, history }) {
 
     const [isDirty, setDirty] = useState(true);
 
-    useEffect(() => {
-        if (actionState === 2) {
-            resetActionState(); 
-            history.push('/events');
-        }
-    },
-        // eslint-disable-next-line
-        [actionState]);
 
     const cancelHandler = () => history.push('/events');
 
     const submitHandler = (values, actions) => {
-        saveEventAction(values);
+        saveEventAction(values, history);
         actions.setSubmitting(false);
         setDirty(false);
     };
@@ -154,24 +146,15 @@ function CreateEvent({actionState, resetActionState, saveEventAction, history })
     );
 }
 
-const mapStateToProps = state => {
-    return {
-        actionState: state.events.actionState,
-    };
-};
-
 const mapDispatchToProps = dispatch => {
     return {
-        saveEventAction : event => {
-            dispatch(saveEvent(event));
-      },
-      resetActionState: () => {
-          dispatch(setActionState(0));
+        saveEventAction : (event, history) => {
+            dispatch(saveEvent(event, history));
       }
     };
   };
   
   export default connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
   )(CreateEvent);

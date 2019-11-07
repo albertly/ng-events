@@ -5,7 +5,6 @@ const initialState = {
     currentEvent: {},
     errorMessage: '',
     loading: false,
-    actionState: 0
 };
 
 const eventsReducer = (state = initialState, action) => {
@@ -17,8 +16,6 @@ const eventsReducer = (state = initialState, action) => {
         case actions.GET_EVENTS_START:
             return { ...state, errorMessage: '', loading: true };
 
-        case actions.SET_ACTION_STATE:
-            return { ...state, actionState: action.payload };
 
         case actions.DELETE_EVENT_START:
             return { ...state, errorMessage: '', loading: true };
@@ -30,10 +27,10 @@ const eventsReducer = (state = initialState, action) => {
                 errorMessage: '', loading: false
             }
         case actions.SAVE_EVENT_START:
-            return { ...state, errorMessage: '', loading: true, actionState: 1 }
+            return { ...state, errorMessage: '', loading: true }
 
         case actions.SAVE_EVENT_SUCCESS:
-            return { ...state, events: state.events.concat(action.payload), errorMessage: '', loading: false, actionState: 2 }
+            return { ...state, events: state.events.concat(action.payload), errorMessage: '', loading: false }
 
         case actions.GET_EVENT_START:
             return { ...state, currentEvent: {}, errorMessage: '', loading: true };
@@ -71,7 +68,7 @@ const eventsReducer = (state = initialState, action) => {
         case actions.GET_EVENTS_FAILURE:
             return { ...state, currentEvent: {}, errorMessage: action.error, loading: false };
         case actions.SAVE_EVENT_FAILURE:
-            return { ...state, currentEvent: {}, errorMessage: action.error, loading: false, actionState: 2 }
+            return { ...state, currentEvent: {}, errorMessage: action.error, loading: false }
 
         default:
             return state;

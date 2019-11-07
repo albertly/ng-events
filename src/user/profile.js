@@ -1,31 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css'
 
-import { updateUser, signupUser, setActionState } from '../actions/user-actions';
+import { updateUser, signupUser } from '../actions/user-actions';
 import { selectUser } from '../selectors/user-selector';
 import CustomInputComponent from '../shared/custom-input-component';
 
-function Profile({ user, errorMessage, actionState, onUpdateUser, onSignupUser, resetActionState, history, location }) {
+function Profile({ user, errorMessage, actionState, onUpdateUser, onSignupUser,  history, location }) {
 
-  useEffect(() => {
-
-    if (actionState === 2) {
-      resetActionState();
-      if (errorMessage) {
-        toastr.error(errorMessage)
-      } else {
-        toastr.success('Profile Saved');
-        history.push('/events');
-      }
-     
-    }
-  },
-    // eslint-disable-next-line
-    [actionState]);
 
   const mode = location.pathname === '/profile' ? 'upd' : 'add';
 
@@ -38,14 +23,13 @@ function Profile({ user, errorMessage, actionState, onUpdateUser, onSignupUser, 
 
   const submitHandler = (values, actions) => {
     if (mode === 'add') {
-      onSignupUser(values.email, values.password, values.userName, values.firstName, values.lastName);
+      onSignupUser(values.email, values.password, values.userName, values.firstName, values.lastName, history);
 
       actions.setSubmitting(false);
-      toastr.success('User created');
-      history.push('/events');
+      
 
     } else {
-      onUpdateUser(user.id, values.firstName, values.lastName);
+      onUpdateUser(user.id, values.firstName, values.lastName, history);
       actions.setSubmitting(false);
       
     }
@@ -141,14 +125,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onUpdateUser: (userId, firstName, lastName) => {
-      dispatch(updateUser(userId, firstName, lastName));
+    onUpdateUser: (userId, firstName, lastName, history) => {
+      dispatch(updateUser(userId, firstName, lastName, history));
     },
-    onSignupUser: (email, password, userName, firstName, lastName) => {
-      dispatch(signupUser(email, password, userName, firstName, lastName));
-    },
-    resetActionState: () => {
-      dispatch(setActionState(0));
+    onSignupUser: (email, password, userName, firstName, lastName, history) => {
+      dispatch(signupUser(email, password, userName, firstName, lastName, history));
     }
   };
 };

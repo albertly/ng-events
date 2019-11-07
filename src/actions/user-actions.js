@@ -1,11 +1,7 @@
 import axios from 'axios';
+import toastr from 'toastr';
 
 import * as actions from './types';
-
-export const setActionState = (actionState) => ({
-  type: actions.SET_USER_ACTION_STATE,
-  payload : actionState
-});
 
 export const logoffUser = () => {
   return dispatch => {
@@ -47,7 +43,7 @@ const authUserFailure = error => ({
   error
 });
 
-export const updateUser = (userId, firstName, lastName) => {
+export const updateUser = (userId, firstName, lastName, history) => {
   return (dispatch, getState) => {
     dispatch(updateUserStarted());
 
@@ -56,9 +52,12 @@ export const updateUser = (userId, firstName, lastName) => {
     axios.put(`/api/users/${userId}`, { id: userId, firstName: firstName, lastName: lastName }, config)
       .then(res => {
          dispatch(updateUserSuccess(res.data));
+         toastr.success('Profile Saved');
+         history.push('/events');
       })
       .catch(err => {
          dispatch(updateUserFailure(err.message));
+         toastr.error(err.message);
       });
   };
 };
@@ -77,17 +76,19 @@ const updateUserFailure = error => ({
   error
 });
 
-export const signupUser = (email, password, userName, firstName, lastName) => {
+export const signupUser = (email, password, userName, firstName, lastName, history) => {
   return (dispatch, getState) => {
     dispatch(signupUserStarted());
 
     axios.post(`/api/signup`, { email: email, password: password, userName: userName, firstName: firstName, lastName: lastName })
       .then(res => {
-        console.log('signup', res);
         dispatch(signupUserSuccess(res.data));
+        toastr.success('User created');
+        history.push('/events');
       })
       .catch(err => {
         dispatch(signupUserFailure(err.message));
+        toastr.error(err.message);
       });
   };
 };

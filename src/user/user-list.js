@@ -9,6 +9,7 @@ import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
 export function UserList({ history }) {
     const [userData, setUserData] = useState([]);
+    const [gridApi, setGridApi] = useState('a');
     const state = {
         columnDefs: [{
             headerName: "Id", field: "_id", sortable: false, width: 190
@@ -42,11 +43,30 @@ export function UserList({ history }) {
         });                        
     },[]);
 
+
+    let gridColumnApi = null;
+
+    const onGridReady = params => {
+        console.log("params ", params.api);
+        setGridApi(params.api);
+        console.log("Grid API ", gridApi);
+        //gridColumnApi = params.columnApi;
+        
+    };
+    
+    const onRemoveSelected = () => {
+        console.log(gridApi);
+        var selectedData = gridApi.getSelectedRows();
+        console.log(selectedData);
+       // var res = this.gridApi.updateRowData({ remove: selectedData });
+       // printResult(res);
+    }
+
     return (
         <>
             <h1>User List</h1>
             <hr />
-
+            <button onClick={onRemoveSelected}>Remove</button>
             <div
                 className="ag-theme-balham-dark"
                 style={{
@@ -59,7 +79,8 @@ export function UserList({ history }) {
                     rowSelection='single'
                     pagination='true'
                     columnDefs={state.columnDefs}
-                    rowData={userData}>
+                    rowData={userData}
+                    onGridReady={onGridReady}>
                 </AgGridReact>
             </div>
         </>

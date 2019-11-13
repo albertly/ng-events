@@ -1,35 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { ButtonGroup, Button, Glyphicon } from 'react-bootstrap';
 
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
-
-function FileCellRenderer({onRemoveSelected}) {
-//
-        console.log(onRemoveSelected);
-        return (
-            <div>
-                    <button onClick={onRemoveSelected}>x1</button>
-            </div>
-        );
-
-
-}
-
+import styles from './user-list.module.css';
 
 export function UserList({ history }) {
     const [userData, setUserData] = useState([]);
     const [gridApi, setGridApi] = useState('a');
 
-    const frameworkComponents = {
-        fileCellRenderer: FileCellRenderer
-    };
-    
+    let savedAPI = null;
+
     const state = {
-        columnDefs: [
-        {
+        columnDefs: [{
             headerName: "Id", field: "_id", sortable: false, width: 190
         }, {
             headerName: "User Name", field: "userName", sortable: true, width: 190
@@ -41,34 +27,23 @@ export function UserList({ history }) {
             headerName: "Last Name", field: "lastName", sortable: true, width: 150
         }, {
             headerName: "Roles", field: "roles", sortable: true, width: 90
-         },
-
-         {
+         },{
             headerName: "", field: "googleProvider", sortable: true, width: 50,
+            cellRenderer: function(params) {
+                return params.data.googleProvider ? '<img src="/assets/images/g1.png" height="20" width="40" alt=""/>' : '';
+            }
          },
          {
-            headerName: "Action", width:50, 
-            cellRendererFramework: () => <button onClick={onRemoveSelected}>a2</button>
+            headerName: "", width:100, 
+            cellRendererFramework: () => <ButtonGroup >
+                                          <Button  bsSize="xsmall"  className={styles['btn-primary-outline']}  onClick={onRemoveSelected}>
+                                            <Glyphicon glyph="trash" />
+                                         </Button>
+                                         <Button  bsSize="xsmall" className={styles['btn-primary-outline']}  onClick={onRemoveSelected}>
+                                            <Glyphicon glyph="pencil" />
+                                         </Button>
+                                         </ButtonGroup>
          }
-            // function(params) {
-            //     return params.data.googleProvider ? '<img src="/assets/images/g1.png" height="20" width="40" alt=""/>' : "";
-            // }
-
-            // cellRenderer: function(params) {
-
-            //     var eDiv = document.createElement('button');
-            //     eDiv.innerHTML = '<span class="my-css-class"><button class="btn-simple">Push Me</button></span>';
-            //     var eButton = eDiv.querySelectorAll('.btn-simple')[0];
-            
-            //     eButton.addEventListener('click', function() {
-            //         onRemoveSelected();
-            //     });
-            
-            //     return eDiv;
-
-            //     //return '<button onClick={onRemoveSelected}>x</button>';
-            // }
-        
      ]        
     }
 
@@ -89,17 +64,13 @@ export function UserList({ history }) {
     let gridColumnApi = null;
 
     const onGridReady = params => {
-        console.log("params ", params.api);
         setGridApi(params.api);
-        console.log("Grid API 1", gridApi);
-        console.log("Grid API 2", params.api);
-        //gridColumnApi = params.columnApi;
-        
+        savedAPI = params.api;
     };
     
     const onRemoveSelected = () => {
-        console.log('Grid 1',gridApi);
-        var selectedData = gridApi.getSelectedRows();
+        console.log('Grid 1',savedAPI);
+        var selectedData = savedAPI.getSelectedRows();
         console.log('Data', selectedData);
        // var res = this.gridApi.updateRowData({ remove: selectedData });
        // printResult(res);
@@ -109,7 +80,6 @@ export function UserList({ history }) {
         <>
             <h1>User List</h1>
             <hr />
-            <button onClick={onRemoveSelected}>Remove</button>
             <div
                 className="ag-theme-balham-dark"
                 style={{

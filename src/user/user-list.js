@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { ButtonGroup, Button, Glyphicon } from 'react-bootstrap';
-
 import { AgGridReact } from 'ag-grid-react';
+
+import { deleteUser } from '../actions/user-actions';
+
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 import styles from './user-list.module.css';
 
-export function UserList({ history }) {
+export function UserList({onDeleteUser, history }) {
     const [userData, setUserData] = useState([]);
     const [gridApi, setGridApi] = useState('a');
 
@@ -71,9 +73,10 @@ export function UserList({ history }) {
     const onRemoveSelected = () => {
         console.log('Grid 1',savedAPI);
         var selectedData = savedAPI.getSelectedRows();
-        console.log('Data', selectedData);
-       // var res = this.gridApi.updateRowData({ remove: selectedData });
-       // printResult(res);
+        console.log('Data', selectedData[0]._id);
+        onDeleteUser(selectedData[0]._id, history);
+       var res = savedAPI.updateRowData({ remove: selectedData });
+       console.log(res);
     }
 
     return (
@@ -100,7 +103,15 @@ export function UserList({ history }) {
     )
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+      onDeleteUser: (userId, history) => {
+        dispatch(deleteUser(userId, history));
+      }
+    };
+};
+
 export default connect(
     null,
-    null
+    mapDispatchToProps
 )(UserList);

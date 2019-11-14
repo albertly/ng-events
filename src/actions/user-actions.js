@@ -42,7 +42,7 @@ const authUserFailure = error => ({
   type: actions.AUTH_FAILURE,
   error
 });
-
+////////////////////////////
 export const updateUser = (userId, firstName, lastName, history) => {
   return (dispatch, getState) => {
     dispatch(updateUserStarted());
@@ -75,7 +75,41 @@ const updateUserFailure = error => ({
   type: actions.UPDATE_USER_FAILURE,
   error
 });
+////////////////////////////////
+////////////////////////////
+export const deleteUser = (userId,  history) => {
+  return (dispatch, getState) => {
+    dispatch(deleteUserStarted());
 
+    const config = { headers: { authorization: getState().user.token, } };
+    console.log(config);
+    axios.delete(`/api/users/${userId}`,  config)
+      .then(res => {
+         dispatch(deleteUserSuccess(res.data));
+         toastr.success('User Deleted');
+        // history.push('/events');
+      })
+      .catch(err => {
+         dispatch(deleteUserFailure(err.message));
+         toastr.error(err.message);
+      });
+  };
+};
+
+const deleteUserSuccess = payload => ({
+  type: actions.DELETE_USER_SUCCESS,
+  payload,
+});
+
+const deleteUserStarted = () => ({
+  type: actions.DELETE_USER_START
+});
+
+const deleteUserFailure = error => ({
+  type: actions.DELETE_USER_FAILURE,
+  error
+});
+////////////////////////////////
 export const signupUser = (email, password, userName, firstName, lastName, history) => {
   return (dispatch, getState) => {
     dispatch(signupUserStarted());

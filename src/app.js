@@ -11,10 +11,13 @@ import UserList from './user/user-list';
 import Error404 from './errors/error404';
 import { selectUser, isAuth } from './selectors/user-selector';
 
+//import { UserCreated } from './user/user-created';
+
 import 'ngf-bootstrap/dist/bootstrap.min.css';
 
 const Login = React.lazy(() => import('./user/login'));
 const Profile = React.lazy(() => import('./user/profile'));
+const UserCreated = React.lazy(() => import('./user/user-created'));
 
 const renderIfAdmin = (routeProps) => (isAuth, user, Component) => {
   if (isAuth && user.roles && user.roles === 'admin') {
@@ -28,9 +31,7 @@ export const App = ({ isAuth, user }) => {
 
   // axios.defaults.baseURL = 'https://immense-earth-80859.herokuapp.com/';
   axios.defaults.baseURL = process.env.REACT_APP_AXIOS_BASE;
-  console.log('process.env.AXIOS_BASE',process.env.REACT_APP_AXIOS_BASE)
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-  console.log('REACT_APP_STRIPE_KEY', process.env.REACT_APP_STRIPE_KEY)
+
   return (
     <>
       <Router history={history}>
@@ -46,6 +47,7 @@ export const App = ({ isAuth, user }) => {
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/signup" component={Profile} />
             <Route exact path="/users" component = {UserList} />
+            <Route exact path="/user-created" component = {UserCreated} />
             <Route exact path="/error" component={Error404} />
             <Route component={Error404} />
           </Switch>

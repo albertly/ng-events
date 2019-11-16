@@ -118,7 +118,7 @@ export const signupUser = (email, password, userName, firstName, lastName, histo
       .then(res => {
         dispatch(signupUserSuccess(res.data));
         toastr.success('User created');
-        history.push('/events');
+        history.push('/user-created');
       })
       .catch(err => {
         dispatch(signupUserFailure(err.message));

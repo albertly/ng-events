@@ -49,8 +49,6 @@ export function UserList({onDeleteUser, history }) {
      ]        
     }
 
-
-
     useEffect(() => {
         axios.get('/api/users?limit=50')
        // .then(result => result.json())
@@ -62,21 +60,16 @@ export function UserList({onDeleteUser, history }) {
         });                        
     },[]);
 
-
-    let gridColumnApi = null;
-
     const onGridReady = params => {
         setGridApi(params.api);
         savedAPI = params.api;
     };
     
     const onRemoveSelected = () => {
-        console.log('Grid 1',savedAPI);
-        var selectedData = savedAPI.getSelectedRows();
+        let selectedData = savedAPI.getSelectedRows();
         console.log('Data', selectedData[0]._id);
         onDeleteUser(selectedData[0]._id, history);
-       var res = savedAPI.updateRowData({ remove: selectedData });
-       console.log(res);
+        savedAPI.updateRowData({ remove: selectedData });
     }
 
     return (

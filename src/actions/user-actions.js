@@ -24,7 +24,11 @@ export const authUser = (userName, password) => {
         dispatch(authUserSuccess(res.data));
       })
       .catch(err => {
-        dispatch(authUserFailure(err.message));
+        let errMsg = err.message;
+        if (err.response.data) {
+          errMsg = err.response.data;
+        }
+        dispatch(authUserFailure(errMsg));
       });
   };
 };

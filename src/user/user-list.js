@@ -41,7 +41,7 @@ export function UserList({onDeleteUser, history }) {
                                           <Button  bsSize="xsmall"  className={styles['btn-primary-outline']}  onClick={onRemoveSelected}>
                                             <Glyphicon glyph="trash" />
                                          </Button>
-                                         <Button  bsSize="xsmall" className={styles['btn-primary-outline']}  onClick={onRemoveSelected}>
+                                         <Button  bsSize="xsmall" className={styles['btn-primary-outline']}  onClick={onEditSelected}>
                                             <Glyphicon glyph="pencil" />
                                          </Button>
                                          </ButtonGroup>
@@ -70,6 +70,12 @@ export function UserList({onDeleteUser, history }) {
         console.log('Data', selectedData[0]._id);
         onDeleteUser(selectedData[0]._id, history);
         savedAPI.updateRowData({ remove: selectedData });
+    }
+
+    const onEditSelected = () => {
+        let selectedData = savedAPI.getSelectedRows();
+        
+        history.push(`/user-edit/${selectedData[0]._id}`);
     }
 
     return (

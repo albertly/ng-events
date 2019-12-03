@@ -1,23 +1,81 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import Select from 'react-select';
 import useForm from 'react-hook-form';
+import chroma from 'chroma-js';
+
+const colourStyles = {
+    control: styles => ({ ...styles, backgroundColor: 'white' }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+        const color = chroma(data.color);
+        return {
+            ...styles,
+            backgroundColor: isDisabled
+                ? null
+                : isSelected
+                    ? data.color
+                    : isFocused
+                        ? color.alpha(0.1).css()
+                        : null,
+            color: isDisabled
+                ? '#ccc'
+                : isSelected
+                    ? chroma.contrast(color, 'white') > 2
+                        ? 'white'
+                        : 'black'
+                    : data.color,
+            cursor: isDisabled ? 'not-allowed' : 'default',
+
+            ':active': {
+                ...styles[':active'],
+                backgroundColor: !isDisabled && (isSelected ? data.color : color.alpha(0.3).css()),
+            },
+        };
+    },
+    multiValue: (styles, { data }) => {
+        const color = chroma(data.color);
+        return {
+            ...styles,
+            backgroundColor: color.alpha(0.1).css(),
+        };
+    },
+    multiValueLabel: (styles, { data }) => ({
+        ...styles,
+        color: data.color,
+    }),
+    multiValueRemove: (styles, { data }) => ({
+        ...styles,
+        color: data.color,
+        ':hover': {
+            backgroundColor: data.color,
+            color: 'white',
+        },
+    }),
+};
 
 function UserEdit({ match }) {
+
+    const rolesOptions = [
+        { value: 'user', label: 'User', color: '#00B8D9' },
+        { value: 'admin', label: 'Admin', color: '#0052CC' }
+    ];
+
+    const [roles, setRoles] = useState('');
     const { register, handleSubmit, errors, reset } = useForm(); // initialise the hook
 
     useEffect(() => {
-        console.log(match.params.id);
+
         axios.get(`/api/users/${match.params.id}`)
-            // .then(result => result.json())
             .then(res => {
-                // setUserData(rowData.data.data);
-                console.log(res.data);
+
+                setRoles(res.data.roles);
+
                 reset({
                     id: res.data._id,
                     firstName: res.data.firstName,
                     lastName: res.data.lastName,
-                    email: res.data.email
+                    email: res.data.email,
+                    roles: res.data.roles,
                 });
             })
             .catch(err => {
@@ -29,6 +87,10 @@ function UserEdit({ match }) {
         console.log(data);
     };
 
+    const handleChange = selectedOption => {
+        console.log(`Option selected:`, selectedOption)
+    };
+
     return (
         <form className="form-horizontal" onSubmit={handleSubmit(onSubmit)}>
 
@@ -37,7 +99,7 @@ function UserEdit({ match }) {
                 <div className="form-group">
                     <label className="col-sm-1" htmlFor="id">Id</label>
                     <div class="col-sm-11">
-                        <input name="id" className="form-control" ref={register} readOnly/>
+                        <input name="id" className="form-control" ref={register} readOnly />
                     </div>
                 </div>
 
@@ -60,6 +122,21 @@ function UserEdit({ match }) {
                     <div class="col-sm-11">
                         <input name="lastName" className="form-control" ref={register({ required: true })} />
                         {errors.lastName && 'Last name is required.'}
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label className="col-sm-1" htmlFor="roles">Roles</label>
+                    <div class="col-sm-11">
+                        <Select
+                            value={rolesOptions.filter(({ value }) => roles.split(' ').includes(value))}
+                            isMulti
+                            name="roles"
+                            options={rolesOptions}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            styles={colourStyles}
+                            onChange={handleChange}
+                        />
                     </div>
                 </div>
 

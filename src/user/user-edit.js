@@ -76,6 +76,8 @@ function UserEdit({ match }) {
                     lastName: res.data.lastName,
                     email: res.data.email,
                     roles: res.data.roles,
+                    emailConfirmed: res.data.emailConfirmed,
+                    googleProvider: res.data.googleProvider && res.data.googleProvider.id
                 });
             })
             .catch(err => {
@@ -98,7 +100,7 @@ function UserEdit({ match }) {
 
                 <div className="form-group">
                     <label className="col-sm-1" htmlFor="id">Id</label>
-                    <div class="col-sm-11">
+                    <div className="col-sm-11">
                         <input name="id" className="form-control" ref={register} readOnly />
                     </div>
                 </div>
@@ -106,14 +108,16 @@ function UserEdit({ match }) {
                 <div className="form-group">
                     <label className="col-sm-1" htmlFor="email">Email</label>
                     <div class="col-sm-11">
-                        <input name="email" className="form-control" ref={register} />
+                        <input name="email" className="form-control" ref={register({ required: true, pattern: /^\S+@\S+$/i })} />
+                        {errors.email && 'Please enter valid email.'}
                     </div>
                 </div>
 
                 <div className="form-group">
                     <label className="col-sm-1" htmlFor="firstName">First Name</label>
                     <div class="col-sm-11">
-                        <input name="firstName" className="form-control" ref={register} /> {/* register an input */}
+                        <input name="firstName" className="form-control" ref={register({ required: true })} />
+                        {errors.firstName && 'Please enter a first name.'}
                     </div>
                 </div>
 
@@ -124,6 +128,7 @@ function UserEdit({ match }) {
                         {errors.lastName && 'Last name is required.'}
                     </div>
                 </div>
+
                 <div className="form-group">
                     <label className="col-sm-1" htmlFor="roles">Roles</label>
                     <div class="col-sm-11">
@@ -141,8 +146,10 @@ function UserEdit({ match }) {
                 </div>
 
                 <div className="form-group">
-                    <input name="age" ref={register({ pattern: /\d+/ })} />
-                    {errors.age && 'Please enter number for age.'}
+                    <label className="col-sm-1" htmlFor="emailConfirmed">Email Confirmed</label>
+                    <div class="col-sm-11">
+                        <input type="checkbox" name="emailConfirmed" className="form-control455" ref={register({ required: true })} />
+                    </div>
                 </div>
 
                 <button type="submit" className="btn btn-primary">Submit</button>

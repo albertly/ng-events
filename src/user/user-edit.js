@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import Select from 'react-select';
 import useForm from 'react-hook-form';
 import chroma from 'chroma-js';
+import toastr from 'toastr';
+
+import { selectUser } from '../selectors/user-selector';
 
 const colourStyles = {
     control: styles => ({ ...styles, backgroundColor: 'white' }),
@@ -53,7 +57,7 @@ const colourStyles = {
     }),
 };
 
-function UserEdit({ match }) {
+function UserEdit({ match, user }) {
 
     const rolesOptions = [
         { value: 'user', label: 'User', color: '#00B8D9' },
@@ -61,13 +65,11 @@ function UserEdit({ match }) {
     ];
 
     const [roles, setRoles] = useState('');
-    const { register, handleSubmit, errors, reset } = useForm(); // initialise the hook
+    const { register, handleSubmit, errors, reset } = useForm();
 
     useEffect(() => {
-
         axios.get(`/api/users/${match.params.id}`)
             .then(res => {
-
                 setRoles(res.data.roles);
 
                 reset({
@@ -85,12 +87,25 @@ function UserEdit({ match }) {
             });
     }, [match]);
 
-    const onSubmit = data => {
-        console.log(data);
+    const onSubmit = async data => {
+
+        const config = { headers: { authorization: user.token } };
+
+        try {
+            const res = await axios.put(`/api/users/ex/${data.id}`, data, config);
+            toastr.success('User Updated');
+        }
+        catch (err) {
+            toastr.error("Cannot update user " + err.message);
+        }
+
     };
 
     const handleChange = selectedOption => {
-        console.log(`Option selected:`, selectedOption)
+        console.log(selectedOption)
+        const roles = selectedOption.reduce((acc, curr) => acc + ' ' + curr.value, '');
+        console.log(roles);
+        setRoles(roles);
     };
 
     return (
@@ -107,7 +122,7 @@ function UserEdit({ match }) {
 
                 <div className="form-group">
                     <label className="col-sm-1" htmlFor="email">Email</label>
-                    <div class="col-sm-11">
+                    <div className="col-sm-11">
                         <input name="email" className="form-control" ref={register({ required: true, pattern: /^\S+@\S+$/i })} />
                         {errors.email && 'Please enter valid email.'}
                     </div>
@@ -115,7 +130,7 @@ function UserEdit({ match }) {
 
                 <div className="form-group">
                     <label className="col-sm-1" htmlFor="firstName">First Name</label>
-                    <div class="col-sm-11">
+                    <div className="col-sm-11">
                         <input name="firstName" className="form-control" ref={register({ required: true })} />
                         {errors.firstName && 'Please enter a first name.'}
                     </div>
@@ -123,7 +138,7 @@ function UserEdit({ match }) {
 
                 <div className="form-group">
                     <label className="col-sm-1" htmlFor="lastName">Last Name</label>
-                    <div class="col-sm-11">
+                    <div className="col-sm-11">
                         <input name="lastName" className="form-control" ref={register({ required: true })} />
                         {errors.lastName && 'Last name is required.'}
                     </div>
@@ -131,7 +146,7 @@ function UserEdit({ match }) {
 
                 <div className="form-group">
                     <label className="col-sm-1" htmlFor="roles">Roles</label>
-                    <div class="col-sm-11">
+                    <div className="col-sm-11">
                         <Select
                             value={rolesOptions.filter(({ value }) => roles.split(' ').includes(value))}
                             isMulti
@@ -147,7 +162,7 @@ function UserEdit({ match }) {
 
                 <div className="form-group">
                     <label className="col-sm-1" htmlFor="emailConfirmed">Email Confirmed</label>
-                    <div class="col-sm-11">
+                    <div className="col-sm-11">
                         <input type="checkbox" name="emailConfirmed" className="form-control455" ref={register({ required: true })} />
                     </div>
                 </div>
@@ -155,8 +170,18 @@ function UserEdit({ match }) {
                 <button type="submit" className="btn btn-primary">Submit</button>
             </div>
         </form>
-
     );
 }
 
-export default UserEdit;
+
+const mapStateToProps = state => {
+    return {
+        user: selectUser(state),
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    null
+)(UserEdit);
+

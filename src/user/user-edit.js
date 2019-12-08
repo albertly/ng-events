@@ -7,6 +7,7 @@ import chroma from 'chroma-js';
 import toastr from 'toastr';
 
 import { selectUser } from '../selectors/user-selector';
+import UserOrdersList from './user-orders-list';
 
 const colourStyles = {
     control: styles => ({ ...styles, backgroundColor: 'white' }),
@@ -65,13 +66,16 @@ function UserEdit({ match, user }) {
     ];
 
     const [roles, setRoles] = useState('');
+    const [orders, setOrders] = useState([]);
+
     const { register, handleSubmit, errors, reset } = useForm();
 
     useEffect(() => {
         axios.get(`/api/users/${match.params.id}`)
             .then(res => {
                 setRoles(res.data.roles);
-
+                setOrders(res.data.orders);
+                console.log(res.data.orders);
                 reset({
                     id: res.data._id,
                     firstName: res.data.firstName,
@@ -90,7 +94,7 @@ function UserEdit({ match, user }) {
     const onSubmit = async data => {
 
         const config = { headers: { authorization: user.token } };
-
+        data.roles = roles;
         try {
             const res = await axios.put(`/api/users/ex/${data.id}`, data, config);
             toastr.success('User Updated');
@@ -102,74 +106,85 @@ function UserEdit({ match, user }) {
     };
 
     const handleChange = selectedOption => {
-        console.log(selectedOption)
+        selectedOption = selectedOption || [];
         const roles = selectedOption.reduce((acc, curr) => acc + ' ' + curr.value, '');
-        console.log(roles);
         setRoles(roles);
     };
 
     return (
-        <form className="form-horizontal" onSubmit={handleSubmit(onSubmit)}>
+        <div>
+            <h1>User Info</h1>
+            <hr />
+            <div className="row">
+                <form className="form-horizontal" onSubmit={handleSubmit(onSubmit)}>
 
-            <div className="col-md-10">
+                    <div className="col-md-10">
 
-                <div className="form-group">
-                    <label className="col-sm-1" htmlFor="id">Id</label>
-                    <div className="col-sm-11">
-                        <input name="id" className="form-control" ref={register} readOnly />
+                        <div className="form-group">
+                            <label className="col-sm-1" htmlFor="id">Id</label>
+                            <div className="col-sm-11">
+                                <input name="id" className="form-control" ref={register} readOnly />
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label className="col-sm-1" htmlFor="email">Email</label>
+                            <div className="col-sm-11">
+                                <input name="email" className="form-control" ref={register({ required: true, pattern: /^\S+@\S+$/i })} />
+                                {errors.email && 'Please enter valid email.'}
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label className="col-sm-1" htmlFor="firstName">First Name</label>
+                            <div className="col-sm-11">
+                                <input name="firstName" className="form-control" ref={register({ required: true })} />
+                                {errors.firstName && 'Please enter a first name.'}
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label className="col-sm-1" htmlFor="lastName">Last Name</label>
+                            <div className="col-sm-11">
+                                <input name="lastName" className="form-control" ref={register({ required: true })} />
+                                {errors.lastName && 'Last name is required.'}
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label className="col-sm-1" htmlFor="roles">Roles</label>
+                            <div className="col-sm-11">
+                                <Select
+                                    value={rolesOptions.filter(({ value }) => roles.split(' ').includes(value))}
+                                    isMulti
+                                    name="roles"
+                                    options={rolesOptions}
+                                    className="basic-multi-select"
+                                    classNamePrefix="select"
+                                    styles={colourStyles}
+                                    onChange={handleChange}
+                                    ref={register}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <label className="col-sm-1" htmlFor="emailConfirmed">Email Confirmed</label>
+                            <div className="col-sm-11">
+                                <input type="checkbox" name="emailConfirmed" className="form-control455" ref={register({ required: true })} />
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div className="form-group">
-                    <label className="col-sm-1" htmlFor="email">Email</label>
-                    <div className="col-sm-11">
-                        <input name="email" className="form-control" ref={register({ required: true, pattern: /^\S+@\S+$/i })} />
-                        {errors.email && 'Please enter valid email.'}
+                    <div className="col-md-2">
+                        <button type="submit" className="btn btn-primary">Submit</button>
                     </div>
-                </div>
 
-                <div className="form-group">
-                    <label className="col-sm-1" htmlFor="firstName">First Name</label>
-                    <div className="col-sm-11">
-                        <input name="firstName" className="form-control" ref={register({ required: true })} />
-                        {errors.firstName && 'Please enter a first name.'}
-                    </div>
-                </div>
-
-                <div className="form-group">
-                    <label className="col-sm-1" htmlFor="lastName">Last Name</label>
-                    <div className="col-sm-11">
-                        <input name="lastName" className="form-control" ref={register({ required: true })} />
-                        {errors.lastName && 'Last name is required.'}
-                    </div>
-                </div>
-
-                <div className="form-group">
-                    <label className="col-sm-1" htmlFor="roles">Roles</label>
-                    <div className="col-sm-11">
-                        <Select
-                            value={rolesOptions.filter(({ value }) => roles.split(' ').includes(value))}
-                            isMulti
-                            name="roles"
-                            options={rolesOptions}
-                            className="basic-multi-select"
-                            classNamePrefix="select"
-                            styles={colourStyles}
-                            onChange={handleChange}
-                        />
-                    </div>
-                </div>
-
-                <div className="form-group">
-                    <label className="col-sm-1" htmlFor="emailConfirmed">Email Confirmed</label>
-                    <div className="col-sm-11">
-                        <input type="checkbox" name="emailConfirmed" className="form-control455" ref={register({ required: true })} />
-                    </div>
-                </div>
-
-                <button type="submit" className="btn btn-primary">Submit</button>
+                </form>
             </div>
-        </form>
+            <div className="row">
+                <UserOrdersList orders={orders} />
+            </div>
+        </div>
     );
 }
 

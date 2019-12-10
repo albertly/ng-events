@@ -32,9 +32,5 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-          
-      run: npm build
-      #- run: 
-      #    command: npm start
-      #    environment: 
-      #      NODE_ENV: CI
+
+      - run: npm build

@@ -1,8 +1,10 @@
+import url from 'url';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Router, Switch, Redirect, Route } from 'react-router-dom';
 import history from './history';
 import axios from 'axios';
+import Script from 'react-load-script'
 
 
 import NavBar from './navbar/nav-bar';
@@ -30,11 +32,31 @@ const renderIfAdmin = (routeProps) => (isAuth, user, Component) => {
 
 export const App = ({ isAuth, user }) => {
 
+  const handleScriptCreate = () => {
+    //this.setState({ scriptLoaded: false })
+  }
+   
+  const handleScriptError = () => {
+    //this.setState({ scriptError: true })
+  }
+   
+  const handleScriptLoad = () => {
+    //this.setState({ scriptLoaded: true })
+  }
+
   // axios.defaults.baseURL = 'https://immense-earth-80859.herokuapp.com/';
   axios.defaults.baseURL = process.env.REACT_APP_AXIOS_BASE;
 
-  return (
+  const url_talk = url.resolve(process.env.REACT_APP_TALK_URL, '/assets/js/embed.js');
+  
+  return (  
     <>
+      <Script
+        url={url_talk}
+        onCreate={handleScriptCreate}
+        onError={handleScriptError}
+        onLoad={handleScriptLoad}
+      />
       <Router history={history}>
         <NavBar></NavBar>
         <div style={{ "marginTop": "70px" }}>
@@ -47,9 +69,9 @@ export const App = ({ isAuth, user }) => {
             <Route exact path="/login" component={Login} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/signup" component={Profile} />
-            <Route exact path="/users" component = {UserList} />
-            <Route exact path="/user-edit/:id" component = {UserEdit} />
-            <Route exact path="/user-created" component = {UserCreated} />
+            <Route exact path="/users" component={UserList} />
+            <Route exact path="/user-edit/:id" component={UserEdit} />
+            <Route exact path="/user-created" component={UserCreated} />
             <Route exact path="/error" component={Error404} />
             <Route component={Error404} />
           </Switch>

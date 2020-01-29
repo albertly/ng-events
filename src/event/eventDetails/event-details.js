@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { getEvent, addSession } from '../../actions/events-actions';
 import { selectEvent } from '../../selectors/events-selector';
 import { CreateSession, SessionsList } from '..';
+import  Comments  from '../../shared/comments';
 
 import styles from './event-details.module.css';
 
@@ -104,6 +105,7 @@ function EventDetails({ addSessionAction, event, fetchEvent, match, history }) {
                 />
             }
 
+            <Comments storyID={match.params.id} storyURL={window.location.href}/>
         </div>
     );
 }

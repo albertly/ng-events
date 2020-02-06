@@ -182,7 +182,7 @@ function UserEdit({ match, user }) {
                 </form>
             </div>
             <div className="row">
-                <UserOrdersList orders={orders} />
+                <UserOrdersList orders={orders} userId={match.params.id} />
             </div>
         </div>
     );

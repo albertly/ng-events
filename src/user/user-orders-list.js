@@ -19,13 +19,13 @@ export function UserOrdersList({ orders, userId }) {
 
     //How to download files using axios
     //https://stackoverflow.com/questions/41938718/how-to-download-files-using-axios
-    const  getPDF =  () => {
+    const  getPDF =  (id) => {
         //axios.get(`/api/invoice/pdf/${userId}`);
 
         axios({
-            url: `/api/invoice/pdf/${userId}`, //your url
+            url: `/api/invoice/pdf/${id}`, //your url
             method: 'GET',
-          //  responseType: 'blob', // important
+            responseType: 'blob', // important
           }).then((response) => {
              console.log(response);
              const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -59,7 +59,7 @@ export function UserOrdersList({ orders, userId }) {
                     <Glyphicon glyph="pencil" />
                 </Button>
 
-                <Button bsSize="xsmall" className={styles['btn-primary-outline']} onClick={getPDF}>
+                <Button bsSize="xsmall" className={styles['btn-primary-outline']} onClick={onEditSelected}>
                     <FontAwesomeIcon icon={faFilePdf} />
                 </Button>
             </ButtonGroup>
@@ -80,7 +80,7 @@ export function UserOrdersList({ orders, userId }) {
 
     const onEditSelected = () => {
         let selectedData = savedAPI.getSelectedRows();
-
+        getPDF(selectedData[0]._id);
         //   history.push(`/user-edit/${selectedData[0]._id}`);
     }
 

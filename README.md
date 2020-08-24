@@ -9,3 +9,5 @@ Github repository [jmcooper/angular-fundamentals-files](https://github.com/jmcoo
 * Version with Saga
 
 * Server Side API (Node.js)
+
+![Android](https://raw.githubusercontent.com/albertly/ng-events/master/ng-event.png)
